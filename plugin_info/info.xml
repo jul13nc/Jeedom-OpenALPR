@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+    <id>openalpr</id>
+    <name>OpenALPR</name>
+    <description>Plugin permanent de faire de la reconnaissance de plaque d'immatriculation avec nos camera</description>
+    <icon>fa fa-video-camera</icon>
+    <licence>AGPL</licence>
+    <author>Halbout Michael</author>
+    <installation>Procedure automatique ci dessous</installation>
+    <require>2.0</require>
+    <version>1</version>
+    <category>security</category>
+    <display>panel</display>
+    <allowRemote>1</allowRemote>
+	<hasDependency>1</hasDependency>
+    <hasOwnDeamon>1</hasOwnDeamon>
+</info>
+
