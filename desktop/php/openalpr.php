@@ -24,31 +24,37 @@ $eqLogics = eqLogic::byType('openalpr');
 	<div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
 		<legend>{{Gestion}}</legend>
 		<div class="eqLogicThumbnailContainer">
-			<div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; " >
+			<div class="cursor eqLogicAction" data-action="add" style="height: 120px; margin-bottom: 10px; padding: 5px; border-radius: 2px; width: 160px; margin-left: 10px; position: absolute; left: 170px; top: 0px; background-color: rgb(255, 255, 255);">
 				<center>
-					<i class="fa fa-plus-circle" style="font-size : 7em;color:#497CB1;"></i>
-				</center>
-				<span style="font-size : 1.1em;position:relative; word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#497CB1">
-					<center>Ajouter</center>
-				</span>
+			      		<i class="fa fa-plus-circle" style="font-size : 5em;color:#497CB1;"></i>
+			    	</center>
+			    	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#497CB1">
+			    		<center>Ajouter</center>
+			    	</span>
 			</div>
 			<div class="cursor eqLogicAction" data-action="gotoPluginConf" style="height: 120px; margin-bottom: 10px; padding: 5px; border-radius: 2px; width: 160px; margin-left: 10px; position: absolute; left: 170px; top: 0px; background-color: rgb(255, 255, 255);">
 				<center>
 			      		<i class="fa fa-wrench" style="font-size : 5em;color:#767676;"></i>
 			    	</center>
-			    	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>Configuration</center></span>
-			</div>
-			<div class="cursor snapshot" style="background-color : #ffffff;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-			  <center>
-				<i class="fa fa-camera" style="font-size : 5em;color:#767676;"></i>
-			  </center>
-				<center>{{Snapshot}}</center>
-			</div>
-			<div class="cursor logAlprd" style="background-color : #ffffff;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-			  <center>
-				<i class="fa fa-file-o" style="font-size : 5em;color:#767676;"></i>
-			  </center>
-				<center>{{Log ALPRD}}</center>
+			    	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676">
+			    		<center>Configuration</center>
+			    	</span>
+			</div>			
+			<div class="cursor snapshot" style="height: 120px; margin-bottom: 10px; padding: 5px; border-radius: 2px; width: 160px; margin-left: 10px; position: absolute; left: 170px; top: 0px; background-color: rgb(255, 255, 255);">
+				<center>
+			      		<i class="fa fa-camera" style="font-size : 5em;color:#767676;"></i>
+			    	</center>
+			    	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676">
+			    		<center>Snapshot</center>
+			    	</span>
+			</div>			
+			<div class="cursor logAlprd" style="height: 120px; margin-bottom: 10px; padding: 5px; border-radius: 2px; width: 160px; margin-left: 10px; position: absolute; left: 170px; top: 0px; background-color: rgb(255, 255, 255);">
+				<center>
+			      		<i class="fa fa-file-o" style="font-size : 5em;color:#767676;"></i>
+			    	</center>
+			    	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676">
+			    		<center>Log ALPRD</center>
+			    	</span>
 			</div>
 		</div>
         <legend>{{Mes groupes de plaques d'immatriculation}}</legend>
