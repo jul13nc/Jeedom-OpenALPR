@@ -6,6 +6,13 @@ try {
     if (!isConnect('admin')) {
         throw new Exception(__('401 - Accès non autorisé', __FILE__));
     }
+	if (init('action') == 'UpdateStatut') {
+		$Commande=cmd::byId(init('id'));
+		if(is_object($Commande)){
+			$Commande->execute();
+		}
+		ajax::success(true);
+	}
 	if (init('action') == 'ConfigOpenAlpr') {
 		$AlprdConfig['local'] =openalpr::ConfigOpenAlpr();
 		if (config::byKey('jeeNetwork::mode') == 'master') {
