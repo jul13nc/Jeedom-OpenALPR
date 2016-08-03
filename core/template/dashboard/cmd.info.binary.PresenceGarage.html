@@ -18,7 +18,24 @@
 
         $('.cmd[data-cmd_id=#id#] .action').off();
         $('.cmd[data-cmd_id=#id#] .action').on('click', function () {
-            jeedom.cmd.execute({id: '#id#'});
+	//jeedom.cmd.execute({id: '#id#'});
+		$.ajax({
+			type: 'POST',
+			url: 'plugins/openalpr/core/ajax/openalpr.ajax.php',
+			data: {
+				action: 'UpdateStatut',
+				id:'#id#'
+			},
+			dataType: 'json',
+			global: false,
+			error: function(request, status, error) {},
+			success: function(data) {
+				if (data.state != 'ok') {
+					$('#div_alert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+			}
+		});
         });
 	</script>
 </div>
