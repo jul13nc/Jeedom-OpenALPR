@@ -272,20 +272,20 @@ class openalprCmd extends cmd {
 			}
 			if (config::byKey('snapshot','openalpr')) {
 				$dir=config::byKey('SnapshotFolder','openalpr');
-				log::add('openalpr','debug','Evoie d\'un message avec les derniere photo');
 				$_options['files'] = array_slice(scandir($dir,SCANDIR_SORT_DESCENDING),0,config::byKey('NbSnap','openalpr'));
+				log::add('openalpr','debug','Evoie d\'un message avec les derniere photo:'.$_options['files']);
 				for($loop=0;$loop<=count($_options['files']);$loop++)
 					$_options['files'][$loop]=$dir.'/'.$_options['files'][$loop];
 				$_options['title'] = '[Jeedom][openAlpr] Détéction d\'une immatriculation';
 				$_options['message'] = 'La plaque d\'immatriculation  '.$_options["plate"].' du vehicule '.$this->getName().' a ete détécté';
 				$cmds = explode('&&', config::byKey('alertMessageCommand','openalpr'));
+				log::add('openalpr','debug',json_encode($cmds));
 				foreach ($cmds as $id) {
 					$cmd = cmd::byId(str_replace('#', '', $id));
-					if (is_object(!$cmd)) {
-						continue;
+					if (is_object($cmd)) {
+						log::add('openalpr','debug','Evoie d\'un message avec les derniere photo a '.$cmd->getName());
+						$cmd->execute($_options);
 					}
-					log::add('openalpr','debug','Evoie d\'un message avec les derniere photo a '.$cmd->getName());
-					$cmd->execute($_options);
 				}
 			}
 		}
