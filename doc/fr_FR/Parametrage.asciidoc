@@ -1,42 +1,41 @@
-Si vous avez activé l'ajout automatique ou l'import ETS4, les equipements et les commandes ont été créer, mais il reste certain parametre a configurer.
-La suite de ce paragraphe va vous etre utiles.
-
-==== Équipement
-Dans un premier temps, il faut créer un nouvelle équipement et le nommé.
+==== Groupe de plaques
+Dans un premier temps, il faut créer un nouvelle groupe  et le nommé.
 Comme dans tous les plugins Jeedom vous avez un bouton ajouté un equipement sur la gauche de votre fenetre.
 
 image::../images/Configuration_equipement.jpg[]
 
 Ce nouvelle équipement a besoin d'être paramétré.
 
-* Nom de l'équipement KNX : Le nom a déjà été paramétrée mais vous avez la possibilité de la changer
-* Adresse Physique de l'équipement : cette element n'est pas tres important et peut etre laissé vide
+* Nom du groupe : Le nom a déjà été paramétrée mais vous avez la possibilité de la changer
 * Objet parent : Ce paramétré permet d'ajouter l'équipement dans un objet Jeedom
 * Catégorie : Déclare l'équipement dans une catégorie
 * Visible : Permet de rendre l'équipement visible dans le Dashboard
 * Activer : Permet d'activer l'équipement
-* Délai max entre 2 messages: ce champs permet est utile pour les equipements qui fonctionne sur batterie, il indique a jeedom le delais qu'il doit laissé entre 2 messages avant de vous informé d'un risque de panne.
 
-==== Commande
+Le groupe "Plaques détectées inconnu" ce créer automatiquement des qu’une plaque a ete détécté et qu’elle n’existe pas sous jeedom.
+Pour créer votre groupe et comme partout sur jeedom vous avez le bouton "Ajouter" sur la gauche de votre écran.
+
+==== Plaques d'imatriculation
 
 Maintenant que votre équipement est crée et configurée, on vas pouvoir y ajouter des commandes.
+Le groupe "Plaques détectées inconnu" ce créer automatiquement des qu’une plaque a ete détécté et qu’elle n’existe pas sous jeedom.
+Pour créer votre groupe et comme partout sur jeedom vous avez le bouton "Ajouter" sur la gauche de votre écran.
 
 Exemple de configuration
 
 image::../images/Configuration_commande.jpg[]
 
-* Nom : Nommée votre commande de manière a la retrouve facilement dans Jeedom
-* Data Point Type : ce champs est important et indispensable pour l'encodage et décodage de la valeur.
-* Groupe d'addresse : ce champs identifi la commande sur le bus et sur jeedom
-* Retour d'état : Ce paramètre est visible pour une commande de type action, elle permet a jeedom de liée une info a une action
-Paramètre :
-* Type : Une action pour faire un Write et une info pour un retour d'état
-* Sous Type : Choisissez le sous type le plus adaptée a la valeur transmis ou a transmettre
-* Valeur : Ce champs apparaitra uniquement quand vous êtes en Action -> Defaut. Si elle est la valeur est défini jeedom transmettera que cette valeur sur le bus, autrement, il alternera automatiquement
-* Initialiser: ce parmettre permet de déterminer quel paramettre on souhait initialisé lors d'un redémararge du plugin
-* Evenement: ce paramettre détermine la maniere dont est mis a jour la valeur de la commande. Activé, c'est un evenement qui se produira sur le bus. Désactivé, une requet de lecture sera emise sur le bus.
-* Visible : Permet de rendre visible votre commande sur le dashboard
-* Historiser : Permet d'enregistrer la valeur
-* Transmetre : Permet a jeedom d'envoyer une reponse a une requet read. Si Activé, il faudra déterminé un objets jeedom qui contient la valeur
-* Inverser : Cette commande permet d'inverser la logique
+* Nom : Donner un nom a votre plaque de manière a la retrouve facilement dans Jeedom
+* Numero de la plaque: Numero de la plaque (sans les tirets) (il est possible de remplacé des caractere par de ** en cas de flotte avec de plaque qui se suive
+
+ AX**
+AX123**
+AX**WW
+123
+**123WW
+**WW
+
+* Historiser: Tres utiles si vous voulez visualiser sur le panel les entée
+* Afficher: si vous voulez que la plaque apparaisse sur le dashbord
+* Déplacer: ce bouton permet de déplacer une plaque d’un groupe a un autre
 * Enfin pensez sauvegarder.
