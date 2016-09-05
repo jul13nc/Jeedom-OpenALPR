@@ -214,15 +214,17 @@ class openalpr extends eqLogic {
 	public static function deamon_stop() {
 		exec('sudo pkill alprd');
 	}
-	public static function SendLastSnap($_options){
+	public static function SendLastSnap($Detect){
 		if (config::byKey('snapshot','openalpr')) {
-			$dir=config::byKey('SnapshotFolder','openalpr');
-			$_options['files'] = array_slice(scandir($dir,SCANDIR_SORT_DESCENDING),0,config::byKey('NbSnap','openalpr'));
+			$directory=config::byKey('SnapshotFolder','openalpr');
+			if(substr($directory,-1)!='/')
+				$directory.='/';
+			$lastFiles = array_slice(array_diff(scandir($directory,1), array('..', '.')),0,config::byKey('NbSnap','openalpr'));
 			log::add('openalpr','debug','Evoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
-			for($loop=0;$loop<=count($_options['files']);$loop++)
-				$_options['files'][$loop]=$dir.'/'.$_options['files'][$loop];
+			foreach($lastFiles as $file)
+				$_options['files'][$loop]=$directory.$file.
 			$_options['title'] = '[Jeedom][openAlpr] Détéction d\'une immatriculation';
-			$_options['message'] = json_encode($_options);
+			$_options['message'] = json_encode($Detect);
 			$cmds = explode('&&', config::byKey('alertMessageCommand','openalpr'));
 			log::add('openalpr','debug',json_encode($cmds));
 			foreach ($cmds as $id) {
