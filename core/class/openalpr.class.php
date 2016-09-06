@@ -219,6 +219,10 @@ class openalpr extends eqLogic {
 	public static function SendLastSnap($Detect){
 		if (config::byKey('snapshot','openalpr')) {
 			$directory=config::byKey('SnapshotFolder','openalpr');
+			if(!file_exists($directory)){
+				exec('sudo mkdir -p '.$directory);
+				exec('sudo chmod 777 -R '.$directory);
+			}
 			if(substr($directory,-1)!='/')
 				$directory.='/';
 			$lastFiles = array_slice(array_diff(scandir($directory,1), array('..', '.')),0,config::byKey('NbSnap','openalpr'));
@@ -264,12 +268,12 @@ class openalprCmd extends cmd {
 		$this->setCollectDate('');
 		$this->save();
 		log::add('openalpr','debug',$this->getName().' est '.$return);
-		if(isset($_options["plate"])){
-			$this->setConfiguration('confidence',$_options["confidence"]);
-			//$this->setConfiguration('matches_template',$_options["matches_template"]);
-			//$this->setConfiguration('region',$_options["region"]);
-			//$this->setConfiguration('region_confidence',$_options["region_confidence"]);
-			$this->setConfiguration('coordinates',$_options["coordinates"]);
+		if(isset($_options["results"]["plate"])){
+			$this->setConfiguration('confidence',$_options["results"]["confidence"]);
+			//$this->setConfiguration('matches_template',$_options["results"]["matches_template"]);
+			//$this->setConfiguration('region',$_options["results"]["region"]);
+			//$this->setConfiguration('region_confidence',$_options["results"]["region_confidence"]);
+			$this->setConfiguration('coordinates',$_options["results"]["coordinates"]);
 			$this->setCollectDate('');
 			$this->save();
 			$CmdGroupe=$this->getEqlogic()->getCmd(null,'*');
@@ -286,9 +290,14 @@ class openalprCmd extends cmd {
 			if(is_object($CmdLast)){
 				log::add('openalpr','debug','Mise a jour de l\'objet de derniere detection');
 				//if($CmdLast->execCmd()== 0){
-					$dir=config::byKey('SnapshotFolder','openalpr');
-					$value= array_slice(scandir($dir,SCANDIR_SORT_DESCENDING),0,1);
-					log::add('openalpr','debug','Dernier snapshot: '.json_encode($value));
+					$directory=config::byKey('SnapshotFolder','openalpr');
+					if(!file_exists($directory)){
+						exec('sudo mkdir -p '.$directory);
+						exec('sudo chmod 777 -R '.$directory);
+					}
+					//$value= array_slice(scandir($directory,SCANDIR_SORT_DESCENDING),0,1);
+					$value=$directory.$_options["uuid"].'.jpg';
+					log::add('openalpr','debug','Dernier snapshot: '.$value);
 					$CmdLast->event($value);
 					$CmdLast->setCollectDate('');
 					$CmdLast->save();
