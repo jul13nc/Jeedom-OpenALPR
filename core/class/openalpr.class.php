@@ -208,8 +208,13 @@ class openalpr extends eqLogic {
 		$deamon_info = self::deamon_info();
 		if ($deamon_info['launchable'] != 'ok') 
 			return;
-		//log::remove('openalpr');
+		log::remove('openalpr');
 		self::deamon_stop();
+		$directory=config::byKey('SnapshotFolder','openalpr');
+		if(!file_exists($directory)){
+			exec('sudo mkdir -p '.$directory);
+			exec('sudo chmod 777 -R '.$directory);
+		}
 		if ($deamon_info['state'] != 'ok') 
 			exec('sudo alprd');
 	}
@@ -268,12 +273,12 @@ class openalprCmd extends cmd {
 		$this->setCollectDate('');
 		$this->save();
 		log::add('openalpr','debug',$this->getName().' est '.$return);
-		if(isset($_options["results"]["plate"])){
-			$this->setConfiguration('confidence',$_options["results"]["confidence"]);
-			//$this->setConfiguration('matches_template',$_options["results"]["matches_template"]);
-			//$this->setConfiguration('region',$_options["results"]["region"]);
-			//$this->setConfiguration('region_confidence',$_options["results"]["region_confidence"]);
-			$this->setConfiguration('coordinates',$_options["results"]["coordinates"]);
+		if(isset($_options["plate"])){
+			$this->setConfiguration('confidence',$_options["confidence"]);
+			//$this->setConfiguration('matches_template',$_options["matches_template"]);
+			//$this->setConfiguration('region',$_options["region"]);
+			//$this->setConfiguration('region_confidence',$_options["region_confidence"]);
+			$this->setConfiguration('coordinates',$_options["coordinates"]);
 			$this->setCollectDate('');
 			$this->save();
 			$CmdGroupe=$this->getEqlogic()->getCmd(null,'*');
@@ -295,10 +300,11 @@ class openalprCmd extends cmd {
 						exec('sudo mkdir -p '.$directory);
 						exec('sudo chmod 777 -R '.$directory);
 					}
-					//$value= array_slice(scandir($directory,SCANDIR_SORT_DESCENDING),0,1);
-					$value=$directory.$_options["uuid"].'.jpg';
+					if(substr($directory,-1)!='/')
+						$directory.='/';
+					$value= array_slice(scandir($directory,SCANDIR_SORT_DESCENDING),0,1)[0];
 					log::add('openalpr','debug','Dernier snapshot: '.$value);
-					$CmdLast->event($value);
+					$CmdLast->event($directory.$value);
 					$CmdLast->setCollectDate('');
 					$CmdLast->save();
 				//}
