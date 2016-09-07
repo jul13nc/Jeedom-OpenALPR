@@ -26,13 +26,6 @@ try {
 		}
 		ajax::success($AlprdConfig);
 	}
-	if (init('action') == 'OpenAlprSlave') {
-		$result=array();
-		foreach (jeeNetwork::byPlugin('motion') as $jeeNetwork) 
-			$result[$jeeNetwork->getId()]=array('Id'=>$jeeNetwork->getId(),'Nom'=>$jeeNetwork->getName());
-		
-		ajax::success($result);
-	}
    	if (init('action') == 'movePlate') {
 		$Commande=cmd::byId(init('id'));
 		if(is_object($Commande)){
