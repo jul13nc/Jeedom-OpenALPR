@@ -289,41 +289,9 @@ function AddCamera(div,cameraId){
 					.append($('<i class="fa fa-check">'))
 					.text('{{Supprimer}}'))))
 		.append('<legend></legend>'));
-	getOpenAlprSlave();
 	$('body').on('click','#bt_removecamera', function() {
 		$(this).closest('.camera').remove();
 	}); 
-}
-function getOpenAlprSlave(){
-	$.ajax({
-		type: "POST",
-		url: "plugins/openalpr/core/ajax/openalpr.ajax.php",
-		data: {
-			action: "OpenAlprSlave",
-		},
-		dataType: 'json',
-		error: function(request, status, error) {
-			handleAjaxError(request, status, error);
-		},
-		success: function(data) { 
-			if (data.state != 'ok') {
-				$('#div_alert').showAlert({message: data.result, level: 'danger'});
-				return;
-			}
-			if (data.result!=false)
-			{
-				$('.configKey[data-l3key=slave]').html('');
-				$('.configKey[data-l3key=slave]').append(
-						$('<option>').attr('value','local')
-						.text('Local'));
-				for (var i in data.result) {
-					$('.configKey[data-l3key=slave]').append(
-						$('<option>').attr('value',data.result[i].Id)
-						.text(data.result[i].Nom));
-				}
-			}
-		}
-	});	
 }
 
 </script>
