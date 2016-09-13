@@ -98,8 +98,8 @@ class openalpr extends eqLogic {
 		if(config::byKey('configuration','openalpr')!=''){
 			foreach(config::byKey('configuration','openalpr') as $AlprCamera){
 				if($AlprCamera['cameraUrl']!=''){
-					$Adresse=preg_split('~://~',$AlprCamera['cameraUrl']);
-					$UrlAcces=$Adresse[0];
+					$Adresse=explode('://',$AlprCamera['cameraUrl']);
+					$UrlAcces=$Adresse[0].'://';
 					if($AlprCamera['cameraLogin']!='')
 						$UrlAcces.=$AlprCamera['cameraLogin'].':'.$AlprCamera['cameraPass'].'@';
 					$UrlAcces=$Adresse[1];
