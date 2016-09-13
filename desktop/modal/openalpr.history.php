@@ -3,10 +3,18 @@ if (!isConnect()) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
 $path=dirname(__FILE__);
-for($i=1; $i<count(split('/',dirname(__FILE__)));$i++){
-	$path.='/..';
+if(substr($path, -1) !='/')
+	$path.='/';
+foreach(explode('/',$path) as $other){
+	if($other!='')
+		$path.='../';
 }
-$path .= config::byKey('SnapshotFolder','openalpr');
+
+$SnapshotFolder = config::byKey('SnapshotFolder','openalpr');
+if(substr($SnapshotFolder,0,1) !='/')
+	$SnapshotFolder=substr($SnapshotFolder,1);
+	
+$path.=$SnapshotFolder;
 if(substr($path, -1) !='/')
 	$path.='/';
 $files = array();
