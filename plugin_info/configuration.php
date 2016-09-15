@@ -208,11 +208,8 @@ $.ajax({
 		if (data.result['configuration']!=''){
 			$.each(data.result['configuration'], function( key, value ){
 				AddCamera($('.CameraListe'),key);	
-				$('.configKey[data-l1key=configuration][data-l2key='+key+'][data-l3key=plugin] option[value="'+data.result['configuration'][key]['plugin']+'"]').prop('selected', true);
 				$('.configKey[data-l1key=configuration][data-l2key='+key+'][data-l3key=cameraUrl]').val(data.result['configuration'][key]['cameraUrl']);
-				$('.configKey[data-l1key=configuration][data-l2key='+key+'][data-l3key=cameraLogin]').val(data.result['configuration'][key]['cameraLogin']);
-				$('.configKey[data-l1key=configuration][data-l2key='+key+'][data-l3key=cameraPass]').val(data.result['configuration'][key]['cameraPass']);
-			});
+				});
 		}
 	}
 });	
@@ -265,23 +262,10 @@ function openalpr_postSaveConfiguration(){
 function AddCamera(div,cameraId){
 	div.append($('<div class="camera">')
 		.append($('<div class="form-group">')
-			.append($('<label class="col-lg-4 control-label">').text('{{Resau jeedom}}'))
-			.append($('<div class="col-lg-4">')
-				.append($('<select class="configKey form-control changeplugin" data-l1key="configuration" data-l2key="'+cameraId+'" data-l3key="slave">')
-					.append($('<option value="local">').text('Local')))))
-		.append($('<div class="form-group">')
 			.append($('<label class="col-lg-4 control-label">').text('{{Url de la Camera}}'))
 			.append($('<div class="col-lg-4 ">')
 				.append($('<input class="configKey form-control" data-l1key="configuration" data-l2key="'+cameraId+'" data-l3key="cameraUrl">'))))
-		.append($('<div class="form-group">')
-			.append($('<label class="col-lg-4 control-label">').text('{{Login de connexion a la Camera}}'))
-			.append($('<div class="col-lg-4 ">')
-				.append($('<input class="configKey form-control" data-l1key="configuration" data-l2key="'+cameraId+'" data-l3key="cameraLogin">'))))
-		.append($('<div class="form-group">')
-			.append($('<label class="col-lg-4 control-label">').text('{{Mots de pass de la Camera}}'))
-			.append($('<div class="col-lg-4 ">')
-				.append($('<input class="configKey form-control" data-l1key="configuration" data-l2key="'+cameraId+'" data-l3key="cameraPass">'))))
-		.append('<legend></legend>')
+		append('<legend></legend>')
 		.append($('<div class="form-group">')
 			.append($('<label class="col-lg-4 control-label">').text('{{Supprimer cette camera}}'))
 			.append($('<div class="col-lg-4">')
