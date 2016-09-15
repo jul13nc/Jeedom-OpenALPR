@@ -265,7 +265,7 @@ function AddCamera(div,cameraId){
 			.append($('<label class="col-lg-4 control-label">').text('{{Url de la Camera}}'))
 			.append($('<div class="col-lg-4 ">')
 				.append($('<input class="configKey form-control" data-l1key="configuration" data-l2key="'+cameraId+'" data-l3key="cameraUrl">'))))
-		append('<legend></legend>')
+		.append('<legend></legend>')
 		.append($('<div class="form-group">')
 			.append($('<label class="col-lg-4 control-label">').text('{{Supprimer cette camera}}'))
 			.append($('<div class="col-lg-4">')
