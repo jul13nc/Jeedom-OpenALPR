@@ -13,7 +13,8 @@ Les paramettre de configuration général sont:
 * Création automatique de plaque inconnue: Permet a jeedom de créer une commande pour les plaque non reconue
 * Activer le Snapshot: Permet de déterminer si on veut des snapshot des détécton
 * Choisir l'emplacement par defaut des snapshot
-* Choisir une commande d'alerte (mail, slack...) et le nombre d'images envoyé
+* Choisir les commandes d'alerte (mail, slack...) separer par des &&
+* Choisir le nombre d'images envoyé
 * Personnalisé les paramettre par defaut de OpenAlpr
 
 *  state_id_img_size_percent
