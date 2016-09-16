@@ -228,7 +228,7 @@ class openalpr extends eqLogic {
 			$lastFiles = array_slice(array_diff(scandir($directory,1), array('..', '.')),0,config::byKey('NbSnap','openalpr'));
 			log::add('openalpr','debug','Evoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
 			foreach($lastFiles as $file)
-				$_options['files'][$loop]=$directory.$file.
+				$_options['files'][]=$directory.$file;
 			$_options['title'] = '[Jeedom][openAlpr] Détéction d\'une immatriculation';
 			$_options['message'] = json_encode($Detect);
 			$cmds = explode('&&', config::byKey('alertMessageCommand','openalpr'));
@@ -236,7 +236,7 @@ class openalpr extends eqLogic {
 			foreach ($cmds as $id) {
 				$cmd = cmd::byId(str_replace('#', '', $id));
 				if (is_object($cmd)) {
-					log::add('openalpr','debug','Evoie d\'un message avec les derniere photo a '.$cmd->getName());
+					log::add('openalpr','debug','Evoie du message a '.$cmd->getName());
 					$cmd->execute($_options);
 				}
 			}
