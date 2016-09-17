@@ -273,7 +273,7 @@ class openalprCmd extends cmd {
 			//$this->setConfiguration('matches_template',$_options["matches_template"]);
 			//$this->setConfiguration('region',$_options["region"]);
 			//$this->setConfiguration('region_confidence',$_options["region_confidence"]);
-			$this->setConfiguration('coordinates',$_options["coordinates"]);
+			//$this->setConfiguration('coordinates',$_options["coordinates"]);
 			$this->setCollectDate('');
 			$this->save();
 			$CmdGroupe=$this->getEqlogic()->getCmd(null,'*');
