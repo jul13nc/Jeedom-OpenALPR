@@ -4,13 +4,13 @@ class openalpr extends eqLogic {
 	public static function cron() {
 		foreach(eqLogic::byType('openalpr') as $Equipement){ 
 			foreach($Equipement->getCmd(null,'*') as $Commandes){ 
-                foreach($Commandes as $Commande){ 
-                  //  if($Commande->execCmd()== 1){
+		                foreach($Commandes as $Commande){ 
+			                //if($Commande->execCmd()== 1){
 						log::add('openalpr','debug','['.$Commande->getEqlogic()->getName().']['.$Commande->getName().'] a False');
-                        $Commande->setCollectDate('');
-                        $Commande->event(0);
-                        $Commande->save();
-                  //  }
+			                        $Commande->setCollectDate('');
+			                        $Commande->event(0);
+			                        $Commande->save();
+			                //}
 				}
 			}
 		}
