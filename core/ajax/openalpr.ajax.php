@@ -52,7 +52,7 @@ try {
 				if ($cmd->getLogicalId()!='*' && $cmd->getLogicalId()!='lastdetect'){
 					foreach($cmd->getHistory(init('start'),init('end')) as $History)
 					{
-						if ($History->getValue()!=0){
+						//if ($History->getValue()!=0){
 							$result[]=array(
 								'id'=>$eqLogic->getId(),
 								'groupeId'=>$eqLogic->getLogicalId(),
@@ -62,7 +62,7 @@ try {
 								'datetime'=>$History->getDatetime(),
 								//'value'=>$History->getValue(),
 							);
-						}
+					//	}
 					}
 				}
 			}
