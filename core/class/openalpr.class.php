@@ -259,7 +259,8 @@ class openalprCmd extends cmd {
       }
      */
 	public function execute($_options = array()) {
-		if($this->getValueDate() < date("Y-m-d H:i:s", strtotime('+5 minutes', date('Y-m-d H:i:s'))){ 
+		$return='';
+		if($this->getValueDate() < date("Y-m-d H:i:s", strtotime('+5 minutes', date('Y-m-d H:i:s')))){ 
 			openalpr::SendLastSnap($_options);
 			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
 			if($this->execCmd() == 0)
