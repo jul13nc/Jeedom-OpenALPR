@@ -259,52 +259,56 @@ class openalprCmd extends cmd {
       }
      */
 	public function execute($_options = array()) {
-		log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
-		if($this->execCmd() == 0)
-			$return=1;
-		else
-			$return=0;
-		$this->event($return);
-		$this->setCollectDate('');
-		$this->save();
-		log::add('openalpr','debug',$this->getName().' est '.$return);
-		if(isset($_options["plate"])){
-			$this->setConfiguration('confidence',$_options["confidence"]);
-			//$this->setConfiguration('matches_template',$_options["matches_template"]);
-			//$this->setConfiguration('region',$_options["region"]);
-			//$this->setConfiguration('region_confidence',$_options["region_confidence"]);
-			//$this->setConfiguration('coordinates',$_options["coordinates"]);
+		if($this->getValueDate() < date("Y-m-d H:i:s", strtotime('+5 minutes', date('Y-m-d H:i:s'))){ 
+			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
+			if($this->execCmd() == 0)
+				$return=1;
+			else
+				$return=0;
+			$this->event($return);
 			$this->setCollectDate('');
 			$this->save();
-			$CmdGroupe=$this->getEqlogic()->getCmd(null,'*');
-			if(is_object($CmdGroupe)){
-				log::add('openalpr','debug','Mise a jour de l\'etat Général');
-				//if($CmdGroupe->execCmd()== 0){
-					log::add('openalpr','debug','['.$CmdGroupe->getEqlogic()->getName().']['.$CmdGroupe->getName().'] a true');
-					$CmdGroupe->event(1);
-					$CmdGroupe->setCollectDate('');
-					$CmdGroupe->save();
-				//}
-			}
-			$CmdLast=$this->getEqlogic()->getCmd(null,'lastdetect');
-			if(is_object($CmdLast)){
-				log::add('openalpr','debug','Mise a jour de l\'objet de derniere detection');
-				//if($CmdLast->execCmd()== 0){
-					$directory=config::byKey('SnapshotFolder','openalpr');
-					if(!file_exists($directory)){
-						exec('sudo mkdir -p '.$directory);
-						exec('sudo chmod 777 -R '.$directory);
-					}
-					if(substr($directory,-1)!='/')
-						$directory.='/';
-					$value= array_slice(scandir($directory,SCANDIR_SORT_DESCENDING),0,1)[0];
-					log::add('openalpr','debug','Dernier snapshot: '.$value);
-					$CmdLast->event($directory.$value);
-					$CmdLast->setCollectDate('');
-					$CmdLast->save();
-				//}
+			log::add('openalpr','info',$this->getName().' est '.$return);
+			if(isset($_options["plate"])){
+				$this->setConfiguration('confidence',$_options["confidence"]);
+				//$this->setConfiguration('matches_template',$_options["matches_template"]);
+				//$this->setConfiguration('region',$_options["region"]);
+				//$this->setConfiguration('region_confidence',$_options["region_confidence"]);
+				//$this->setConfiguration('coordinates',$_options["coordinates"]);
+				$this->setCollectDate('');
+				$this->save();
+				$CmdGroupe=$this->getEqlogic()->getCmd(null,'*');
+				if(is_object($CmdGroupe)){
+					log::add('openalpr','debug','Mise a jour de l\'etat Général');
+					//if($CmdGroupe->execCmd()== 0){
+						log::add('openalpr','info','['.$CmdGroupe->getEqlogic()->getName().']['.$CmdGroupe->getName().'] a true');
+						$CmdGroupe->event(1);
+						$CmdGroupe->setCollectDate('');
+						$CmdGroupe->save();
+					//}
+				}
+				$CmdLast=$this->getEqlogic()->getCmd(null,'lastdetect');
+				if(is_object($CmdLast)){
+					log::add('openalpr','debug','Mise a jour de l\'objet de derniere detection');
+					//if($CmdLast->execCmd()== 0){
+						$directory=config::byKey('SnapshotFolder','openalpr');
+						if(!file_exists($directory)){
+							exec('sudo mkdir -p '.$directory);
+							exec('sudo chmod 777 -R '.$directory);
+						}
+						if(substr($directory,-1)!='/')
+							$directory.='/';
+						$value= array_slice(scandir($directory,SCANDIR_SORT_DESCENDING),0,1)[0];
+						log::add('openalpr','info','Dernier snapshot: '.$value);
+						$CmdLast->event($directory.$value);
+						$CmdLast->setCollectDate('');
+						$CmdLast->save();
+					//}
+				}
 			}
 		}
+		else
+			log::add('openalpr','info','Une détéction sur '.$this->getName().' - '.$this->getLogicalId().' a été detecté mais ignoré');
 		return $return;
 	}
     /*     * **********************Getteur Setteur*************************** */
