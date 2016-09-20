@@ -260,13 +260,13 @@ class openalprCmd extends cmd {
      */
 	public function execute($_options = array()) {
 		$return='';
-		if($this->getValueDate() < date("Y-m-d H:i:s", strtotime('+5 minutes', date('Y-m-d H:i:s')))){ 
+		if(date("Y-m-d H:i:s",$this->getValueDate()) < date("Y-m-d H:i:s", strtotime('+5 minutes', date('Y-m-d H:i:s')))){ 
 			openalpr::SendLastSnap($_options);
 			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
 			if($this->execCmd() == 0)
-				$return=1;
+				$return=true;
 			else
-				$return=0;
+				$return=false;
 			$this->event($return);
 			$this->setCollectDate('');
 			$this->save();
@@ -284,7 +284,7 @@ class openalprCmd extends cmd {
 					log::add('openalpr','debug','Mise a jour de l\'etat Général');
 					//if($CmdGroupe->execCmd()== 0){
 						log::add('openalpr','info','['.$CmdGroupe->getEqlogic()->getName().']['.$CmdGroupe->getName().'] a true');
-						$CmdGroupe->event(1);
+						$CmdGroupe->event(true);
 						$CmdGroupe->setCollectDate('');
 						$CmdGroupe->save();
 					//}
