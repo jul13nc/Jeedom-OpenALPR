@@ -260,8 +260,7 @@ class openalprCmd extends cmd {
      */
 	public function execute($_options = array()) {
 		$return='';
-		if(date("Y-m-d H:i:s",strtotime($this->getValueDate())) < date("Y-m-d H:i:s", strtotime('+5 minutes', date('Y-m-d H:i:s')))){ 
-			openalpr::SendLastSnap($_options);
+		if(date("Y-m-d H:i:s",strtotime($this->getValueDate())) < date("Y-m-d H:i:s", strtotime("+5 minutes","now"))){ 
 			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
 			if($this->execCmd() == 0)
 				$return=true;
@@ -272,6 +271,7 @@ class openalprCmd extends cmd {
 			$this->save();
 			log::add('openalpr','info',$this->getName().' est '.$return);
 			if(isset($_options["plate"])){
+				openalpr::SendLastSnap($_options);
 				$this->setConfiguration('confidence',$_options["confidence"]);
 				//$this->setConfiguration('matches_template',$_options["matches_template"]);
 				//$this->setConfiguration('region',$_options["region"]);
