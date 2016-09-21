@@ -31,19 +31,21 @@ sudo apt-get install -y --force-yes libleptonica-dev
 sudo apt-get install -y --force-yes beanstalkd
 echo 50 > /tmp/compilation_openAlpr_in_progress
 
-mkdir /usr/local/src/openalpr/
-mkdir /etc/openalpr/
-cd /usr/local/src/openalpr/
 
 #if [ "$(cat /etc/openalpr/openalpr_VERSION)" != "v2.1.0" ]
 #then
 	echo "*****************************************************************************************************"
 	echo "*                                            Compile openalpr:                                      *"
 	echo "*****************************************************************************************************"
-	cd /usr/local/src/openalpr/
-	if [ -d "/usr/local/src/openalpr/openalpr" ]; then
-		rm -R openalpr
+	if [ -d "/usr/local/src/openalpr" ]; then
+		sudo rm -R "/usr/local/src/openalpr"
 	fi
+	if [ -d "/etc/openalpr/" ]; then
+		sudo rm -R "/etc/openalpr/"
+	fi
+	sudo mkdir /usr/local/src/openalpr/
+	sudo mkdir /etc/openalpr/
+	cd /usr/local/src/openalpr/
 	git clone https://github.com/openalpr/openalpr.git
 	cd openalpr/src
 	mkdir build
