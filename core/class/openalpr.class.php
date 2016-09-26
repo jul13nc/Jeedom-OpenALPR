@@ -260,7 +260,7 @@ class openalprCmd extends cmd {
      */
 	public function execute($_options = array()) {
 		$return='';
-		if(date("Y-m-d H:i:s",strtotime($this->getValueDate())) < date("Y-m-d H:i:s", strtotime("+5 minutes","now"))){ 
+		if(date("Y-m-d H:i:s",strtotime($this->getValueDate())) < date("Y-m-d H:i:s", strtotime("+5 min"))){ 
 			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
 			if($this->execCmd() == 0)
 				$return=true;
@@ -310,8 +310,7 @@ class openalprCmd extends cmd {
 			}
 		}
 		else
-			log::add('openalpr','info','Une détéction sur '.$this->getName().' - '.$this->getLogicalId().' a été detecté mais ignoré parce que la derniere 
-			detection ('.date("Y-m-d H:i:s",strtotime($this->getValueDate()).') à moins de 5minute);
+			log::add('openalpr','info','Une détéction sur '.$this->getName().' - '.$this->getLogicalId().' a été detecté mais ignoré parce que la derniere détection ('.$this->getValueDate().') à moins de 5minute');
 		return $return;
 	}
     /*     * **********************Getteur Setteur*************************** */
