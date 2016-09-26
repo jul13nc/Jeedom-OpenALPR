@@ -310,7 +310,8 @@ class openalprCmd extends cmd {
 			}
 		}
 		else
-			log::add('openalpr','info','Une détéction sur '.$this->getName().' - '.$this->getLogicalId().' a été detecté mais ignoré');
+			log::add('openalpr','info','Une détéction sur '.$this->getName().' - '.$this->getLogicalId().' a été detecté mais ignoré parce que la derniere 
+			detection ('.date("Y-m-d H:i:s",strtotime($this->getValueDate()).') à moins de 5minute);
 		return $return;
 	}
     /*     * **********************Getteur Setteur*************************** */
