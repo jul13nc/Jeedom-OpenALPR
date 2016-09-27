@@ -232,11 +232,10 @@ class openalpr extends eqLogic {
 			$_options['message'] = json_encode($Detect);
 			log::add('openalpr','debug','Evoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
 			$cmds = explode('&&', config::byKey('alertMessageCommand','openalpr'));
-			log::add('openalpr','debug',json_encode($cmds));
 			foreach ($cmds as $id) {
 				$cmd = cmd::byId(str_replace('#', '', $id));
 				if (is_object($cmd)) {
-					log::add('openalpr','debug','Evoie du message a '.$cmd->getName());
+					log::add('openalpr','debug','Evoie du message avec '.$cmd->getName());
 					$cmd->execute($_options);
 				}
 			}
