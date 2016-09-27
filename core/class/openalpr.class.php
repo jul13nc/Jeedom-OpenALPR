@@ -260,6 +260,7 @@ class openalprCmd extends cmd {
      */
 	public function execute($_options = array()) {
 		$return='';
+		log::add('openalpr','debug','Verification si '.date("Y-m-d H:i:s",strtotime($this->getValueDate())) .'< '.date("Y-m-d H:i:s", strtotime("+5 min")));
 		if(date("Y-m-d H:i:s",strtotime($this->getValueDate())) < date("Y-m-d H:i:s", strtotime("+5 min"))){ 
 			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
 			if($this->execCmd() == 0)
