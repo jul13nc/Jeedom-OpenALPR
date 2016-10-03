@@ -266,10 +266,10 @@ class openalprCmd extends cmd {
 				$return=true;
 			else
 				$return=false;
+			$this->setCollectDate(date('Y-m-d H:i:s'));
 			$this->event($return);
-			$this->setCollectDate('');
 			$this->save();
-			log::add('openalpr','info',$this->getName().' est '.$return);
+			log::add('openalpr','info',$this->getHumanName().' est '.$return);
 			if(isset($_options["plate"])){
 				openalpr::SendLastSnap($_options);
 				$this->setConfiguration('confidence',$_options["confidence"]);
@@ -277,15 +277,15 @@ class openalprCmd extends cmd {
 				//$this->setConfiguration('region',$_options["region"]);
 				//$this->setConfiguration('region_confidence',$_options["region_confidence"]);
 				//$this->setConfiguration('coordinates',$_options["coordinates"]);
-				$this->setCollectDate('');
 				$this->save();
 				$CmdGroupe=$this->getEqlogic()->getCmd(null,'*');
 				if(is_object($CmdGroupe)){
 					log::add('openalpr','debug','Mise a jour de l\'etat Général');
 					//if($CmdGroupe->execCmd()== 0){
 						log::add('openalpr','info','['.$CmdGroupe->getEqlogic()->getName().']['.$CmdGroupe->getName().'] a true');
+						$CmdGroupe->setCollectDate(date('Y-m-d H:i:s'));
+						$CmdGroupe->setConfiguration('doNotRepeatEvent', 1);
 						$CmdGroupe->event(true);
-						$CmdGroupe->setCollectDate('');
 						$CmdGroupe->save();
 					//}
 				}
@@ -303,7 +303,8 @@ class openalprCmd extends cmd {
 						$value= array_slice(scandir($directory,SCANDIR_SORT_DESCENDING),0,1)[0];
 						log::add('openalpr','info','Dernier snapshot: '.$value);
 						$CmdLast->event($directory.$value);
-						$CmdLast->setCollectDate('');
+						$CmdLast->setConfiguration('doNotRepeatEvent', 1);
+						$CmdLast->setCollectDate(date('Y-m-d H:i:s'));
 						$CmdLast->save();
 					//}
 				}
