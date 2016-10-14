@@ -31,13 +31,13 @@ if (!isConnect()) {
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Création automatique de plaque inconnue}}</label>
 				<div class="col-lg-4">
-					<input type="checkbox" class="configKey bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="inconnue" />
+					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="inconnue" />
 				 </div>
 			</div>
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Personnalisé les paramettre par defaut de OpenAlpr}}</label>
 				<div class="col-lg-4">
-					<input type="checkbox" class="configKey bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="openParam" />
+					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="openParam" />
 				 </div>
 			</div> 
 		</fieldset>
@@ -56,7 +56,7 @@ if (!isConnect()) {
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Activer le Snapshot}}</label>
 				<div class="col-lg-4">
-					<input type="checkbox" class="configKey bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="snapshot"/>
+					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="snapshot"/>
 				 </div>
 			</div> 
 		</fieldset>
@@ -131,13 +131,13 @@ if (!isConnect()) {
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Les résultats doivent correspondre un textpattern de post-traitement si un modèle est disponible.}}</label>
 				<div class="col-lg-4">
-					<input type="checkbox" class="configKey bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="must_match_pattern" checked/>
+					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="must_match_pattern" checked/>
 				 </div>
 			</div>
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Contourne la détection de la plaque. Si elle est positionnée à 1, la bibliothèque suppose que chaque zone prévue est une zone de la plaque susceptible.}}</label>
 				<div class="col-lg-4">
-					<input type="checkbox" class="configKey bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="skip_detection" checked/>
+					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="skip_detection" checked/>
 				 </div>
 			</div>
 			<div class="form-group">
@@ -179,7 +179,7 @@ if (!isConnect()) {
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Mode Débug}}</label>
 				<div class="col-lg-4">
-					<input type="checkbox" class="configKey bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="debug"/>
+					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="debug"/>
 				 </div>
 			</div>
 		</fieldset>
@@ -218,7 +218,7 @@ $("#bt_selectActionMessage").on('click', function () {
         $(".configKey[data-l1key=alertMessageCommand]").atCaret('insert',result.human);
     });
 });
-$('body').on('switchChange.bootstrapSwitch change','.configKey[data-l1key=snapshot]',function(){
+$('body').on('change','.configKey[data-l1key=snapshot]',function(){
 	if($(this).is(':checked')){
 		$(".configKey[data-l1key=alertMessageCommand]").parent().parent().parent().show();    
 		$(".configKey[data-l1key=NbSnap]").parent().parent().show();     
@@ -228,7 +228,7 @@ $('body').on('switchChange.bootstrapSwitch change','.configKey[data-l1key=snapsh
 		$(".configKey[data-l1key=NbSnap]").parent().parent().hide();
 	}
 });
-$('body').on('switchChange.bootstrapSwitch change','.configKey[data-l1key=openParam]',function(){
+$('body').on('change','.configKey[data-l1key=openParam]',function(){
 	if($(this).is(':checked'))
 		$('.openAlprParamters').show();
 	else
