@@ -45,9 +45,9 @@ $eqLogics = eqLogic::byType('openalpr');
 			</div>
 			<div class="cursor logAlprd" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
 				<center>
-					<i class="fa fa-file-o" style="font-size : 5em;color:#767676;"></i>
+					<i class="fa fa-heartbeat" style="font-size : 5em;color:#767676;"></i>
 				</center>
-				<span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Log ALPRD}}</center></span>
+				<span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Information sur le logiciel ALPRD}}</center></span>
 			</div>
 		</div>
         <legend>{{Mes groupes de plaques d'immatriculation}}</legend>
