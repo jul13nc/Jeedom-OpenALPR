@@ -60,9 +60,9 @@ function addCmdToTable(_cmd) {
 			.append($('<input type="hidden" class="cmdAttr" data-l1key="type" value="info" />'))
 			.append($('<input type="hidden" class="cmdAttr" data-l1key="subType" value="binary" />'))
 			.append($('<span>')
-				.append($('<input type="checkbox" class="cmdAttr bootstrapSwitch" data-size="mini" data-label-text="{{Historiser}}" data-l1key="isHistorized" checked/>')))
+				.append($('<input type="checkbox" class="cmdAttr" data-size="mini" data-label-text="{{Historiser}}" data-l1key="isHistorized" checked/>')))
 			.append($('<span>')
-				.append($('<input type="checkbox" class="cmdAttr bootstrapSwitch" data-size="mini" data-label-text="{{Afficher}}" data-l1key="isVisible" checked/>'))));
+				.append($('<input type="checkbox" class="cmdAttr" data-size="mini" data-label-text="{{Afficher}}" data-l1key="isVisible" checked/>'))));
 
 	var parmetre=$('<td>')
 		.append($('<i class="fa fa-arrows-v pull-left cursor bt_sortable" style="margin-top: 9px;">'))
