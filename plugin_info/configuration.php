@@ -267,7 +267,7 @@ function AddCamera(div,cameraId){
 				.append($('<a class="btn btn-danger" id="bt_removecamera">')
 					.append($('<i class="fa fa-check">'))
 					.text('{{Supprimer}}'))))
-		.append('<legend></legend>'));
+		.append('<legend></legend>');
 }
 $('body').on('click','#bt_removecamera', function() {
 	$(this).closest('.camera').remove();
