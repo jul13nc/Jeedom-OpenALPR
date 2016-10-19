@@ -260,22 +260,16 @@ function openalpr_postSaveConfiguration(){
 	});	
 };
 function AddCamera(div,cameraId){
-	div.append($('<div class="camera">')
-		.append($('<div class="form-group">')
+	div.append($('<div class="form-group camera">')
 			.append($('<label class="col-lg-4 control-label">').text('{{Url de la Camera}}'))
 			.append($('<div class="col-lg-4 ">')
-				.append($('<input class="configKey form-control" data-l1key="configuration" data-l2key="'+cameraId+'" data-l3key="cameraUrl">'))))
-		.append('<legend></legend>')
-		.append($('<div class="form-group">')
-			.append($('<label class="col-lg-4 control-label">').text('{{Supprimer cette camera}}'))
-			.append($('<div class="col-lg-4">')
+				.append($('<input class="configKey form-control" data-l1key="configuration" data-l2key="'+cameraId+'" data-l3key="cameraUrl">'))
 				.append($('<a class="btn btn-danger" id="bt_removecamera">')
 					.append($('<i class="fa fa-check">'))
 					.text('{{Supprimer}}'))))
 		.append('<legend></legend>'));
-	$('body').on('click','#bt_removecamera', function() {
-		$(this).closest('.camera').remove();
-	}); 
 }
-
+$('body').on('click','#bt_removecamera', function() {
+	$(this).closest('.camera').remove();
+}); 
 </script>
