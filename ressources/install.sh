@@ -4,8 +4,8 @@ echo 0 > /tmp/compilation_openAlpr_in_progress
 echo "*****************************************************************************************************"
 echo "*                                Installing additional libraries                                    *"
 echo "*****************************************************************************************************"
-sudo apt-get -y --force-yes update
-sudo apt-get -y --force-yes upgrade
+#sudo apt-get -y --force-yes update
+#sudo apt-get -y --force-yes upgrade
 echo 10 > /tmp/compilation_openAlpr_in_progress
 sudo apt-get install -y --force-yes autoconf automake libtool
 sudo apt-get install -y --force-yes pkg-config
