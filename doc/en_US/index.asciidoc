@@ -1,4 +1,4 @@
-= OpenALPR - Reconnaissance de plaque d’immatriculation
+= OpenALPR - License Plate Recognition
 
 == Description
 Plugin permanent de faire de la reconnaissance de plaque d’immatriculation avec nos camera
