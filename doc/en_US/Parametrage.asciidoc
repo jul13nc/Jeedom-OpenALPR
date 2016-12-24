@@ -1,5 +1,5 @@
 ==== Group of license plates
-Dans un premier temps, il faut créer un nouvelle groupe  et le nommé.
+First of all, you need to create a new group and to name it.
 Comme dans tous les plugins Jeedom vous avez un bouton ajouté un equipement sur la gauche de votre fenetre.
 
 image::../images/Configuration_equipement.jpg[]
