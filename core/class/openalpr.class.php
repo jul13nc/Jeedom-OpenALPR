@@ -216,7 +216,102 @@ class openalpr extends eqLogic {
 	public static function deamon_stop() {
 		exec('sudo pkill alprd');
 	}
-	public static function SendLastSnap($Detect){
+	public static function GestionDetect($Detect){
+		openalpr::SendLastSnap($Detect["uuid"].".jpg");
+		//$Detect["uuid"];
+		//$Detect["camera_id"];
+		//$Detect["site_id"];
+		//$Detect["img_width"];
+		//$Detect["img_height"];
+		//$Detect["epoch_time"];
+		//$Detect["processing_time_ms"];
+		$PlateConfigure=false;
+		foreach($Detect["results"] as $Results){
+			foreach($Results["candidates"] as $Plate){
+				$CmdPlates=cmd::byLogicalId(trim($Plate["plate"]));
+				if(is_array($CmdPlates)){
+					foreach($CmdPlates as $CmdPlate){
+						if (is_object($CmdPlate)) {
+							log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+							$PlateConfigure=true;
+							$CmdPlate->execute($Plate);
+						}
+					} 
+				}
+				if(!$PlateConfigure){
+					$PlateSplite=preg_split('[a-z]',trim($Plate["plate"]));
+					if(count($PlateSplite)== 3){
+						$CmdPlates=cmd::byLogicalId($PlateSplite[0].'****');
+						if(is_array($CmdPlates)){
+							foreach($CmdPlates as $CmdPlate){
+								if (is_object($CmdPlate)) {
+									log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+									$PlateConfigure=true;
+									$CmdPlate->execute($Plate);
+								}
+							} 
+						}
+						$CmdPlates=cmd::byLogicalId($PlateSplite[0].$PlateSplite[1].'**');
+						if(is_array($CmdPlates)){
+							foreach($CmdPlates as $CmdPlate){
+								if (is_object($CmdPlate)) {
+									log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+									$PlateConfigure=true;
+									$CmdPlate->execute($Plate);
+								}
+							} 
+						}
+						$CmdPlates=cmd::byLogicalId($PlateSplite[0].'**'.$PlateSplite[2]);
+						if(is_array($CmdPlates)){
+							foreach($CmdPlates as $CmdPlate){
+								if (is_object($CmdPlate)) {
+									log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+									$PlateConfigure=true;
+									$CmdPlate->execute($Plate);
+								}
+							} 
+						}
+						$CmdPlates=cmd::byLogicalId('**'.$PlateSplite[1].'**');
+						if(is_array($CmdPlates)){
+							foreach($CmdPlates as $CmdPlate){
+								if (is_object($CmdPlate)) {
+									log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+									$PlateConfigure=true;
+									$CmdPlate->execute($Plate);
+								}
+							} 
+						}
+						$CmdPlates=cmd::byLogicalId('**'.$PlateSplite[1].$PlateSplite[2]);
+						if(is_array($CmdPlates)){
+							foreach($CmdPlates as $CmdPlate){
+								if (is_object($CmdPlate)) {
+									log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+									$PlateConfigure=true;
+									$CmdPlate->execute($Plate);
+								}
+							} 
+						}
+						$CmdPlates=cmd::byLogicalId('****'.$PlateSplite[2]);
+						if(is_array($CmdPlates)){
+							foreach($CmdPlates as $CmdPlate){
+								if (is_object($CmdPlate)) {
+									log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+									$PlateConfigure=true;
+									$CmdPlate->execute($Plate);
+								}
+							} 
+						}
+					}
+				}
+			}
+			if(!$PlateConfigure && config::byKey('inconnue','openalpr')){
+				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
+				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);
+				$CmdPlate->execute($Results);
+			}
+		}
+	}
+	public static function SendLastSnap($file){
 		if (config::byKey('snapshot','openalpr')) {
 			$directory=config::byKey('SnapshotFolder','openalpr');
 			if(!file_exists($directory)){
@@ -225,11 +320,9 @@ class openalpr extends eqLogic {
 			}
 			if(substr($directory,-1)!='/')
 				$directory.='/';
-			$lastFiles = array_slice(array_diff(scandir($directory,1), array('..', '.')),0,config::byKey('NbSnap','openalpr'));
-			foreach($lastFiles as $file)
-				$_options['files'][]=$directory.$file;
+			$_options['files'][]=$directory.$file;
 			$_options['title'] = '[Jeedom][openAlpr] Détéction d\'une immatriculation';
-			$_options['message'] = json_encode($Detect);
+			$_options['message'] = "Une détéction a ete levée";
 			log::add('openalpr','debug','Evoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
 			$cmds = explode('&&', config::byKey('alertMessageCommand','openalpr'));
 			foreach ($cmds as $id) {
@@ -259,7 +352,7 @@ class openalprCmd extends cmd {
      */
 	public function execute($_options = array()) {
 		$return='';
-		log::add('openalpr','debug','Verification si '.date("Y-m-d H:i:s",strtotime($this->getValueDate())) .'< '.date("Y-m-d H:i:s", strtotime("+5 min")));
+		log::add('openalpr','debug','Verification si '.date("Y-m-d H:i:s",strtotime($this->getCollectDate())) .'< '.date("Y-m-d H:i:s", strtotime("+5 min")));
 		if(date("Y-m-d H:i:s",strtotime($this->getCollectDate())) < date("Y-m-d H:i:s", strtotime("+5 min"))){ 
 			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
 			if($this->execCmd() == 0)
@@ -271,7 +364,6 @@ class openalprCmd extends cmd {
 			$this->save();
 			log::add('openalpr','info',$this->getHumanName().' est '.$return);
 			if(isset($_options["plate"])){
-				openalpr::SendLastSnap($_options);
 				$this->setConfiguration('confidence',$_options["confidence"]);
 				//$this->setConfiguration('matches_template',$_options["matches_template"]);
 				//$this->setConfiguration('region',$_options["region"]);
