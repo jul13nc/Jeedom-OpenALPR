@@ -12,22 +12,16 @@ if (!isConnect()) {
 		<legend>Général</legend>
 		<fieldset>
 			<div class="form-group">
-                <label class="col-lg-4 control-label">{{Commande d'alerte (mail, slack...)}}</label>
-                <div class="col-lg-4">
+				<label class="col-lg-4 control-label">{{Commande d'alerte (mail, slack...)}}</label>
+				<div class="col-lg-4">
 					<div class="input-group">
-                        <input type="text" class="configKey" data-l1key="alertMessageCommand" placeholder="{{Commande mail pour l'envoi d'une capture}}"/>
-                        <span class="input-group-btn">
-                            <a class="btn btn-default listCmdActionMessage" id="bt_selectActionMessage"><i class="fa fa-list-alt"></i></a>
-                        </span>
-                    </div>
-                </div>      
-            </div>   
-			<div class="form-group">    
-				<label class="col-lg-4 control-label">Nombre de captures</label>
-                <div class="col-lg-4">
-                    <input type="text" class="configKey" data-l1key="NbSnap">
-                </div>
-            </div>
+						<input type="text" class="configKey" data-l1key="alertMessageCommand" placeholder="{{Commande mail pour l'envoi d'une capture}}"/>
+						<span class="input-group-btn">
+						    <a class="btn btn-default listCmdActionMessage" id="bt_selectActionMessage"><i class="fa fa-list-alt"></i></a>
+						</span>
+				    	</div>
+				</div>      
+			</div>   
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Création automatique de plaque inconnue}}</label>
 				<div class="col-lg-4">

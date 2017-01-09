@@ -1,19 +1,19 @@
-= OpenALPR - Reconnaissance de plaque d’immatriculation
+= OpenALPR - Erkennung von Nummernschilder
 
-== Description
-Plugin permanent de faire de la reconnaissance de plaque d’immatriculation avec nos camera
+== Beschreibung
+Plugin, um kontinuierlich Kennzeichen mit der Kamera zu erkennen
 
-  Attention avec l'usage de ce plugin
-Seules les autorités publiques (les mairies notamment) peuvent
-filmer la voie publique.
-Les particuliers ne peuvent filmer que l’intérieur de leur propriété.
-Ils ne peuvent pas filmer la voie publique, y compris pour
-assurer la sécurité de leur véhicule garé devant leur domicile.
+  Vorsicht mit dem Einsatz dieses Plugins,
+nur Behörden dürfen (einschließlich Regierungen) 
+die öffentlichen Straße filmen.
+Privatpersonen dürfen nur innerhalb von ihrem Eigentum filmen. 
+Sie dürfen die Straße nicht filmen, auch nicht um die Sicherheit
+ihres Fahrzeugs zu gewährleisten, das vor ihrem Wohnsitz abgestellt wurde.
 
-== Installation et configuration
+== Installation und Konfiguration
 include::Installation.asciidoc[]
 
-== Paramétrage des equipements et des commandes
+== Einrichten von Geräten und Befehlen
 include::Parametrage.asciidoc[]
 
 == FAQ

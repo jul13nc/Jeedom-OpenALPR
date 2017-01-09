@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3.dev">
-<title>OpenALPR - Reconnaissance de plaque d’immatriculation</title>
+<title>OpenALPR - Erkennung von Nummernschilder</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -412,18 +412,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>OpenALPR - Reconnaissance de plaque d’immatriculation</h1>
+<h1>OpenALPR - Erkennung von Nummernschilder</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table des matières</div>
 <ul class="sectlevel1">
-<li><a href="#_description">1. Description</a></li>
-<li><a href="#_installation_et_configuration">2. Installation et configuration</a>
+<li><a href="#_beschreibung">1. Beschreibung</a></li>
+<li><a href="#_installation_und_konfiguration">2. Installation und Konfiguration</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_des_dépendance">2.1. Installation des dépendance</a></li>
-<li><a href="#_configuration_du_plugin_et_de_ses_dépendance">2.2. Configuration du plugin et de ses dépendance</a></li>
+<li><a href="#_abhängigkeiten_installation">2.1. Abhängigkeiten Installation</a></li>
+<li><a href="#_konfiguration_des_plugins_und_seine_abhängigkeiten">2.2. Konfiguration des Plugins und seine Abhängigkeiten</a></li>
 </ul>
 </li>
-<li><a href="#_paramétrage_des_equipements_et_des_commandes">3. Paramétrage des equipements et des commandes</a>
+<li><a href="#_einrichten_von_geräten_und_befehlen">3. Einrichten von Geräten und Befehlen</a>
 <ul class="sectlevel3">
 <li><a href="#_groupe_de_plaques">3.1. Groupe de plaques</a></li>
 <li><a href="#_plaques_d_imatriculation">3.2. Plaques d&#8217;imatriculation</a></li>
@@ -435,28 +435,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_description">1. Description</h2>
+<h2 id="_beschreibung">1. Beschreibung</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Plugin permanent de faire de la reconnaissance de plaque d’immatriculation avec nos camera</p>
+<p>Plugin, um kontinuierlich Kennzeichen mit der Kamera zu erkennen</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>  Attention avec l'usage de ce plugin
-Seules les autorités publiques (les mairies notamment) peuvent
-filmer la voie publique.
-Les particuliers ne peuvent filmer que l’intérieur de leur propriété.
-Ils ne peuvent pas filmer la voie publique, y compris pour
-assurer la sécurité de leur véhicule garé devant leur domicile.</pre>
+<pre>  Vorsicht mit dem Einsatz dieses Plugins,
+nur Behörden dürfen (einschließlich Regierungen)
+die öffentlichen Straße filmen.
+Privatpersonen dürfen nur innerhalb von ihrem Eigentum filmen.
+Sie dürfen die Straße nicht filmen, auch nicht um die Sicherheit
+ihres Fahrzeugs zu gewährleisten, das vor ihrem Wohnsitz abgestellt wurde.</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_et_configuration">2. Installation et configuration</h2>
+<h2 id="_installation_und_konfiguration">2. Installation und Konfiguration</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_des_dépendance">2.1. Installation des dépendance</h3>
+<h3 id="_abhängigkeiten_installation">2.1. Abhängigkeiten Installation</h3>
 <div class="paragraph">
 <p>Pour facilité la mise en place des dépendance, jeedom vas gérer seul l’installation et la compilation du logiciel OpenALPR.</p>
 </div>
@@ -470,7 +470,7 @@ assurer la sécurité de leur véhicule garé devant leur domicile.</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_du_plugin_et_de_ses_dépendance">2.2. Configuration du plugin et de ses dépendance</h3>
+<h3 id="_konfiguration_des_plugins_und_seine_abhängigkeiten">2.2. Konfiguration des Plugins und seine Abhängigkeiten</h3>
 <div class="imageblock">
 <div class="content">
 <img src="../images/openalpr_screenshot_configuration.jpg" alt="openalpr screenshot configuration">
@@ -582,7 +582,7 @@ assurer la sécurité de leur véhicule garé devant leur domicile.</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_paramétrage_des_equipements_et_des_commandes">3. Paramétrage des equipements et des commandes</h2>
+<h2 id="_einrichten_von_geräten_und_befehlen">3. Einrichten von Geräten und Befehlen</h2>
 <div class="sectionbody">
 <div class="sect3">
 <h4 id="_groupe_de_plaques">3.1. Groupe de plaques</h4>
