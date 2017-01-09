@@ -117,6 +117,21 @@ $eqLogics = eqLogic::byType('openalpr');
 
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">{{Camera autorisé}}</label>
+						<div class="col-md-8">
+							<select class="eqLogicAttr" data-l1key="configuration" data-l2key="AutoriseCamera" >
+								<option value="all">Toutes</option>
+								<?php
+								foreach(config::byKey('configuration','openalpr') as  $key =>$AlprCamera){
+									if($AlprCamera['cameraUrl']!=''){
+										echo '<option value="'.str_replace ('camera_','',$key).'">'.$AlprCamera['cameraUrl'].'</option>';
+									}
+								}
+								?>
+							</select>
+						</div>
+					</div>
 				</div>
 			</fieldset> 
         </form>
@@ -124,12 +139,12 @@ $eqLogics = eqLogic::byType('openalpr');
         <a class="btn btn-success btn-sm cmdAction" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter un plaque d'immatriculation}}</a><br/><br/-->
         <table id="table_cmd" class="table table-bordered table-condensed">
             <thead>
-                <tr>
-                    <th>{{Nom}}</th>
-					<th>{{Numero de la plaque}}</th>
-					<th>{{Action}}</th>
-                    <th>{{}}</th>
-                </tr>
+		    <tr>
+			    <th>{{Nom}}</th>
+			    <th>{{Numero de la plaque}}</th>
+			    <th>{{Action}}</th>
+			    <th>{{}}</th>
+		    </tr>
             </thead>
             <tbody>
             </tbody>
