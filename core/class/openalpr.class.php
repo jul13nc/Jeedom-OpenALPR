@@ -234,7 +234,8 @@ class openalpr extends eqLogic {
 						if (is_object($CmdPlate)) {
 							log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
 							$PlateConfigure=true;
-							$CmdPlate->execute($Plate);
+							if($CmdPlate->getEqLogic->getConfiguration('AutoriseCamera')=='all' || $CmdPlate->getEqLogic->getConfiguration('AutoriseCamera')==$Detect["camera_id"];
+								$CmdPlate->execute($Plate);
 						}
 					} 
 				}
