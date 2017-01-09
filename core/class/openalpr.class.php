@@ -229,7 +229,7 @@ class openalpr extends eqLogic {
 					return;
 			}
 			foreach($Results["candidates"] as $Plate){
-				if(self::isValideImmat(trim($Plate["plate"])){
+				if(self::isValideImmat(trim($Plate["plate"]))){
 					$PlateSplite=preg_split('[a-z]',trim($Plate["plate"]));
 					$search[]=trim($Plate["plate"]);
 					$search[]=$PlateSplite[0].'****';
