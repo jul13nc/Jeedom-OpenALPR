@@ -118,6 +118,15 @@ $eqLogics = eqLogic::byType('openalpr');
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-md-2 control-label">{{Mode de mise a jours}}</label>
+						<div class="col-md-8">
+							<select class="eqLogicAttr" data-l1key="configuration" data-l2key="UpdateMode" >
+								<option value="toogle">Changement d'etat a chaque détéction</option>
+								<option value="vue">Présent sur la camera</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-md-2 control-label">{{Camera autorisé}}</label>
 						<div class="col-md-8">
 							<select class="eqLogicAttr" data-l1key="configuration" data-l2key="AutoriseCamera" >
