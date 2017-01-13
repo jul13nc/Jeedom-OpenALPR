@@ -3,14 +3,19 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class openalpr extends eqLogic {
 	public static function cron() {
 		foreach(eqLogic::byType('openalpr') as $Equipement){ 
-			foreach($Equipement->getCmd(null,'*') as $Commandes){ 
-		                foreach($Commandes as $Commande){ 
-			                //if($Commande->execCmd()== 1){
-						log::add('openalpr','debug','['.$Commande->getEqlogic()->getName().']['.$Commande->getName().'] a False');
-			                        $Commande->setCollectDate('');
-			                        $Commande->event(0);
-			                        $Commande->save();
-			                //}
+			foreach($Equipement->getCmd() as $Commandes){ 
+				switch($this->getConfiguration('UpdateMode')){
+					case'toogle':
+					break;
+					case'vue':
+					default:
+		             			foreach($Commandes as $Commande){ 
+							log::add('openalpr','debug','['.$Commande->getEqlogic()->getName().']['.$Commande->getName().'] a False');
+							$Commande->setCollectDate('');
+							$Commande->event(0);
+							$Commande->save();
+						}
+					break;
 				}
 			}
 		}
@@ -319,10 +324,17 @@ class openalprCmd extends cmd {
 		log::add('openalpr','debug','Verification si '.date("Y-m-d H:i:s",strtotime($this->getCollectDate())) .'< '.date("Y-m-d H:i:s", strtotime("+5 min")));
 		if(date("Y-m-d H:i:s",strtotime($this->getCollectDate())) < date("Y-m-d H:i:s", strtotime("+5 min"))){ 
 			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
-			if($this->execCmd() == 0)
-				$return=true;
-			else
-				$return=false;
+			switch($this->getEqLogic()->getConfiguration('UpdateMode')){
+				case'toogle':
+					if($this->execCmd() == 0)
+						$return=true;
+					else
+						$return=false;
+				break;
+				case'vue':
+					$return=true;
+				break;
+			}
 			$this->setCollectDate(date('Y-m-d H:i:s'));
 			$this->event($return);
 			$this->save();
