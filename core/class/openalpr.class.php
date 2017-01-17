@@ -4,7 +4,7 @@ class openalpr extends eqLogic {
 	public static function cron() {
 		foreach(eqLogic::byType('openalpr') as $Equipement){ 
 			foreach($Equipement->getCmd() as $Commandes){ 
-				switch($this->getConfiguration('UpdateMode')){
+				switch($Equipement->getConfiguration('UpdateMode')){
 					case'toogle':
 					break;
 					case'vue':
