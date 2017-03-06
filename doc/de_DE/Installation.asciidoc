@@ -38,7 +38,7 @@ Les paramettre de configuration général sont:
 * Plugin source camera: determine la maniere de configurer une camera
 * Url de la Camera: adresse du flux de votre camera
 * Login de connexion a la Camera
-* Mots de pass de la Camera
+* Passwort der Kamera
 
 Nous pouvons voir le status de configuration et d’activation d’OpenALPR dans le cadre "Démon"
 
