@@ -3,20 +3,20 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class openalpr extends eqLogic {
 	public static function cron() {
 		foreach(eqLogic::byType('openalpr') as $Equipement){ 
-			foreach($Equipement->getCmd() as $Commandes){ 
-				switch($Equipement->getConfiguration('UpdateMode')){
-					case'toogle':
-					break;
-					case'vue':
-					default:
-		             			foreach($Commandes as $Commande){ 
-							log::add('openalpr','debug','['.$Commande->getEqlogic()->getName().']['.$Commande->getName().'] a False');
+			switch($Equipement->getConfiguration('UpdateMode')){
+				case'toogle':
+				break;
+				case'vue':
+				default:
+					foreach($Equipement->getCmd() as $Commande){ 
+						if(is_object($Commande)){
+							log::add('openalpr','debug',$Commande->getHumanName().' a False');
 							$Commande->setCollectDate('');
 							$Commande->event(0);
 							$Commande->save();
 						}
-					break;
-				}
+					}
+				break;
 			}
 		}
     	}

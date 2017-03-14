@@ -21,7 +21,7 @@ Maintenant que votre équipement est crée et configurée, on vas pouvoir y ajou
 Le groupe "Plaques détectées inconnu" ce créer automatiquement des qu’une plaque a ete détécté et qu’elle n’existe pas sous jeedom.
 Pour créer votre groupe et comme partout sur jeedom vous avez le bouton "Ajouter" sur la gauche de votre écran.
 
-Exemple de configuration
+Beispielkonfiguration
 
 image::../images/Configuration_commande.jpg[]
 
