@@ -10,7 +10,7 @@ class openalpr extends eqLogic {
 					case'vue':
 					default:
 		             			foreach($Commandes as $Commande){ 
-							log::add('openalpr','debug','['.$Commande->getEqLogic()->getName().']['.$Commande->getName().'] a False');
+							log::add('openalpr','debug',$Commande->getHumanName().' a False');
 							$Commande->setCollectDate('');
 							$Commande->event(0);
 							$Commande->save();
