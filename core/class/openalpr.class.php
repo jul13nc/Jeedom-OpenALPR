@@ -228,9 +228,10 @@ class openalpr extends eqLogic {
 		//$Detect["epoch_time"];
 		//$Detect["processing_time_ms"];
 		foreach($Detect["results"] as $Results){
+			$camera_id=$Results["camera_id"];
 			if(self::isValideImmat($Results["plate"])){
 				$search[]=$Results["plate"];
-				if(self::searchValidPlate($search,$Results))
+				if(self::searchValidPlate($camera_id,$search,$Results))
 					return;
 			}
 			foreach($Results["candidates"] as $Plate){
@@ -243,7 +244,7 @@ class openalpr extends eqLogic {
 					$search[]='**'.$PlateSplite[1].'**';
 					$search[]='**'.$PlateSplite[1].$PlateSplite[2];
 					$search[]='****'.$PlateSplite[2];
-					if(self::searchValidPlate($search,$Plate))
+					if(self::searchValidPlate($camera_id,$search,$Plate))
 						return;
 				}
 			}
@@ -254,7 +255,7 @@ class openalpr extends eqLogic {
 			}
 		}
 	}
-	public static function searchValidPlate($search,$Plate){
+	public static function searchValidPlate($camera_id,$search,$Plate){
 		$state=false;
 		foreach($search as $plate){
 			$CmdPlates=cmd::byLogicalId($plate);
@@ -263,7 +264,7 @@ class openalpr extends eqLogic {
 					if (is_object($CmdPlate)){
 						log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
-						if($CameraAutorise=='all' || $CameraAutorise==$Detect["camera_id"])
+						if($CameraAutorise=='all' || $CameraAutorise==$camera_id)
 							$CmdPlate->execute($Plate);
 						$state=true;
 					}
