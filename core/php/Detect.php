@@ -4,6 +4,6 @@ log::add('openalpr','debug','Lancement du script de détéction');
 $JsonDetect=file_get_contents('php://input');
 log::add('openalpr','debug',$JsonDetect);
 $Detect=json_decode($JsonDetect, true);
-openalpr::SendLastSnap($Detect);
+openalpr::GestionDetect($Detect);
 exit;
 ?>
