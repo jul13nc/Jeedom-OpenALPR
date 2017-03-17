@@ -36,12 +36,10 @@ try {
 	}
 	if (init('action') == 'removeRecord') {
 		$file = init('file');
-	//	$file = str_replace('..', '', $file);
 		$record_dir =  config::byKey('SnapshotFolder','openalpr');
 		if(substr($record_dir, -1) !='/')
 			$record_dir.='/';
-        unlink($record_dir .$file);
-		//exec('sudo rm ' . $record_dir . $file.' > /dev/null 2>/dev/null &');
+		exec('sudo rm ' . $record_dir . $file);
 		ajax::success();
 	}
 	if (init('action') == 'getHistory') {
