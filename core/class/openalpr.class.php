@@ -227,8 +227,8 @@ class openalpr extends eqLogic {
 		//$Detect["img_height"];
 		//$Detect["epoch_time"];
 		//$Detect["processing_time_ms"];
+		$camera_id=$Detect["camera_id"];
 		foreach($Detect["results"] as $Results){
-			$camera_id=$Results["camera_id"];
 			if(self::isValideImmat($Results["plate"])){
 				$search[]=$Results["plate"];
 				if(self::searchValidPlate($camera_id,$search,$Results))
