@@ -19,8 +19,8 @@ class openalpr extends eqLogic {
 				break;
 			}
 		}
-    	}
-    	public function postSave() {
+    }
+    public function postSave() {
 		self::addCommande($this,'Etat du groupe','*');
 	}
  	public static function ConfigOpenAlpr() {
@@ -85,8 +85,7 @@ class openalpr extends eqLogic {
 			fputs($fp, "\n");
 			fputs($fp,'debug_pause_on_frame  = '.config::byKey('debug','openalpr'));
 			fclose($fp);
-		}
-		else{
+		}else{
 			exec('sudo rm '.$file);
 			exec('sudo touch '.$file);
 			exec('sudo chmod 777 '.$file);
@@ -150,8 +149,7 @@ class openalpr extends eqLogic {
 	}
 	public static function addCommande($eqLogic,$Name,$_logicalId, $subtype='binary') {
 		$Commande = $eqLogic->getCmd(null,$_logicalId);
-		if (!is_object($Commande))
-		{
+		if (!is_object($Commande)){
 			$Commande = new openalprCmd();
 			$Commande->setId(null);
 			$Commande->setName($Name);
@@ -179,9 +177,8 @@ class openalpr extends eqLogic {
 		return $return;
 	}
 	public static function dependancy_install() {
-		if (file_exists('/tmp/compilation_openAlpr_in_progress')) {
+		if (file_exists('/tmp/compilation_openAlpr_in_progress')) 
 			return;
-		}
 		log::remove('openalpr_update');
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../ressources/install.sh';
 		$cmd .= ' >> ' . log::getPathToLog('openalpr_update') . ' 2>&1 &';
@@ -315,7 +312,7 @@ class openalprCmd extends cmd {
 		$this->setLogicalId(str_replace('-','',$this->getLogicalId()));
 		$this->setTemplate('dashboard','PresenceGarage');
 		$this->setTemplate('mobile','PresenceGarage');
-		}
+	}
     /*
      * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
       public function dontRemoveCmd() {
@@ -360,13 +357,11 @@ class openalprCmd extends cmd {
 						$CmdGroupe->save();
 					//}
 				}
-		
 			}
 		}
 		else
 			log::add('openalpr','info','Une détéction sur '.$this->getName().' - '.$this->getLogicalId().' a été detecté mais ignoré parce que la derniere détection ('.$this->getValueDate().') à moins de 5minute');
 		return $return;
 	}
-    /*     * **********************Getteur Setteur*************************** */
 }
 ?>
