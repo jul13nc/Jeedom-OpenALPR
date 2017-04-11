@@ -250,7 +250,7 @@ class openalpr extends eqLogic {
 			if(self::isValideImmat($Results["plate"]) && config::byKey('inconnue','openalpr')){
 				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
 				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);
-				$CmdPlate->execute($Results);
+				$CmdPlate->event($Results);
 			}
 		}
 	}
@@ -265,7 +265,7 @@ class openalpr extends eqLogic {
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
 							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');
-							$CmdPlate->execute($Plate);
+							$CmdPlate->event($Plate);
 						}
 						$state=true;
 					}
@@ -300,7 +300,7 @@ class openalpr extends eqLogic {
 				$cmd = cmd::byId(str_replace('#', '', $id));
 				if (is_object($cmd)) {
 					log::add('openalpr','debug','Evoie du message avec '.$cmd->getName());
-					$cmd->execute($_options);
+					$cmd->event($_options);
 				}
 			}
 		}
