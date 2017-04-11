@@ -25,7 +25,7 @@ class openalpr extends eqLogic {
 	}
  	public static function ConfigOpenAlpr() {
 		$file='/etc/openalpr/openalpr.conf';
-		if (config::byKey('openParam','openalpr')){
+		//if (config::byKey('openParam','openalpr')){
 			$fp = fopen($file,"w+");
 			fputs($fp,'ocr_img_size_percent = '.config::byKey('ocr_img_size_percent','openalpr'));
 			fputs($fp, "\n");
@@ -85,11 +85,11 @@ class openalpr extends eqLogic {
 			fputs($fp, "\n");
 			fputs($fp,'debug_pause_on_frame  = '.config::byKey('debug','openalpr'));
 			fclose($fp);
-		}else{
-			exec('sudo rm '.$file);
-			exec('sudo touch '.$file);
-			exec('sudo chmod 777 '.$file);
-		}
+		//}else{
+			//exec('sudo rm '.$file);
+			//exec('sudo touch '.$file);
+			//exec('sudo chmod 777 '.$file);
+		//}
 		$file='/etc/openalpr/alprd.conf';
 		$fp = fopen($file,"w+");
 		fputs($fp,'[daemon]');
@@ -191,6 +191,8 @@ class openalpr extends eqLogic {
 		if(!self::deamonRunning())
 			$return['state'] = 'nok';
 		$return['launchable'] = 'nok';
+		if(!file_exists('/etc/openalpr/alprd.conf'))
+			return $return;
 		if(config::byKey('configuration','openalpr')!=''){
 			foreach(config::byKey('configuration','openalpr') as $AlprCamera)
 			{
