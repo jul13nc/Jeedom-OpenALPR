@@ -1,0 +1,13 @@
+{
+	"id" : "openalpr",
+	"name" : "OpenALPR",
+	"description" : "Plugin permanent de faire de la reconnaissance de plaque d'immatriculation avec nos camera",
+	"licence" : "AGPL",
+	"author" : "Halbout Michael",
+	"require" : "3.0",
+	"category" : "security",
+	"display" : "panel",
+	"mobile" : "panel",
+	"hasOwnDeamon" : true,
+	"hasDependency" : true
+}

@@ -19,13 +19,13 @@ class openalpr extends eqLogic {
 				break;
 			}
 		}
-    	}
-    	public function postSave() {
+    }
+    public function postSave() {
 		self::addCommande($this,'Etat du groupe','*');
 	}
  	public static function ConfigOpenAlpr() {
 		$file='/etc/openalpr/openalpr.conf';
-		if (config::byKey('openParam','openalpr')){
+		//if (config::byKey('openParam','openalpr')){
 			$fp = fopen($file,"w+");
 			fputs($fp,'ocr_img_size_percent = '.config::byKey('ocr_img_size_percent','openalpr'));
 			fputs($fp, "\n");
@@ -85,12 +85,11 @@ class openalpr extends eqLogic {
 			fputs($fp, "\n");
 			fputs($fp,'debug_pause_on_frame  = '.config::byKey('debug','openalpr'));
 			fclose($fp);
-		}
-		else{
-			exec('sudo rm '.$file);
-			exec('sudo touch '.$file);
-			exec('sudo chmod 777 '.$file);
-		}
+		//}else{
+			//exec('sudo rm '.$file);
+			//exec('sudo touch '.$file);
+			//exec('sudo chmod 777 '.$file);
+		//}
 		$file='/etc/openalpr/alprd.conf';
 		$fp = fopen($file,"w+");
 		fputs($fp,'[daemon]');
@@ -150,8 +149,7 @@ class openalpr extends eqLogic {
 	}
 	public static function addCommande($eqLogic,$Name,$_logicalId, $subtype='binary') {
 		$Commande = $eqLogic->getCmd(null,$_logicalId);
-		if (!is_object($Commande))
-		{
+		if (!is_object($Commande)){
 			$Commande = new openalprCmd();
 			$Commande->setId(null);
 			$Commande->setName($Name);
@@ -179,9 +177,8 @@ class openalpr extends eqLogic {
 		return $return;
 	}
 	public static function dependancy_install() {
-		if (file_exists('/tmp/compilation_openAlpr_in_progress')) {
+		if (file_exists('/tmp/compilation_openAlpr_in_progress')) 
 			return;
-		}
 		log::remove('openalpr_update');
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../ressources/install.sh';
 		$cmd .= ' >> ' . log::getPathToLog('openalpr_update') . ' 2>&1 &';
@@ -194,6 +191,8 @@ class openalpr extends eqLogic {
 		if(!self::deamonRunning())
 			$return['state'] = 'nok';
 		$return['launchable'] = 'nok';
+		if(!file_exists('/etc/openalpr/alprd.conf'))
+			return $return;
 		if(config::byKey('configuration','openalpr')!=''){
 			foreach(config::byKey('configuration','openalpr') as $AlprCamera)
 			{
@@ -251,7 +250,7 @@ class openalpr extends eqLogic {
 			if(self::isValideImmat($Results["plate"]) && config::byKey('inconnue','openalpr')){
 				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
 				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);
-				$CmdPlate->execute($Results);
+				$CmdPlate->event($Results);
 			}
 		}
 	}
@@ -266,7 +265,7 @@ class openalpr extends eqLogic {
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
 							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');
-							$CmdPlate->execute($Plate);
+							$CmdPlate->event($Plate);
 						}
 						$state=true;
 					}
@@ -301,7 +300,7 @@ class openalpr extends eqLogic {
 				$cmd = cmd::byId(str_replace('#', '', $id));
 				if (is_object($cmd)) {
 					log::add('openalpr','debug','Evoie du message avec '.$cmd->getName());
-					$cmd->execute($_options);
+					$cmd->event($_options);
 				}
 			}
 		}
@@ -315,7 +314,7 @@ class openalprCmd extends cmd {
 		$this->setLogicalId(str_replace('-','',$this->getLogicalId()));
 		$this->setTemplate('dashboard','PresenceGarage');
 		$this->setTemplate('mobile','PresenceGarage');
-		}
+	}
     /*
      * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
       public function dontRemoveCmd() {
@@ -360,13 +359,11 @@ class openalprCmd extends cmd {
 						$CmdGroupe->save();
 					//}
 				}
-		
 			}
 		}
 		else
 			log::add('openalpr','info','Une détéction sur '.$this->getName().' - '.$this->getLogicalId().' a été detecté mais ignoré parce que la derniere détection ('.$this->getValueDate().') à moins de 5minute');
 		return $return;
 	}
-    /*     * **********************Getteur Setteur*************************** */
 }
 ?>
