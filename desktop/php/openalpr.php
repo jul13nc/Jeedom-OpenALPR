@@ -94,7 +94,6 @@ $eqLogics = eqLogic::byType('openalpr');
 			<div role="tabpanel" class="tab-pane active" id="eqlogictab">
 				<form class="form-horizontal">
 					<fieldset>
-						<legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}  <i class='fa fa-cogs eqLogicAction pull-right cursor expertModeVisible' data-action='configure'></i></legend>
 						<div class="form-horizontal">
 							<div class="form-group">
 								<label class="col-md-2 control-label">{{Nom du groupe}}</label>
