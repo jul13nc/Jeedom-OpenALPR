@@ -11,9 +11,13 @@ class openalpr extends eqLogic {
 					foreach($Equipement->getCmd() as $Commande){ 
 						if(is_object($Commande) && $Commande->execCmd()){
 							log::add('openalpr','debug',$Commande->getHumanName().' a False');
-							$Commande->setCollectDate('');
-							$Commande->event(0);
-							$Commande->save();
+							//$Commande->setCollectDate('');
+							//$Commande->event(0);
+							//$Commande->save();							
+							if ($Commande->execCmd() != $Commande->formatValue(0)) {
+								$Commande->event(0);
+							}
+							$Commande->setCache('collectDate', date('Y-m-d H:i:s'));
 						}
 					}
 				break;
@@ -128,8 +132,8 @@ class openalpr extends eqLogic {
 		if($result != ""){
 			return $result;
 		}
-        return false;
-    }
+       		return false;
+    	}
 	public static function addEquipement($Name,$_logicalId) 	{
 		$Equipement = self::byLogicalId($_logicalId, 'openalpr');
 		if (is_object($Equipement)) {
@@ -250,7 +254,7 @@ class openalpr extends eqLogic {
 			if(self::isValideImmat($Results["plate"]) && config::byKey('inconnue','openalpr')){
 				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
 				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);
-				$CmdPlate->event($Results);
+				$Equipement->checkAndUpdateCmd($Results["plate"],$Results);
 			}
 		}
 	}
@@ -264,8 +268,11 @@ class openalpr extends eqLogic {
 						log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
-							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');
-							$CmdPlate->event($Plate);
+							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');					
+							if ($CmdPlate->execCmd() != $CmdPlate->formatValue($Plate)) {
+								$CmdPlate->event($Plate);
+							}
+							$CmdPlate->setCache('collectDate', date('Y-m-d H:i:s'));
 						}
 						$state=true;
 					}
@@ -300,7 +307,7 @@ class openalpr extends eqLogic {
 				$cmd = cmd::byId(str_replace('#', '', $id));
 				if (is_object($cmd)) {
 					log::add('openalpr','debug','Evoie du message avec '.$cmd->getName());
-					$cmd->event($_options);
+					$cmd->execute($_options);
 				}
 			}
 		}
@@ -337,9 +344,13 @@ class openalprCmd extends cmd {
 					$return=true;
 				break;
 			}
-			$this->setCollectDate(date('Y-m-d H:i:s'));
-			$this->event($return);
-			$this->save();
+			//$this->setCollectDate(date('Y-m-d H:i:s'));
+			//$this->event($return);
+			//$this->save();
+			if ($this->execCmd() != $this->formatValue($return)) {
+				$this->event($return);
+			}
+			$this->setCache('collectDate', date('Y-m-d H:i:s'));
 			log::add('openalpr','info',$this->getHumanName().' est '.$return);
 			if(isset($_options["plate"])){
 				$this->setConfiguration('confidence',$_options["confidence"]);
@@ -352,12 +363,17 @@ class openalprCmd extends cmd {
 				if(is_object($CmdGroupe)){
 					log::add('openalpr','debug','Mise a jour de l\'etat Général');
 					//if($CmdGroupe->execCmd()== 0){
-						log::add('openalpr','info','['.$CmdGroupe->getEqlogic()->getName().']['.$CmdGroupe->getName().'] a true');
-						$CmdGroupe->setCollectDate(date('Y-m-d H:i:s'));
-						$CmdGroupe->setConfiguration('doNotRepeatEvent', 1);
-						$CmdGroupe->event(true);
-						$CmdGroupe->save();
+						//$CmdGroupe->setCollectDate(date('Y-m-d H:i:s'));
+						//$CmdGroupe->setConfiguration('doNotRepeatEvent', 1);
+						//$CmdGroupe->event(true);
+						//$CmdGroupe->save();
 					//}
+					
+					if ($CmdGroupe->execCmd() != $CmdGroupe->formatValue(true)) {
+						log::add('openalpr','info',$CmdGroupe->getHumanName().' a true');
+						$CmdGroupe->event(true);
+					}
+					$CmdGroupe->setCache('collectDate', date('Y-m-d H:i:s'));
 				}
 			}
 		}
