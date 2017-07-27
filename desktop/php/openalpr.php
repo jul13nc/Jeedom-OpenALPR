@@ -165,7 +165,7 @@ $eqLogics = eqLogic::byType('openalpr');
 					</fieldset> 
 				</form>
 			</div>
-			<div role="tabpanel" class="tab-pane active" id="commandtab">
+			<div role="tabpanel" class="tab-pane" id="commandtab">
 				<a class="btn btn-success btn-sm cmdAction" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter un plaque d'immatriculation}}</a><br/><br/-->
 				<table id="table_cmd" class="table table-bordered table-condensed">
 					<thead>
