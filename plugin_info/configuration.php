@@ -63,7 +63,7 @@ if (!isConnect()) {
 		</fieldset>
 	</form>
 </div>
-<div class="col-sm-6 openAlprParamters">
+<!--div class="col-sm-6 openAlprParamters">
 	<form class="form-horizontal">
 		<fieldset>
 			<legend>Configuration de parametre de détéction OpenAlpr</legend>
@@ -178,7 +178,7 @@ if (!isConnect()) {
 			</div>
 		</fieldset>
 	</form>
-</div>
+</div-->
 
 <script>
 $.ajax({
