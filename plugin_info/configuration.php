@@ -261,16 +261,19 @@ $('body').on('click','#bt_AddCamera', function() {
 	AddCamera($('#table_camera tbody'),'');
 });
 function AddCamera(_el,data){
+	var id= $('.configKey[data-l1key=configuration][data-l2key=cameraUrl]').length +1;
 	var tr=$('<tr>');
 	tr.append($('<td>')
 		.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="name">')));
 	tr.append($('<td>')
 		.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="cameraUrl">')));
 	tr.append($('<td>')
+		.append($('<input type="hidden" class="configKey" data-l1key="configuration" data-l2key="id">'))
 		.append($('<span class="input-group-btn">')
 			.append($('<a class="btn btn-default btn-sm bt_removecamera">')
 				.append($('<i class="fa fa-minus-circle">')))));
 	_el.append(tr);
 	_el.find('tr:last').setValues(data, '.configKey');
+	_el.find('tr:last').find('.configKey[data-l1key=configuration][data-l2key=id]').val(id);
 } 
 </script>
