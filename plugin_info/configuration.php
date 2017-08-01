@@ -56,10 +56,15 @@ if (!isConnect()) {
 		</fieldset>
 		<legend>Configuration des Camera<a class="btn btn-success btn-xs pull-right cursor" id="bt_AddCamera"><i class="fa fa-check"></i> {{Ajouter}}</a></legend>
 		<fieldset>
-			<div class="form-group">
-				<label>{{Liste des camera}}</label>
-				<div class="CameraListe"></div>
-			</div> 
+			<table id="table_camera" class="table table-bordered table-condensed tablesorter">
+				<thead>
+					<tr>
+						<th>{{Url}}</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
 		</fieldset>
 	</form>
 </div>
@@ -180,33 +185,53 @@ if (!isConnect()) {
 	</form>
 </div-->
 
-<script>
+<script>	
 $.ajax({
 	type: "POST",
-	timeout:8000, 
+	timeout:8000,
 	url: "core/ajax/config.ajax.php",
 	data: {
 		action:'getKey',
 		key:'{"configuration":""}',
-		plugin:'openalpr',
+		plugin:'arrosageAuto',
 	},
 	dataType: 'json',
 	error: function(request, status, error) {
 		handleAjaxError(request, status, error);
 	},
-	success: function(data) { 
+	success: function(data) {
 		if (data.state != 'ok') {
 			$('#div_alert').showAlert({message: data.result, level: 'danger'});
 			return;
 		}
 		if (data.result['configuration']!=''){
-			$.each(data.result['configuration'], function( key, value ){
-				AddCamera($('.CameraListe'),key);	
-				$('.configKey[data-l1key=configuration][data-l2key='+key+'][data-l3key=cameraUrl]').val(data.result['configuration'][key]['cameraUrl']);
-				});
+			var Camera= new Object();
+			$.each(data.result['configuration'], function(param,valeur){
+				switch(typeof(valeur)){
+					case 'object':
+						$.each(valeur, function(key,value ){
+							if (typeof(Camera[key]) === 'undefined')
+								Camera[key]= new Object();
+							if (typeof(Camera[key]['configuration']) === 'undefined')
+								Camera[key]['configuration']= new Object();
+							Camera[key]['configuration'][param]=value;
+						});
+					break;
+					case 'string':
+						if (typeof(Camera[0]) === 'undefined')
+							Camera[0]= new Object();
+						if (typeof(Camera[0]['configuration']) === 'undefined')
+							Camera[0]['configuration']= new Object();
+						Camera[0]['configuration'][param]=valeur;
+					break;
+				}
+			});
+			$.each(Camera, function(id,data){
+				AddCamera($('#table_camera tbody'),data);
+			});
 		}
 	}
-});	
+});
 $("#bt_selectActionMessage").on('click', function () {
     jeedom.cmd.getSelectModal({cmd: {type: 'action',subType : 'message'}}, function (result) {
         $(".configKey[data-l1key=alertMessageCommand]").atCaret('insert',result.human);
@@ -228,42 +253,21 @@ $('body').on('change','.configKey[data-l1key=openParam]',function(){
 	else
 		$('.openAlprParamters').hide();
 });
-$('#bt_AddCamera').on('click',function(){
-	var cameraNb= $('div.camera').length+1;
-	var cameraId='camera_'+cameraNb;
-	AddCamera($(this).closest('.form-horizontal').find('.CameraListe'),cameraId);
-});
-function openalpr_postSaveConfiguration(){
-	$.ajax({
-		type: "POST",
-		timeout:8000, 
-		url: "plugins/openalpr/core/ajax/openalpr.ajax.php",
-		data: {
-			action: "ConfigOpenAlpr",
-		},
-		dataType: 'json',
-		error: function(request, status, error) {
-			handleAjaxError(request, status, error);
-		},
-		success: function(data) { 
-			if (data.state != 'ok') {
-				$('#div_alert').showAlert({message: data.result, level: 'danger'});
-				return;
-			}
-		}
-	});	
-};
-function AddCamera(div,cameraId){
-	div.append($('<div class="form-group camera">')
-			.append($('<label class="col-lg-4 control-label">').text('{{Url de la Camera}}'))
-			.append($('<div class="col-lg-4 ">')
-				.append($('<input class="configKey form-control" data-l1key="configuration" data-l2key="'+cameraId+'" data-l3key="cameraUrl">'))
-				.append($('<a class="btn btn-danger" id="bt_removecamera">')
-					.append($('<i class="fa fa-check">'))
-					.text('{{Supprimer}}'))))
-		.append('<legend></legend>');
-}
 $('body').on('click','#bt_removecamera', function() {
 	$(this).closest('.camera').remove();
-}); 
+});
+$('body').on('click','#bt_AddCamera', function() {
+	AddCamera($('#table_camera tbody'),'');
+});
+function AddCamera(_el,data){
+	var tr=$('<tr>');
+	tr.append($('<td>')
+		.append($('<div class="input-group">')
+			.append($('<span class="input-group-btn">')
+				.append($('<a class="btn btn-default btn-sm bt_removecamera">')
+					.append($('<i class="fa fa-minus-circle">'))))
+			.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="cameraUrl">'))));
+	_el.append(tr);
+	_el.find('tr:last').setValues(data, '.configKey');
+} 
 </script>
