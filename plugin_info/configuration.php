@@ -194,7 +194,7 @@ $.ajax({
 	data: {
 		action:'getKey',
 		key:'{"configuration":""}',
-		plugin:'openalpr',
+		plugin:'openalpr'
 	},
 	dataType: 'json',
 	error: function(request, status, error) {
