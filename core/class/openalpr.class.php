@@ -100,8 +100,9 @@ class openalpr extends eqLogic {
 		fputs($fp,'site_id = Jeedom');
 		fputs($fp, "\n");
 		$Cameras=config::byKey('configuration','openalpr');
-		foreach($Cameras['cameraUrl'] as  $key =>$AlprCamera){
+		foreach($Cameras['cameraUrl'] as $AlprCamera){
 			if($AlprCamera!=''){
+				log::add('openalpr','debug','Ajout de la camera '.$AlprCamera)
 				fputs($fp,'stream ='. $AlprCamera);
 				fputs($fp, "\n");
 			}
