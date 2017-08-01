@@ -272,7 +272,6 @@ function AddCamera(_el,data){
 		.append($('<div class="input-group">')
 			.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="cameraUrl">'))));
 	tr.append($('<td>')
-		.append($('<div class="input-group">')
 			.append($('<span class="input-group-btn">')
 				.append($('<a class="btn btn-default btn-sm bt_removecamera">')
 					.append($('<i class="fa fa-minus-circle">')))));
