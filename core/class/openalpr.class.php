@@ -102,19 +102,10 @@ class openalpr extends eqLogic {
 		$Cameras=config::byKey('configuration','openalpr');
 		foreach($Cameras['cameraUrl'] as $AlprCamera){
 			if($AlprCamera!=''){
-				log::add('openalpr','debug','Ajout de la camera '.$AlprCamera)
 				fputs($fp,'stream ='. $AlprCamera);
 				fputs($fp, "\n");
 			}
 		}
-		/*if(config::byKey('configuration','openalpr')!=''){
-			foreach(config::byKey('configuration','openalpr')['cameraUrl'] as $AlprCamera){
-				if($AlprCamera!=''){
-					fputs($fp,'stream ='. $AlprCamera);
-					fputs($fp, "\n");
-				}
-			}
-		}*/
 		fputs($fp,'topn = 10');
 		fputs($fp, "\n");
 		fputs($fp,'store_plates = '.config::byKey('snapshot','openalpr'));
@@ -217,6 +208,7 @@ class openalpr extends eqLogic {
 			return;
 		log::remove('openalpr');
 		self::deamon_stop();
+		self::ConfigOpenAlpr();
 		$directory=config::byKey('SnapshotFolder','openalpr');
 		if(!file_exists($directory)){
 			exec('sudo mkdir -p '.$directory);
