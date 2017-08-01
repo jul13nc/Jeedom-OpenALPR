@@ -39,7 +39,8 @@ try {
 		$record_dir =  config::byKey('SnapshotFolder','openalpr');
 		if(substr($record_dir, -1) !='/')
 			$record_dir.='/';
-		exec('sudo rm ' . $record_dir . $file);
+		log::add('openalpr','debug', $record_dir . $file);
+		exec('sudo rm ' . $record_dir . $file . ' 2>&1 &');
 		ajax::success();
 	}
 	if (init('action') == 'getHistory') {

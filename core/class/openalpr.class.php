@@ -99,12 +99,11 @@ class openalpr extends eqLogic {
 		fputs($fp, "\n");
 		fputs($fp,'site_id = Jeedom');
 		fputs($fp, "\n");
-		if(config::byKey('configuration','openalpr')!=''){
-			foreach(config::byKey('configuration','openalpr') as $AlprCamera){
-				if($AlprCamera['cameraUrl']!=''){
-					fputs($fp,'stream ='. $AlprCamera['cameraUrl']);
-					fputs($fp, "\n");
-				}
+		$Cameras=config::byKey('configuration','openalpr');
+		foreach($Cameras['cameraUrl'] as $AlprCamera){
+			if($AlprCamera!=''){
+				fputs($fp,'stream ='. $AlprCamera);
+				fputs($fp, "\n");
 			}
 		}
 		fputs($fp,'topn = 10');
@@ -195,9 +194,9 @@ class openalpr extends eqLogic {
 		if(!file_exists('/etc/openalpr/alprd.conf'))
 			return $return;
 		if(config::byKey('configuration','openalpr')!=''){
-			foreach(config::byKey('configuration','openalpr') as $AlprCamera)
+			foreach(config::byKey('configuration','openalpr')['cameraUrl'] as $AlprCamera)
 			{
-				if($AlprCamera['cameraUrl']!='')
+				if($AlprCamera!='')
 					$return['launchable'] = 'ok';
 			}
 		}
@@ -209,6 +208,7 @@ class openalpr extends eqLogic {
 			return;
 		log::remove('openalpr');
 		self::deamon_stop();
+		self::ConfigOpenAlpr();
 		$directory=config::byKey('SnapshotFolder','openalpr');
 		if(!file_exists($directory)){
 			exec('sudo mkdir -p '.$directory);

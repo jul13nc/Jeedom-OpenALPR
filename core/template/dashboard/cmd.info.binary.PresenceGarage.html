@@ -1,41 +1,19 @@
 <div style="padding:0;width:69px;min-height:69px;" class="cmd #history# tooltips cmd-widget container-fluid" data-type="info" data-subtype="binary" data-cmd_id="#id#" data-cmd_uid="#uid#" title="#collectDate#">
 	<div class="row">
-		<div class="center-block col-xs-12 h5 cmdName" id="cmdName#uid#" style="margin-top:0;">
+		<div class="center-block col-xs-12 h5" style="margin-top:0;">
   			<strong>#name#</strong>
  		 </div>
-		<div class="center-block col-xs-12 iconCmd#uid# action"></div>
-		<div class="center-block col-xs-12 h5 cmdName" id="cmdName#uid#" style="margin-top:0;">
+		<div class="center-block col-xs-12 iconCmd#id#"></div>
+		<div class="center-block col-xs-12 h5" style="margin-top:0;">
   			<strong>#logicalId#</strong>
  		 </div>
 	</div>
 	<script>
-		$(".iconCmd#uid#").empty();
-		if ("#state#" == "1") {
-			$(".iconCmd#uid#").html("<img src='plugins/openalpr/core/template/images/garages.png'>");
-		} else {
-			$(".iconCmd#uid#").html("<img src='plugins/openalpr/core/template/images/garages2.png'>");
-		}
-
-        $('.cmd[data-cmd_id=#id#] .action').off();
-        $('.cmd[data-cmd_id=#id#] .action').on('click', function () {
-	//jeedom.cmd.execute({id: '#id#'});
-		$.ajax({
-			type: 'POST',
-			url: 'plugins/openalpr/core/ajax/openalpr.ajax.php',
-			data: {
-				action: 'UpdateStatut',
-				id:'#id#'
-			},
-			dataType: 'json',
-			global: false,
-			error: function(request, status, error) {},
-			success: function(data) {
-				if (data.state != 'ok') {
-					$('#div_alert').showAlert({message: data.result, level: 'danger'});
-					return;
-				}
-			}
-		});
-        });
+		$(".iconCmd#id#").empty();
+		if ("#state#" == "1")
+			$(".iconCmd#id#").html("<img src='plugins/openalpr/core/template/images/garages.png'/>");
+		else
+			$(".iconCmd#id#").html("<img src='plugins/openalpr/core/template/images/garages2.png'/>");
+		
 	</script>
 </div>

@@ -152,9 +152,10 @@ $eqLogics = eqLogic::byType('openalpr');
 									<select class="eqLogicAttr" data-l1key="configuration" data-l2key="AutoriseCamera" >
 										<option value="all">Toutes</option>
 										<?php
-										foreach(config::byKey('configuration','openalpr') as  $key =>$AlprCamera){
-											if($AlprCamera['cameraUrl']!=''){
-												echo '<option value="'.str_replace ('camera_','',$key).'">'.$AlprCamera['cameraUrl'].'</option>';
+										$Cameras=config::byKey('configuration','openalpr');
+										foreach($Cameras['id'] as  $key =>$AlprCamera){
+											if($AlprCamera!=''){
+												echo '<option value="cam_'.$AlprCamera.'">'.$Cameras['name'][$key].'</option>';
 											}
 										}
 										?>
