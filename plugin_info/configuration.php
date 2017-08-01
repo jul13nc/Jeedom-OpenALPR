@@ -59,8 +59,9 @@ if (!isConnect()) {
 			<table id="table_camera" class="table table-bordered table-condensed tablesorter">
 				<thead>
 					<tr>
+						<th>{{Nom}}</th>
 						<th>{{Url}}</th>
-						<th></th>
+						<th>{{}}</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -193,7 +194,7 @@ $.ajax({
 	data: {
 		action:'getKey',
 		key:'{"configuration":""}',
-		plugin:'arrosageAuto',
+		plugin:'openalpr',
 	},
 	dataType: 'json',
 	error: function(request, status, error) {
@@ -266,7 +267,15 @@ function AddCamera(_el,data){
 			.append($('<span class="input-group-btn">')
 				.append($('<a class="btn btn-default btn-sm bt_removecamera">')
 					.append($('<i class="fa fa-minus-circle">'))))
+			.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="name">'))));
+	tr.append($('<td>')
+		.append($('<div class="input-group">')
 			.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="cameraUrl">'))));
+	tr.append($('<td>')
+		.append($('<div class="input-group">')
+			.append($('<span class="input-group-btn">')
+				.append($('<a class="btn btn-default btn-sm bt_removecamera">')
+					.append($('<i class="fa fa-minus-circle">')))));
 	_el.append(tr);
 	_el.find('tr:last').setValues(data, '.configKey');
 } 
