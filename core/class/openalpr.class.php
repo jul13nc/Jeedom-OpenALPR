@@ -100,9 +100,9 @@ class openalpr extends eqLogic {
 		fputs($fp,'site_id = Jeedom');
 		fputs($fp, "\n");
 		if(config::byKey('configuration','openalpr')!=''){
-			foreach(config::byKey('configuration','openalpr') as $AlprCamera){
-				if($AlprCamera['cameraUrl']!=''){
-					fputs($fp,'stream ='. $AlprCamera['cameraUrl']);
+			foreach(config::byKey('configuration','openalpr')['cameraUrl'] as $AlprCamera){
+				if($AlprCamera!=''){
+					fputs($fp,'stream ='. $AlprCamera);
 					fputs($fp, "\n");
 				}
 			}
@@ -195,9 +195,9 @@ class openalpr extends eqLogic {
 		if(!file_exists('/etc/openalpr/alprd.conf'))
 			return $return;
 		if(config::byKey('configuration','openalpr')!=''){
-			foreach(config::byKey('configuration','openalpr') as $AlprCamera)
+			foreach(config::byKey('configuration','openalpr')['cameraUrl'] as $AlprCamera)
 			{
-				if($AlprCamera['cameraUrl']!='')
+				if($AlprCamera!='')
 					$return['launchable'] = 'ok';
 			}
 		}
