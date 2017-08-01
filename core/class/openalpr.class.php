@@ -10,12 +10,9 @@ class openalpr extends eqLogic {
 				default:
 					foreach($Equipement->getCmd() as $Commande){ 
 						if(is_object($Commande) && $Commande->execCmd()){
-							log::add('openalpr','debug',$Commande->getHumanName().' a False');
-							//$Commande->setCollectDate('');
-							//$Commande->event(0);
-							//$Commande->save();							
-							if ($Commande->execCmd() != $Commande->formatValue(0)) {
-								$Commande->event(0);
+							log::add('openalpr','debug',$Commande->getHumanName().' a False');						
+							if ($Commande->execCmd() != $Commande->formatValue(false)) {
+								$Commande->event(false);
 							}
 							$Commande->setCache('collectDate', date('Y-m-d H:i:s'));
 						}
@@ -254,12 +251,11 @@ class openalpr extends eqLogic {
 			if(self::isValideImmat($Results["plate"]) && config::byKey('inconnue','openalpr')){
 				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
 				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);
-				$Equipement->checkAndUpdateCmd($Results["plate"],$Results);
+				$Equipement->checkAndUpdateCmd($Results["plate"],true);
 			}
 		}
 	}
 	public static function searchValidPlate($camera_id,$search,$Plate){
-		$state=false;
 		foreach($search as $plate){
 			$CmdPlates=cmd::byLogicalId($plate);
 			if(is_array($CmdPlates)){
@@ -269,22 +265,22 @@ class openalpr extends eqLogic {
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
 							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');					
-							if ($CmdPlate->execCmd() != $CmdPlate->formatValue($Plate)) {
-								$CmdPlate->event($Plate);
+							if ($CmdPlate->execCmd() != $CmdPlate->formatValue(true)) {
+								$CmdPlate->event(true);
 							}
 							$CmdPlate->setCache('collectDate', date('Y-m-d H:i:s'));
 						}
-						$state=true;
+						return true;
 					}
 				} 
 			}
 		}
-		return $state;
+		return false;
 	}
 	public static function isValideImmat($plate){
 		if (strlen($plate) <= 9 && preg_match("#^[0-9]{1,4}[A-Z]{1,4}[0-9]{1,2}$#", $plate)) {
 			return true;
-		}elseif  (strlen($plate) <= 7 && preg_match("#^[A-Z]{1,2}[0-9]{1,3}[A-Z]{1,2}$#", $plate))  {
+		}elseif  (strlen($plate) <= 7 && preg_match("#^[A-Z]{2,2}[0-9]{2,3}[A-Z]{2,2}$#", $plate))  {
 			return true;
 		}
 		return false;
@@ -314,72 +310,12 @@ class openalpr extends eqLogic {
 	}
 }
 class openalprCmd extends cmd {
-    /*     * *************************Attributs****************************** */
-    /*     * ***********************Methode static*************************** */
-    /*     * *********************Methode d'instance************************* */
 	public function preSave() {
 		$this->setLogicalId(str_replace('-','',$this->getLogicalId()));
 		$this->setTemplate('dashboard','PresenceGarage');
 		$this->setTemplate('mobile','PresenceGarage');
 	}
-    /*
-     * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-      public function dontRemoveCmd() {
-      return true;
-      }
-     */
 	public function execute($_options = array()) {
-		$return='';
-		log::add('openalpr','debug','Verification si '.date("Y-m-d H:i:s",strtotime($this->getCollectDate())) .'< '.date("Y-m-d H:i:s", strtotime("+5 min")));
-		if(date("Y-m-d H:i:s",strtotime($this->getCollectDate())) < date("Y-m-d H:i:s", strtotime("+5 min"))){ 
-			log::add('openalpr','debug','La plaque d\'immatriculation  '.$this->getLogicalId().' du vehicule '.$this->getName().' a ete détécté');
-			switch($this->getEqLogic()->getConfiguration('UpdateMode')){
-				case'toogle':
-					if($this->execCmd() == 0)
-						$return=true;
-					else
-						$return=false;
-				break;
-				case'vue':
-					$return=true;
-				break;
-			}
-			//$this->setCollectDate(date('Y-m-d H:i:s'));
-			//$this->event($return);
-			//$this->save();
-			if ($this->execCmd() != $this->formatValue($return)) {
-				$this->event($return);
-			}
-			$this->setCache('collectDate', date('Y-m-d H:i:s'));
-			log::add('openalpr','info',$this->getHumanName().' est '.$return);
-			if(isset($_options["plate"])){
-				$this->setConfiguration('confidence',$_options["confidence"]);
-				//$this->setConfiguration('matches_template',$_options["matches_template"]);
-				//$this->setConfiguration('region',$_options["region"]);
-				//$this->setConfiguration('region_confidence',$_options["region_confidence"]);
-				//$this->setConfiguration('coordinates',$_options["coordinates"]);
-				$this->save();
-				$CmdGroupe=$this->getEqlogic()->getCmd(null,'*');
-				if(is_object($CmdGroupe)){
-					log::add('openalpr','debug','Mise a jour de l\'etat Général');
-					//if($CmdGroupe->execCmd()== 0){
-						//$CmdGroupe->setCollectDate(date('Y-m-d H:i:s'));
-						//$CmdGroupe->setConfiguration('doNotRepeatEvent', 1);
-						//$CmdGroupe->event(true);
-						//$CmdGroupe->save();
-					//}
-					
-					if ($CmdGroupe->execCmd() != $CmdGroupe->formatValue(true)) {
-						log::add('openalpr','info',$CmdGroupe->getHumanName().' a true');
-						$CmdGroupe->event(true);
-					}
-					$CmdGroupe->setCache('collectDate', date('Y-m-d H:i:s'));
-				}
-			}
-		}
-		else
-			log::add('openalpr','info','Une détéction sur '.$this->getName().' - '.$this->getLogicalId().' a été detecté mais ignoré parce que la derniere détection ('.$this->getValueDate().') à moins de 5minute');
-		return $return;
 	}
 }
 ?>
