@@ -99,14 +99,21 @@ class openalpr extends eqLogic {
 		fputs($fp, "\n");
 		fputs($fp,'site_id = Jeedom');
 		fputs($fp, "\n");
-		if(config::byKey('configuration','openalpr')!=''){
+		$Cameras=config::byKey('configuration','openalpr');
+		foreach($Cameras['cameraUrl'] as  $key =>$AlprCamera){
+			if($AlprCamera!=''){
+				fputs($fp,'stream ='. $AlprCamera);
+				fputs($fp, "\n");
+			}
+		}
+		/*if(config::byKey('configuration','openalpr')!=''){
 			foreach(config::byKey('configuration','openalpr')['cameraUrl'] as $AlprCamera){
 				if($AlprCamera!=''){
 					fputs($fp,'stream ='. $AlprCamera);
 					fputs($fp, "\n");
 				}
 			}
-		}
+		}*/
 		fputs($fp,'topn = 10');
 		fputs($fp, "\n");
 		fputs($fp,'store_plates = '.config::byKey('snapshot','openalpr'));
