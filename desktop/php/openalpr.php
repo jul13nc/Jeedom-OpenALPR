@@ -155,7 +155,7 @@ $eqLogics = eqLogic::byType('openalpr');
 										$Cameras=config::byKey('configuration','openalpr');
 										foreach($Cameras['id'] as  $key =>$AlprCamera){
 											if($AlprCamera!=''){
-												echo '<option value="'.$AlprCamera.'">'.$Cameras['name'][$key].'</option>';
+												echo '<option value="cam_'.$AlprCamera.'">'.$Cameras['name'][$key].'</option>';
 											}
 										}
 										?>
