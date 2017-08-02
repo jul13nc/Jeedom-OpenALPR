@@ -11,10 +11,7 @@ class openalpr extends eqLogic {
 					foreach($Equipement->getCmd() as $Commande){ 
 						if(is_object($Commande) && $Commande->execCmd()){
 							log::add('openalpr','debug',$Commande->getHumanName().' a False');						
-							if ($Commande->execCmd() != $Commande->formatValue(false)) {
-								$Commande->event(false);
-							}
-							$Commande->setCache('collectDate', date('Y-m-d H:i:s'));
+							$Commande->updateState(true);	
 						}
 					}
 				break;
@@ -264,11 +261,8 @@ class openalpr extends eqLogic {
 						log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
-							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');					
-							if ($CmdPlate->execCmd() != $CmdPlate->formatValue(true)) {
-								$CmdPlate->event(true);
-							}
-							$CmdPlate->setCache('collectDate', date('Y-m-d H:i:s'));
+							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');			
+							$CmdPlate->updateState(true);							
 						}
 						return true;
 					}
@@ -280,7 +274,7 @@ class openalpr extends eqLogic {
 	public static function isValideImmat($plate){
 		if (strlen($plate) <= 9 && preg_match("#^[0-9]{1,4}[A-Z]{1,4}[0-9]{1,2}$#", $plate)) {
 			return true;
-		}elseif  (strlen($plate) <= 7 && preg_match("#^[A-Z]{2,2}[0-9]{3,3}[A-Z]{2,2}$#", $plate))  {
+		}elseif  (strlen($plate) <= 7 && preg_match("#^[A-Z]{2,2}[0-9]{2,3}[A-Z]{2,2}$#", $plate))  {
 			return true;
 		}
 		return false;
@@ -308,8 +302,24 @@ class openalpr extends eqLogic {
 			}
 		}
 	}
-}
+	}
 class openalprCmd extends cmd {
+	public function updateState($value){
+		switch($this->getEqLogic()->getConfiguration('UpdateMode')){
+			case'toogle':
+				log::add('openalpr','debug',$this->getCollectDate());
+				if($this->getCollectDate()>date())
+					return;
+			break;
+			case'vue':
+			break;
+		}		
+		if ($this->execCmd() != $this->formatValue($value)) {
+			$this->event($value);
+		}
+		$this->setCache('collectDate', date('Y-m-d H:i:s'));
+	}
+
 	public function preSave() {
 		$this->setLogicalId(str_replace('-','',$this->getLogicalId()));
 		$this->setTemplate('dashboard','PresenceGarage');
