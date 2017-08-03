@@ -221,7 +221,7 @@ class openalpr extends eqLogic {
 		$url = explode("://",$Cameras['cameraUrl'][$id])[0];
 		$url .= '://';
 		if ($Cameras['username'][$id] != '') {
-			$url .= urlencode($Cameras['username'][$id] . ':' . $Cameras['password'][$id]) . '@';
+			$url .= urlencode($Cameras['username'][$id]) . ':' .urlencode($Cameras['password'][$id]) . '@';
 		}
 		$url .= explode("://",$Cameras['cameraUrl'][$id])[1];
 		return $url ;
