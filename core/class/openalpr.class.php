@@ -98,7 +98,7 @@ class openalpr extends eqLogic {
 		$Cameras=config::byKey('configuration','openalpr');
 		foreach($Cameras['cameraUrl'] as $key => $AlprCamera){
 			if($AlprCamera!=''){
-				fputs($fp,'stream ='. $this->getUrl($key);
+				fputs($fp,'stream ='. $this->getUrl($key));
 				fputs($fp, "\n");
 			}
 		}
