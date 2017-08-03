@@ -98,7 +98,7 @@ class openalpr extends eqLogic {
 		$Cameras=config::byKey('configuration','openalpr');
 		foreach($Cameras['cameraUrl'] as $key => $AlprCamera){
 			if($AlprCamera!=''){
-				fputs($fp,'stream ='. $this->getUrl($key));
+				fputs($fp,'stream ='. self::getUrl($key));
 				fputs($fp, "\n");
 			}
 		}
@@ -216,7 +216,7 @@ class openalpr extends eqLogic {
 	public static function deamon_stop() {
 		exec('sudo pkill alprd');
 	}
-	public function getUrl($id) {
+	public static function getUrl($id) {
 		$Cameras=config::byKey('configuration','openalpr');
 		$url = explode("://",$Cameras['cameraUrl'][$id])[0];
 		$url .= '://';
