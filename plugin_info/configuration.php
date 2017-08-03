@@ -266,7 +266,9 @@ function AddCamera(_el,data){
 	tr.append($('<td>')
 		.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="name">')));
 	tr.append($('<td>')
-		.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="cameraUrl">')));
+		.append($('<input type="text" class="configKey form-control" data-l1key="configuration" data-l2key="username" placeholder="{{Nom d\'utilisateur}}"/>'))
+		.append($('<input type="password" class="configKey form-control" data-l1key="configuration" data-l2key="password" placeholder="{{Mot de passe}}"/>'))
+		.append($('<input type="text" class="configKey form-control" data-l1key="configuration" data-l2key="cameraUrl" placeholder="{{URL de capture}}"/>')));
 	tr.append($('<td>')
 		.append($('<input type="hidden" class="configKey" data-l1key="configuration" data-l2key="id">'))
 		.append($('<span class="input-group-btn">')
