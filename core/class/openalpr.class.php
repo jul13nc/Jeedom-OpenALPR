@@ -96,9 +96,9 @@ class openalpr extends eqLogic {
 		fputs($fp,'site_id = Jeedom');
 		fputs($fp, "\n");
 		$Cameras=config::byKey('configuration','openalpr');
-		foreach($Cameras['cameraUrl'] as $AlprCamera){
+		foreach($Cameras['cameraUrl'] as $key => $AlprCamera){
 			if($AlprCamera!=''){
-				fputs($fp,'stream ='. $AlprCamera);
+				fputs($fp,'stream ='. $this->getUrl($key);
 				fputs($fp, "\n");
 			}
 		}
@@ -215,6 +215,16 @@ class openalpr extends eqLogic {
 	}
 	public static function deamon_stop() {
 		exec('sudo pkill alprd');
+	}
+	public function getUrl($id) {
+		$Cameras=config::byKey('configuration','openalpr');
+		$url = explode("://",$Cameras['cameraUrl'][$id])[0];
+		$url .= '://';
+		if ($Cameras['username'][$id] != '') {
+			$url .= urlencode($Cameras['username'][$id] . ':' . $Cameras['password'][$id]) . '@';
+		}
+		$url .= explode("://",$Cameras['cameraUrl'][$id])[1];
+		return $url ;
 	}
 	public static function GestionDetect($Detect){
 		openalpr::SendLastSnap($Detect["uuid"].".jpg");
