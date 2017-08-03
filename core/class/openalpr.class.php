@@ -9,8 +9,7 @@ class openalpr extends eqLogic {
 				case'vue':
 				default:
 					foreach($Equipement->getCmd() as $Commande){ 
-						if(is_object($Commande) && $Commande->execCmd()){
-							log::add('openalpr','debug',$Commande->getHumanName().' a False');						
+						if(is_object($Commande) && $Commande->execCmd()){						
 							$Commande->updateState(true);	
 						}
 					}
@@ -305,9 +304,9 @@ class openalpr extends eqLogic {
 	}
 class openalprCmd extends cmd {
 	public function updateState($value){
+		log::add('openalpr','debug',$this->getCollectDate());
 		switch($this->getEqLogic()->getConfiguration('UpdateMode')){
 			case'toogle':
-				log::add('openalpr','debug',$this->getCollectDate());
 				if($this->getCollectDate()>date())
 					return;
 			break;
