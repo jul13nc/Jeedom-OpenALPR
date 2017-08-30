@@ -254,8 +254,8 @@ $('body').on('change','.configKey[data-l1key=openParam]',function(){
 	else
 		$('.openAlprParamters').hide();
 });
-$('body').on('click','#bt_removecamera', function() {
-	$(this).closest('.camera').remove();
+$('body').on('click','.bt_removecamera', function() {
+	$(this).closest('tr').remove();
 });
 $('body').on('click','#bt_AddCamera', function() {
 	AddCamera($('#table_camera tbody'),'');
@@ -266,7 +266,9 @@ function AddCamera(_el,data){
 	tr.append($('<td>')
 		.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="name">')));
 	tr.append($('<td>')
-		.append($('<input class="configKey form-control input-sm "data-l1key="configuration" data-l2key="cameraUrl">')));
+		.append($('<input type="text" class="configKey form-control" data-l1key="configuration" data-l2key="username" placeholder="{{Nom d\'utilisateur}}"/>'))
+		.append($('<input type="password" class="configKey form-control" data-l1key="configuration" data-l2key="password" placeholder="{{Mot de passe}}"/>'))
+		.append($('<input type="text" class="configKey form-control" data-l1key="configuration" data-l2key="cameraUrl" placeholder="{{URL de capture}}"/>')));
 	tr.append($('<td>')
 		.append($('<input type="hidden" class="configKey" data-l1key="configuration" data-l2key="id">'))
 		.append($('<span class="input-group-btn">')

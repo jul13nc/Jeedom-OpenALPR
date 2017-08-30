@@ -9,12 +9,8 @@ class openalpr extends eqLogic {
 				case'vue':
 				default:
 					foreach($Equipement->getCmd() as $Commande){ 
-						if(is_object($Commande) && $Commande->execCmd()){
-							log::add('openalpr','debug',$Commande->getHumanName().' a False');						
-							if ($Commande->execCmd() != $Commande->formatValue(false)) {
-								$Commande->event(false);
-							}
-							$Commande->setCache('collectDate', date('Y-m-d H:i:s'));
+						if(is_object($Commande) && $Commande->execCmd()){						
+							$Commande->updateState(true);	
 						}
 					}
 				break;
@@ -100,9 +96,9 @@ class openalpr extends eqLogic {
 		fputs($fp,'site_id = Jeedom');
 		fputs($fp, "\n");
 		$Cameras=config::byKey('configuration','openalpr');
-		foreach($Cameras['cameraUrl'] as $AlprCamera){
+		foreach($Cameras['cameraUrl'] as $key => $AlprCamera){
 			if($AlprCamera!=''){
-				fputs($fp,'stream ='. $AlprCamera);
+				fputs($fp,'stream ='. self::getUrl($key));
 				fputs($fp, "\n");
 			}
 		}
@@ -220,6 +216,16 @@ class openalpr extends eqLogic {
 	public static function deamon_stop() {
 		exec('sudo pkill alprd');
 	}
+	public static function getUrl($id) {
+		$Cameras=config::byKey('configuration','openalpr');
+		$url = explode("://",$Cameras['cameraUrl'][$id])[0];
+		$url .= '://';
+		if ($Cameras['username'][$id] != '') {
+			$url .= urlencode($Cameras['username'][$id]) . ':' .urlencode($Cameras['password'][$id]) . '@';
+		}
+		$url .= explode("://",$Cameras['cameraUrl'][$id])[1];
+		return $url ;
+	}
 	public static function GestionDetect($Detect){
 		openalpr::SendLastSnap($Detect["uuid"].".jpg");
 		//$Detect["site_id"];
@@ -264,11 +270,8 @@ class openalpr extends eqLogic {
 						log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
-							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');					
-							if ($CmdPlate->execCmd() != $CmdPlate->formatValue(true)) {
-								$CmdPlate->event(true);
-							}
-							$CmdPlate->setCache('collectDate', date('Y-m-d H:i:s'));
+							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');			
+							$CmdPlate->updateState(true);							
 						}
 						return true;
 					}
@@ -308,8 +311,24 @@ class openalpr extends eqLogic {
 			}
 		}
 	}
-}
+	}
 class openalprCmd extends cmd {
+	public function updateState($value){
+		log::add('openalpr','debug',$this->getCollectDate());
+		switch($this->getEqLogic()->getConfiguration('UpdateMode')){
+			case'toogle':
+				if($this->getCollectDate()>date())
+					return;
+			break;
+			case'vue':
+			break;
+		}		
+		if ($this->execCmd() != $this->formatValue($value)) {
+			$this->event($value);
+		}
+		$this->setCache('collectDate', date('Y-m-d H:i:s'));
+	}
+
 	public function preSave() {
 		$this->setLogicalId(str_replace('-','',$this->getLogicalId()));
 		$this->setTemplate('dashboard','PresenceGarage');

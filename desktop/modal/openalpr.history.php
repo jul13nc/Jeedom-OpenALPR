@@ -65,6 +65,17 @@ foreach ($files as $date => &$file) {
         $('#md_modal2').dialog({title: "Image"});
         $('#md_modal2').load('index.php?v=d&plugin=openalpr&modal=openalpr.displayImage&src='+ $(this).attr('src')).dialog('open');
     });
+	$('.bt_removeCameraFile').on('click', function() {
+		if(typeof $(this).attr('data-filename') != 'undefined'){
+			RemoveFile($(this).attr('data-filename'));
+		}else {
+			$(this).parent().parent().find('.bt_removeCameraFile').each(function() {
+				if(typeof $(this).attr('data-filename') != 'undefined')
+					RemoveFile($(this).attr('data-filename'));
+			});
+		}
+		$(this).parent().parent().remove();
+	});
     $('.bt_removeCameraFile').on('click', function() {
         var card;
         if($(this).attr('data-day') == 1){
@@ -110,4 +121,4 @@ foreach ($files as $date => &$file) {
 			}
 		});
 	}
-</script>
+ </script>
