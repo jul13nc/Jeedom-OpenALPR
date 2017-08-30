@@ -254,7 +254,7 @@ $('body').on('change','.configKey[data-l1key=openParam]',function(){
 	else
 		$('.openAlprParamters').hide();
 });
-$('body').on('click','#bt_removecamera', function() {
+$('body').on('click','.bt_removecamera', function() {
 	$(this).closest('.camera').remove();
 });
 $('body').on('click','#bt_AddCamera', function() {
