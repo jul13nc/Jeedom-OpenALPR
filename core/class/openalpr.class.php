@@ -319,7 +319,7 @@ class openalprCmd extends cmd {
 				if ($this->execCmd())
 					$value=false;
 				else
-					$value=true
+					$value=true;
 				/*if(strtotime($this->getCollectDate())>date('Y-m-d H:i:s'))
 					return;*/
 			break;
