@@ -10,7 +10,7 @@ class openalpr extends eqLogic {
 				default:
 					foreach($Equipement->getCmd() as $Commande){ 
 						if(is_object($Commande) && $Commande->execCmd()){						
-							$Commande->updateState(true);	
+							$Commande->updateState(false);	
 						}
 					}
 				break;
@@ -271,7 +271,7 @@ class openalpr extends eqLogic {
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
 							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');			
-							$CmdPlate->updateState(true);							
+							$CmdPlate->updateState();							
 						}
 						return true;
 					}
@@ -311,18 +311,21 @@ class openalpr extends eqLogic {
 			}
 		}
 	}
-	}
+}
 class openalprCmd extends cmd {
-	public function updateState($value){
-		log::add('openalpr','debug',$this->getCollectDate());
+	public function updateState($value=true){
 		switch($this->getEqLogic()->getConfiguration('UpdateMode')){
 			case'toogle':
-				if($this->getCollectDate()>date())
-					return;
+				if ($this->execCmd())
+					$value=false;
+				else
+					$value=true
+				/*if(strtotime($this->getCollectDate())>date('Y-m-d H:i:s'))
+					return;*/
 			break;
 			case'vue':
 			break;
-		}		
+		}	
 		if ($this->execCmd() != $this->formatValue($value)) {
 			$this->event($value);
 		}
