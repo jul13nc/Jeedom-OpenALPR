@@ -238,15 +238,15 @@ class openalpr extends eqLogic {
 			'#width#' => $this->getDisplay('width', 'auto'),
 			'#cmdColor#' => $cmdColor,
 		);
-		$action = '';
+		$Cmds = '';
 		foreach ($this->getCmd() as $cmd) {
 			if ($cmd->getIsVisible() == 1) {
 				if ($cmd->getDisplay('hideOn' . $version) == 1) 
 					continue;
-				$action .= $cmd->toHtml($_version, $cmdColor);
+				$Cmds .= $cmd->toHtml($_version, $cmdColor);
 			}
 		}
-		$replace_eqLogic['#action#'] = $action;
+		$replace_eqLogic['#cmd#'] = $Cmds;
 		if ($_version == 'dview' || $_version == 'mview') {
 			$object = $this->getObject();
 			$replace_eqLogic['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace_eqLogic['#name#'] : $replace['#name#'];
