@@ -11,4 +11,10 @@
      <a class="camera_history btn btn-default btn-sm folder" data-eqLogic_id="#id#" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-folder-open"></i></a>
     </span>
   </center>
+  	<script>
+		$('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
+			$('#md_modal').dialog({title: "Historique #name#"});
+			$('#md_modal').load('index.php?v=d&plugin=openalpr&modal=openalpr.history').dialog('open');
+		});	
+  </script>
 </div>
