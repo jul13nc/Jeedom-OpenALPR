@@ -244,7 +244,6 @@ class openalpr extends eqLogic {
 				if ($cmd->getDisplay('hideOn' . $version) == 1) 
 					continue;
 				$action .= $cmd->toHtml($_version, $cmdColor);
-				}
 			}
 		}
 		$replace_eqLogic['#action#'] = $action;
@@ -252,7 +251,7 @@ class openalpr extends eqLogic {
 			$object = $this->getObject();
 			$replace_eqLogic['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace_eqLogic['#name#'] : $replace['#name#'];
 		}
-		return template_replace($replace_eqLogic, getTemplate('core', jeedom::versionAlias($version), 'eqLogic', 'motion'));
+		return template_replace($replace_eqLogic, getTemplate('core', jeedom::versionAlias($version), 'eqLogic', 'openalpr'));
 	}
 	public static function getUrl($id) {
 		$Cameras=config::byKey('configuration','openalpr');
