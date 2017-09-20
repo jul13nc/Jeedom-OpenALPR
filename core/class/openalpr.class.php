@@ -317,6 +317,7 @@ class openalpr extends eqLogic {
 				$Equipement->checkAndUpdateCmd($Results["plate"],true);
 			}
 		}
+		self::CleanFolder();
 	}
 	public static function searchValidPlate($camera_id,$search,$Plate){
 		foreach($search as $plate){
@@ -367,6 +368,34 @@ class openalpr extends eqLogic {
 				}
 			}
 		}
+	}
+	public static function getSnapshotDiretory() {
+		$directory=config::byKey('SnapshotFolder','openalpr');
+		if(!file_exists($directory))
+			exec('sudo mkdir -p '.$directory);
+		if(substr($directory,-1)!='/')
+			$directory.='/';
+		$directory = calculPath($directory);
+		if (!is_writable($directory)) 
+			exec('sudo chmod 777 -R '.$directory);
+		return $directory;
+	}
+	public static function CleanFolder() {
+		$directory=self::getSnapshotDiretory();
+		$size = 0;
+		foreach(scandir($directory, 1) as $file) {
+			if(is_file($directory.$file) && $file != '.' && $file != '..' ) {	
+				if ($size>= config::byKey('SnapshotFolderSeize', 'openalpr')*1000000)
+					self::removeRecord($directory.$file);
+				else
+					$size += filesize($directory.$file);
+			}
+		}
+		log::add('openalpr','debug','Le dossier '.$directory.' est a '.$size);
+	}
+	public static function removeRecord($file) {
+		exec('sudo rm '. $file);
+		log::add('openalpr','debug','Fichiers '.$file.' à été supprimée');
 	}
 }
 class openalprCmd extends cmd {
