@@ -368,6 +368,34 @@ class openalpr extends eqLogic {
 			}
 		}
 	}
+	public function getSnapshotDiretory() {
+		$directory=config::byKey('SnapshotFolder','openalpr');
+		if(!file_exists($directory))
+			exec('sudo mkdir -p '.$directory);
+		if(substr($directory,-1)!='/')
+			$directory.='/';
+		$directory = calculPath($directory);
+		if (!is_writable($directory)) 
+			exec('sudo chmod 777 -R '.$directory);
+		return $directory;
+	}
+	public function CleanFolder() {
+		$directory=$this->getSnapshotDiretory();
+		$size = 0;
+		foreach(scandir($directory, 1) as $file) {
+			if(is_file($directory.$file) && $file != '.' && $file != '..'  && $file != 'lastsnap.jpg') {	
+				if ($size>= config::byKey('SnapshotFolderSeize', 'openalpr')*1000000)
+					self::removeRecord($directory.$file);
+				else
+					$size += filesize($directory.$file);
+			}
+		}
+		log::add('openalpr','debug','Le dossier '.$directory.' est a '.$size);
+	}
+	public static function removeRecord($file) {
+		exec('sudo rm '. $file);
+		log::add('openalpr','debug','Fichiers '.$file.' à été supprimée');
+	}
 }
 class openalprCmd extends cmd {
 	public function updateState($value=true){
