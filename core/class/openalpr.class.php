@@ -194,7 +194,7 @@ class openalpr extends eqLogic {
 		$return['launchable'] = 'nok';
 		if(!file_exists('/etc/openalpr/alprd.conf'))
 			return $return;
-      	$Cameras=config::byKey('configuration','openalpr');
+      		$Cameras=config::byKey('configuration','openalpr');
 		if($Cameras!=''){
 			if(is_array($Cameras['cameraUrl'])){
 				foreach($Cameras['cameraUrl'] as $AlprCamera)
@@ -243,10 +243,6 @@ class openalpr extends eqLogic {
 			}
 		}
 		$replace['#cmd#'] = $Cmds;
-		if ($_version == 'dview' || $_version == 'mview') {
-			$object = $this->getObject();
-			$replace['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace_eqLogic['#name#'] : $replace['#name#'];
-		}
       		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'eqLogic', 'openalpr')));
   	}
 	public static function getUrl($id) {		
