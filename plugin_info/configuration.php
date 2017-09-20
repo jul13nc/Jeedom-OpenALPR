@@ -28,12 +28,12 @@ if (!isConnect()) {
 					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="inconnue" />
 				 </div>
 			</div>
-			<div class="form-group">
+			<!--div class="form-group">
 				<label class="col-lg-4 control-label">{{Personnalisé les paramettre par defaut de OpenAlpr}}</label>
 				<div class="col-lg-4">
 					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="openParam" />
 				 </div>
-			</div> 
+			</div--> 
 		</fieldset>
 	</form>
 </div>
@@ -48,12 +48,22 @@ if (!isConnect()) {
 				 </div>
 			</div> 
 			<div class="form-group">
+				<label class="col-lg-4 control-label">Taille du dossier Snapshot (Mo) :</label>
+				<div class="col-lg-4">
+					<input class="configKey form-control" data-l1key="SnapshotFolderSeize" />
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Activer le Snapshot}}</label>
 				<div class="col-lg-4">
 					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="snapshot"/>
 				 </div>
 			</div> 
-		</fieldset>
+		</fieldset>	
+	</form>
+</div>
+<div class="col-sm-6">
+	<form class="form-horizontal">
 		<legend>Configuration des Camera<a class="btn btn-success btn-xs pull-right cursor" id="bt_AddCamera"><i class="fa fa-check"></i> {{Ajouter}}</a></legend>
 		<fieldset>
 			<table id="table_camera" class="table table-bordered table-condensed tablesorter">
