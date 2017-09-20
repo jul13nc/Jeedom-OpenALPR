@@ -264,7 +264,8 @@ class openalpr extends eqLogic {
 		}
 		return template_replace($replace_eqLogic, getTemplate('core', jeedom::versionAlias($version), 'eqLogic', 'openalpr'));
 	}
-	public static function getUrl($id="") {
+	public static function getUrl($id="") {		
+		$Cameras=config::byKey('configuration','openalpr');
 		if($id == ""){
 			$adresse = explode("://",$Cameras['cameraUrl']);
 			$username=$Cameras['username'];
