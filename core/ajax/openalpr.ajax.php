@@ -14,17 +14,7 @@ try {
 		ajax::success(true);
 	}
 	if (init('action') == 'ConfigOpenAlpr') {
-		$AlprdConfig['local'] =openalpr::ConfigOpenAlpr();
-		if (config::byKey('jeeNetwork::mode') == 'master') {
-			foreach (jeeNetwork::byPlugin('openalpr') as $jeeNetwork) {
-				$jsonrpc = $jeeNetwork->getJsonRpc();
-				if (!$jsonrpc->sendRequest('ConfigOpenAlpr', array('plugin' => 'openalpr'))) {
-					throw new Exception($jsonrpc->getError(), $jsonrpc->getErrorCode());
-				}
-				$AlprdConfig[$jeeNetwork->getName()] = $jsonrpc->getResult();
-			}
-		}
-		ajax::success($AlprdConfig);
+		ajax::success(openalpr::ConfigOpenAlpr());
 	}
    	if (init('action') == 'movePlate') {
 		$Commande=cmd::byId(init('id'));
