@@ -96,11 +96,16 @@ class openalpr extends eqLogic {
 		fputs($fp,'site_id = Jeedom');
 		fputs($fp, "\n");
 		$Cameras=config::byKey('configuration','openalpr');
-		foreach($Cameras['cameraUrl'] as $key => $AlprCamera){
-			if($AlprCamera!=''){
-				fputs($fp,'stream ='. self::getUrl($key));
-				fputs($fp, "\n");
+		if(is_array($Cameras['cameraUrl'])){
+			foreach($Cameras['cameraUrl'] as $key => $AlprCamera){
+				if($AlprCamera!=''){
+					fputs($fp,'stream ='. self::getUrl($key));
+					fputs($fp, "\n");
+				}
 			}
+		}else{
+			fputs($fp,'stream ='. self::getUrl());
+			fputs($fp, "\n");
 		}
 		fputs($fp,'topn = 10');
 		fputs($fp, "\n");
@@ -253,14 +258,23 @@ class openalpr extends eqLogic {
 		}
 		return template_replace($replace_eqLogic, getTemplate('core', jeedom::versionAlias($version), 'eqLogic', 'openalpr'));
 	}
-	public static function getUrl($id) {
-		$Cameras=config::byKey('configuration','openalpr');
-		$url = explode("://",$Cameras['cameraUrl'][$id])[0];
-		$url .= '://';
-		if ($Cameras['username'][$id] != '') {
-			$url .= urlencode($Cameras['username'][$id]) . ':' .urlencode($Cameras['password'][$id]) . '@';
+	public static function getUrl($id="") {
+		if($id == ""){
+			$adresse = explode("://",$Cameras['cameraUrl']);
+			$username=$Cameras['username'];
+			$password=$Cameras['password'];
+			
+		}else{
+			$adresse = explode("://",$Cameras['cameraUrl'][$id]);
+			$username=$Cameras['username'][$id];
+			$password=$Cameras['password'][$id];
 		}
-		$url .= explode("://",$Cameras['cameraUrl'][$id])[1];
+		$url=$adresse[0];
+		$url .= '://';
+		if ($username != '') {
+			$url .= urlencode($username) . ':' .urlencode($password) . '@';
+		}
+		$url.=$adresse[1];
 		return $url ;
 	}
 	public static function GestionDetect($Detect){
