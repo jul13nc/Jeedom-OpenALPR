@@ -194,10 +194,15 @@ class openalpr extends eqLogic {
 		$return['launchable'] = 'nok';
 		if(!file_exists('/etc/openalpr/alprd.conf'))
 			return $return;
-		if(config::byKey('configuration','openalpr')!=''){
-			foreach(config::byKey('configuration','openalpr')['cameraUrl'] as $AlprCamera)
-			{
-				if($AlprCamera!='')
+		if($Cameras=config::byKey('configuration','openalpr')!=''){
+			if(is_array($Cameras['cameraUrl'])){
+				foreach($Cameras['cameraUrl'] as $AlprCamera)
+				{
+					if($AlprCamera!='')
+						$return['launchable'] = 'ok';
+				}
+			}else{
+				if($Cameras['cameraUrl']!='')
 					$return['launchable'] = 'ok';
 			}
 		}
