@@ -104,7 +104,7 @@ class openalpr extends eqLogic {
 				}
 			}
 		}else{
-			fputs($fp,'stream ='. self::getUrl());
+			fputs($fp,'stream ='. self::getUrl(""));
 			fputs($fp, "\n");
 		}
 		fputs($fp,'topn = 10');
@@ -264,18 +264,19 @@ class openalpr extends eqLogic {
 		}
 		return template_replace($replace_eqLogic, getTemplate('core', jeedom::versionAlias($version), 'eqLogic', 'openalpr'));
 	}
-	public static function getUrl($id="") {		
+	public static function getUrl($id) {		
 		$Cameras=config::byKey('configuration','openalpr');
-		if($id == ""){
-			$adresse = explode("://",$Cameras['cameraUrl']);
+		if(!is_array($Cameras['cameraUrl'])){
+			$adresse =$Cameras['cameraUrl'];
 			$username=$Cameras['username'];
 			$password=$Cameras['password'];
 			
 		}else{
-			$adresse = explode("://",$Cameras['cameraUrl'][$id]);
+			$adresse =$Cameras['cameraUrl'][$id];
 			$username=$Cameras['username'][$id];
 			$password=$Cameras['password'][$id];
 		}
+		$adresse = explode("://",$adresse);
 		$url=$adresse[0];
 		$url .= '://';
 		if ($username != '') {
