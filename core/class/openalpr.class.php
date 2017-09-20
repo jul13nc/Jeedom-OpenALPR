@@ -228,27 +228,12 @@ class openalpr extends eqLogic {
 		exec('sudo pkill alprd');
 	}
 	public function toHtml($_version = 'dashboard') {
-		if ($this->getIsEnable() != 1) {
-			return '';
-		}
+		$replace = $this->preToHtml($_version);
+		if (!is_array($replace)) 
+			return $replace;
 		$version = jeedom::versionAlias($_version);
-		if ($this->getDisplay('hideOn' . $version) == 1) {
+		if ($this->getDisplay('hideOn' . $version) == 1)
 			return '';
-		}
-		$vcolor = 'cmdColor';
-		if ($version == 'mobile') {
-			$vcolor = 'mcmdColor';
-		}
-		$cmdColor = ($this->getPrimaryCategory() == '') ? '' : jeedom::getConfiguration('eqLogic:category:' . $this->getPrimaryCategory() . ':' . $vcolor);
-		$replace_eqLogic = array(
-			'#id#' => $this->getId(),
-			'#background_color#' => $this->getBackgroundColor(jeedom::versionAlias($_version)),
-			'#humanname#' => $this->getHumanName(),
-			'#name#' => $this->getName(),
-			'#height#' => $this->getDisplay('height', 'auto'),
-			'#width#' => $this->getDisplay('width', 'auto'),
-			'#cmdColor#' => $cmdColor,
-		);
 		$Cmds = '';
 		foreach ($this->getCmd() as $cmd) {
 			if ($cmd->getIsVisible() == 1) {
@@ -257,13 +242,13 @@ class openalpr extends eqLogic {
 				$Cmds .= $cmd->toHtml($_version, $cmdColor);
 			}
 		}
-		$replace_eqLogic['#cmd#'] = $Cmds;
+		$replace['#cmd#'] = $Cmds;
 		if ($_version == 'dview' || $_version == 'mview') {
 			$object = $this->getObject();
-			$replace_eqLogic['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace_eqLogic['#name#'] : $replace['#name#'];
+			$replace['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace_eqLogic['#name#'] : $replace['#name#'];
 		}
-		return template_replace($replace_eqLogic, getTemplate('core', jeedom::versionAlias($version), 'eqLogic', 'openalpr'));
-	}
+      		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'eqLogic', 'openalpr')));
+  	}
 	public static function getUrl($id) {		
 		$Cameras=config::byKey('configuration','openalpr');
 		if(!is_array($Cameras['cameraUrl'])){
