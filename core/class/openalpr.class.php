@@ -317,6 +317,7 @@ class openalpr extends eqLogic {
 				$Equipement->checkAndUpdateCmd($Results["plate"],true);
 			}
 		}
+		self::CleanFolder();
 	}
 	public static function searchValidPlate($camera_id,$search,$Plate){
 		foreach($search as $plate){
@@ -368,7 +369,7 @@ class openalpr extends eqLogic {
 			}
 		}
 	}
-	public function getSnapshotDiretory() {
+	public static function getSnapshotDiretory() {
 		$directory=config::byKey('SnapshotFolder','openalpr');
 		if(!file_exists($directory))
 			exec('sudo mkdir -p '.$directory);
@@ -379,11 +380,11 @@ class openalpr extends eqLogic {
 			exec('sudo chmod 777 -R '.$directory);
 		return $directory;
 	}
-	public function CleanFolder() {
-		$directory=$this->getSnapshotDiretory();
+	public static function CleanFolder() {
+		$directory=self::getSnapshotDiretory();
 		$size = 0;
 		foreach(scandir($directory, 1) as $file) {
-			if(is_file($directory.$file) && $file != '.' && $file != '..'  && $file != 'lastsnap.jpg') {	
+			if(is_file($directory.$file) && $file != '.' && $file != '..' ) {	
 				if ($size>= config::byKey('SnapshotFolderSeize', 'openalpr')*1000000)
 					self::removeRecord($directory.$file);
 				else
