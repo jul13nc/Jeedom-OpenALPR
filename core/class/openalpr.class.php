@@ -3,6 +3,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class openalpr extends eqLogic {
 	public static function cron() {
 		foreach(eqLogic::byType('openalpr') as $Equipement){ 
+			$Equipement->checkAndUpdateCmd('*',false);
 			switch($Equipement->getConfiguration('UpdateMode')){
 				case'toogle':
 				break;
@@ -312,7 +313,8 @@ class openalpr extends eqLogic {
 						$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
 							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');			
-							$CmdPlate->updateState();							
+							$CmdPlate->updateState();
+							$CmdPlate->getEqLogic()->checkAndUpdateCmd('*',true);
 						}
 						return true;
 					}
