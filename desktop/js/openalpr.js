@@ -24,9 +24,7 @@ $('#table_cmd tbody').on( 'click','.bt_movePlate', function() {
 $('#table_cmd tbody').on( 'change','.cmdAttr[data-l1key=logicalId]', function() {
 	switch($(this).val()){
 		case '*':
-			$(this).hide();
-			$(this).closest('.cmd').find('.cmdAction[data-action=remove]').hide();
-		break;
+		case 'lastPlate':
 		case 'lastdetect':
 			$(this).hide();
 			$(this).closest('.cmd').find('.cmdAction[data-action=remove]').hide();

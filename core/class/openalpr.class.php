@@ -20,6 +20,7 @@ class openalpr extends eqLogic {
     }
     public function postSave() {
 		self::addCommande($this,'Etat du groupe','*');
+		self::addCommande($this,'Dernier déclencheur','lastPlate');
 	}
  	public static function ConfigOpenAlpr() {
 		$file='/etc/openalpr/openalpr.conf';
@@ -299,6 +300,7 @@ class openalpr extends eqLogic {
 				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
 				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);
 				$Equipement->checkAndUpdateCmd($Results["plate"],true);
+				$CmdPlate->getEqLogic()->checkAndUpdateCmd('lastPlate',$Results["plate"]);
 			}
 		}
 		self::CleanFolder();
@@ -315,6 +317,7 @@ class openalpr extends eqLogic {
 							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');			
 							$CmdPlate->updateState();
 							$CmdPlate->getEqLogic()->checkAndUpdateCmd('*',true);
+							$CmdPlate->getEqLogic()->checkAndUpdateCmd('lastPlate',$Plate["plate"]);
 						}
 						return true;
 					}
