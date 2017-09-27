@@ -20,7 +20,7 @@ class openalpr extends eqLogic {
     }
     public function postSave() {
 		self::addCommande($this,'Etat du groupe','*');
-		self::addCommande($this,'Dernier déclencheur','lastPlate');
+		self::addCommande($this,'Dernier déclencheur','lastPlate','string');
 	}
  	public static function ConfigOpenAlpr() {
 		$file='/etc/openalpr/openalpr.conf';
@@ -159,13 +159,15 @@ class openalpr extends eqLogic {
 			$Commande->setLogicalId($_logicalId);
 			$Commande->setEqLogic_id($eqLogic->getId());
 			$Commande->setType('info');
-			$Commande->setSubType($subtype);
 			$Commande->setIsHistorized(1);
 		}
-		if($_logicalId =='*' || $_logicalId == 'lastdetect')
+		$Commande->setSubType($subtype);
+		if($_logicalId =='*')
 			$Commande->setIsVisible(0);
-		$Commande->setTemplate('dashboard','PresenceGarage');
-		$Commande->setTemplate('mobile','PresenceGarage');
+		if($_logicalId =='*' || $_logicalId == 'lastPlate'){
+			$Commande->setTemplate('dashboard','PresenceGarage');
+			$Commande->setTemplate('mobile','PresenceGarage');
+		}
 		$Commande->save();
 		return $Commande;
 	}
