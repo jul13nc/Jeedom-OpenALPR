@@ -322,6 +322,15 @@ class openalpr extends eqLogic {
 					}
 				} 
 			}
+			if (is_object($CmdPlates)){
+				log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+				$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
+				if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
+					log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');			
+					$CmdPlate->updateState();
+				}
+				return true;
+			}
 		}
 		return false;
 	}
