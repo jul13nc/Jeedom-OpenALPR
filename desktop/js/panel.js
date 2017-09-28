@@ -70,7 +70,7 @@ function getInconnue(_autoUpdate) {
 			if (data.result.length>0){
 				$('#table_DetectInconnue tbody').html('');
 				for (var i in data.result) {
-					if(data.result[i]['logicalId'] != "lastdetect" && data.result[i]['logicalId'] !='*'){
+					if(data.result[i]['logicalId'] != "lastPlate" && data.result[i]['logicalId'] !='*'){
 						$('#table_DetectInconnue tbody').append($("<tr>")
 							.append($("<td>").text(data.result[i]['logicalId']))
 							.append($("<td>").load('index.php?v=d&modal=movePlate.openAlpr&plugin=openalpr&type=openalpr&id='+data.result[i]['id']))
