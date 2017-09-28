@@ -25,7 +25,6 @@ $('#table_cmd tbody').on( 'change','.cmdAttr[data-l1key=logicalId]', function() 
 	switch($(this).val()){
 		case '*':
 		case 'lastPlate':
-		case 'lastdetect':
 			$(this).hide();
 			$(this).closest('.cmd').find('.cmdAction[data-action=remove]').hide();
 		break;
