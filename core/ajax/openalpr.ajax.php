@@ -38,7 +38,7 @@ try {
 		$result=array();
 		foreach ($eqLogics as $eqLogic) {
 			foreach ($eqLogic->getCmd() as $cmd) {
-				if ($cmd->getLogicalId()!='*' && $cmd->getLogicalId()!='lastdetect'){
+				if ($cmd->getLogicalId()!='*' && $cmd->getLogicalId()!='lastPlate'){
 					foreach($cmd->getHistory(init('start'),init('end')) as $History)
 					{
 						//if ($History->getValue()!=0){
