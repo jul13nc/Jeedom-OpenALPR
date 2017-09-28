@@ -10,7 +10,7 @@ class openalpr extends eqLogic {
 				case'vue':
 				default:
 					foreach($Equipement->getCmd() as $Commande){ 
-						if(is_object($Commande) && $Commande->execCmd()){						
+						if(is_object($Commande) && $Commande->getLogicalId()!='lastPlate' && $Commande->execCmd()){						
 							$Commande->updateState(false);	
 						}
 					}
@@ -300,9 +300,8 @@ class openalpr extends eqLogic {
 			}
 			if(self::isValideImmat($Results["plate"]) && config::byKey('inconnue','openalpr')){
 				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
-				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);
-				$Equipement->checkAndUpdateCmd($Results["plate"],true);
-				$CmdPlate->getEqLogic()->checkAndUpdateCmd('lastPlate',$Results["plate"]);
+				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);			
+				$CmdPlate->updateState();
 			}
 		}
 		self::CleanFolder();
@@ -318,8 +317,6 @@ class openalpr extends eqLogic {
 						if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
 							log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');			
 							$CmdPlate->updateState();
-							$CmdPlate->getEqLogic()->checkAndUpdateCmd('*',true);
-							$CmdPlate->getEqLogic()->checkAndUpdateCmd('lastPlate',$Plate["plate"]);
 						}
 						return true;
 					}
@@ -399,15 +396,13 @@ class openalprCmd extends cmd {
 				/*if(strtotime($this->getCollectDate())>date('Y-m-d H:i:s'))
 					return;*/
 			break;
-			case'vue':
-			break;
 		}	
 		if ($this->execCmd() != $this->formatValue($value)) {
 			$this->event($value);
 		}
-		$this->setCache('collectDate', date('Y-m-d H:i:s'));
+		$this->getEqLogic()->checkAndUpdateCmd('*',true);
+		$this->getEqLogic()->checkAndUpdateCmd('lastPlate',$this->getName());
 	}
-
 	public function preSave() {
 		$this->setLogicalId(str_replace('-','',$this->getLogicalId()));
 		$this->setTemplate('dashboard','PresenceGarage');
