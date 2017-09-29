@@ -413,7 +413,7 @@ class openalprCmd extends cmd {
 		$this->getEqLogic()->checkAndUpdateCmd('lastPlate',$this->getName());
 	}
 	public function preSave() {
-		$this->setLogicalId(str_replace('-','',$this->getLogicalId()));
+		$this->setLogicalId(trim(str_replace('-','',$this->getLogicalId())));
 		$this->setTemplate('dashboard','PresenceGarage');
 		$this->setTemplate('mobile','PresenceGarage');
 	}
