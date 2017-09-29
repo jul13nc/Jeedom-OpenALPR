@@ -308,6 +308,7 @@ class openalpr extends eqLogic {
 	}
 	public static function searchValidPlate($camera_id,$search,$Plate){
 		foreach($search as $plate){
+			log::add('openalpr','debug','Recherche de la plaque d\'immatriculation  '.$plate);
 			$CmdPlates=cmd::byLogicalId($plate);
 			if(is_array($CmdPlates)){
 				foreach($CmdPlates as $CmdPlate){
