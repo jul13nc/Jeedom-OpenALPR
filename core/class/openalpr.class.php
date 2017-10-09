@@ -308,6 +308,7 @@ class openalpr extends eqLogic {
 	}
 	public static function searchValidPlate($camera_id,$search,$Plate){
 		foreach($search as $plate){
+			log::add('openalpr','debug','Recherche de la plaque d\'immatriculation  '.$plate);
 			$CmdPlates=cmd::byLogicalId($plate);
 			if(is_array($CmdPlates)){
 				foreach($CmdPlates as $CmdPlate){
@@ -321,6 +322,15 @@ class openalpr extends eqLogic {
 						return true;
 					}
 				} 
+			}
+			if (is_object($CmdPlates)){
+				log::add('openalpr','debug','La plaque d\'immatriculation  '.$Plate["plate"].' a ete détécté avec la confidence '.$Plate["confidence"]);
+				$CameraAutorise=$CmdPlate->getEqLogic()->getConfiguration('AutoriseCamera');
+				if($CameraAutorise=='all' || $CameraAutorise==$camera_id){
+					log::add('openalpr','debug','La plaque d\'immatriculation a été détecté sur une camera autorisé ('.$camera_id.')');			
+					$CmdPlate->updateState();
+				}
+				return true;
 			}
 		}
 		return false;
@@ -404,7 +414,7 @@ class openalprCmd extends cmd {
 		$this->getEqLogic()->checkAndUpdateCmd('lastPlate',$this->getName());
 	}
 	public function preSave() {
-		$this->setLogicalId(str_replace('-','',$this->getLogicalId()));
+		$this->setLogicalId(trim(str_replace('-','',$this->getLogicalId())));
 		$this->setTemplate('dashboard','PresenceGarage');
 		$this->setTemplate('mobile','PresenceGarage');
 	}
