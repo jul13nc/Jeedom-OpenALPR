@@ -30,7 +30,7 @@ try {
 		if(substr($record_dir, -1) !='/')
 			$record_dir.='/';
 		log::add('openalpr','debug', $record_dir . $file);
-		exec('sudo rm ' . $record_dir . $file . ' 2>&1 &');
+		exec('sudo rm ' . $record_dir . $file);
 		ajax::success();
 	}
 	if (init('action') == 'getHistory') {
