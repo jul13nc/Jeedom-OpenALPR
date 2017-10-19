@@ -397,6 +397,7 @@ class openalpr extends eqLogic {
 }
 class openalprCmd extends cmd {
 	public function updateState($value=true){
+		log::add('openalpr','debug',"Derniere mise détection: ".$this->getCollectDate());
 		switch($this->getEqLogic()->getConfiguration('UpdateMode')){
 			case'toogle':
 				if ($this->execCmd())
