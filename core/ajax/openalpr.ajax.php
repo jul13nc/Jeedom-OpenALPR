@@ -30,8 +30,8 @@ try {
 		if(substr($record_dir, -1) !='/')
 			$record_dir.='/';
 		log::add('openalpr','debug', $record_dir . $file);
-		exec('sudo rm ' . $record_dir . $file);
-		ajax::success();
+		$result=openalpr::removeRecord($file);
+		ajax::success($result);
 	}
 	if (init('action') == 'getHistory') {
 		$eqLogics = eqLogic::byType('openalpr');
