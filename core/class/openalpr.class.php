@@ -404,11 +404,11 @@ class openalprCmd extends cmd {
 					$value=false;
 				else
 					$value=true;
-				/*if(strtotime($this->getCollectDate())>date('Y-m-d H:i:s'))
-					return;*/
+				if(strtotime($this->getCollectDate())>time()+5*60)
+					return;
 			break;
 		}	
-		if ($this->execCmd() != $this->formatValue($value)) {
+		if ($this->execCmd() != $this->formatValue($value)&&) {
 			$this->event($value);
 		}
 		$this->getEqLogic()->checkAndUpdateCmd('*',true);
