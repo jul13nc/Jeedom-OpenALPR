@@ -12,6 +12,14 @@ if (!isConnect()) {
 		<legend>Général</legend>
 		<fieldset>
 			<div class="form-group">
+				<label class="col-lg-4 control-label">{{Temps entre 2 detections}}</label>
+				<div class="col-lg-4">
+					<div class="input-group">
+						<input type="text" class="configKey" data-l1key=DelaisDetect" placeholder="{{Temps entre 2 detections (s)}}"/>
+				    	</div>
+				</div>      
+			</div>  
+			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Commande d'alerte (mail, slack...)}}</label>
 				<div class="col-lg-4">
 					<div class="input-group">
