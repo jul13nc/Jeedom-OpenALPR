@@ -404,7 +404,7 @@ class openalprCmd extends cmd {
 					$value=false;
 				else
 					$value=true;
-				if(strtotime($this->getCollectDate())>time()+5*60)
+				if(strtotime($this->getCollectDate()) >= time()+config::byKey('DelaisDetect', 'openalpr'))
 					return;
 			break;
 		}	
