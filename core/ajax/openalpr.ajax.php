@@ -29,8 +29,8 @@ try {
 		$record_dir =  config::byKey('SnapshotFolder','openalpr');
 		if(substr($record_dir, -1) !='/')
 			$record_dir.='/';
-		log::add('openalpr','debug', $record_dir . $file);
-		$result=openalpr::removeRecord($file);
+		log::add('openalpr','debug',  $record_dir . $file);
+		$result=openalpr::removeRecord($record_dir . $file);
 		ajax::success($result);
 	}
 	if (init('action') == 'getHistory') {
