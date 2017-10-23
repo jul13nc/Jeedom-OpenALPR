@@ -397,6 +397,8 @@ class openalpr extends eqLogic {
 }
 class openalprCmd extends cmd {
 	public function updateState($value=true){
+		if(strtotime($this->getCollectDate()) >= time()+config::byKey('DelaisDetect', 'openalpr'))
+			return;
 		log::add('openalpr','debug',"Derniere mise détection: ".$this->getCollectDate());
 		switch($this->getEqLogic()->getConfiguration('UpdateMode')){
 			case'toogle':
@@ -404,11 +406,9 @@ class openalprCmd extends cmd {
 					$value=false;
 				else
 					$value=true;
-				if(strtotime($this->getCollectDate()) >= time()+config::byKey('DelaisDetect', 'openalpr'))
-					return;
 			break;
 		}	
-		if ($this->execCmd() != $this->formatValue($value)&&) {
+		if ($this->execCmd() != $this->formatValue($value)) {
 			$this->event($value);
 		}
 		$this->getEqLogic()->checkAndUpdateCmd('*',true);
