@@ -15,7 +15,7 @@ if (!isConnect()) {
 				<label class="col-lg-4 control-label">{{Temps entre 2 detections}}</label>
 				<div class="col-lg-4">
 					<div class="input-group">
-						<input type="text" class="configKey" data-l1key=DelaisDetect" placeholder="{{Temps entre 2 detections (s)}}"/>
+						<input type="text" class="configKey" data-l1key="DelaisDetect" placeholder="{{Temps entre 2 detections (s)}}"/>
 				    	</div>
 				</div>      
 			</div>  
