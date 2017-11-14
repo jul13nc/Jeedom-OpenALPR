@@ -20,7 +20,8 @@ class openalpr extends eqLogic {
     }
     public function postSave() {
 		self::addCommande($this,'Etat du groupe','*');
-		self::addCommande($this,'Dernier déclencheur','lastPlate','string');
+		self::addCommande($this,'Dernier déclencheur','lastPlate','info','string');
+		self::addCommande($this,'Détection manuel','manual','action','message');
 	}
  	public static function ConfigOpenAlpr() {
 		$file='/etc/openalpr/openalpr.conf';
@@ -150,7 +151,7 @@ class openalpr extends eqLogic {
 		}
 		return $Equipement;
 	}
-	public static function addCommande($eqLogic,$Name,$_logicalId, $subtype='binary') {
+	public static function addCommande($eqLogic,$Name,$_logicalId, $type='info', $subtype='binary') {
 		$Commande = $eqLogic->getCmd(null,$_logicalId);
 		if (!is_object($Commande)){
 			$Commande = new openalprCmd();
@@ -158,7 +159,7 @@ class openalpr extends eqLogic {
 			$Commande->setName($Name);
 			$Commande->setLogicalId($_logicalId);
 			$Commande->setEqLogic_id($eqLogic->getId());
-			$Commande->setType('info');
+			$Commande->setType($type);
 			$Commande->setIsHistorized(1);
 		}
 		$Commande->setSubType($subtype);
@@ -243,6 +244,7 @@ class openalpr extends eqLogic {
 			if ($cmd->getIsVisible() == 1) {
 				if ($cmd->getDisplay('hideOn' . $version) == 1) 
 					continue;
+				if($cmd->getLogicalId() != 'manual')
 				$Cmds .= $cmd->toHtml($_version, $cmdColor);
 			}
 		}
@@ -420,6 +422,11 @@ class openalprCmd extends cmd {
 		$this->setTemplate('mobile','PresenceGarage');
 	}
 	public function execute($_options = array()) {
+		if($this->getLogicalId()== 'manual'){
+			$Results=exec('sudo alpr -j '.$_options['message']);
+			log::add('openalpr','debug',$Results);
+			openalpr:: GestionDetect($Results);
+		}
 	}
 }
 ?>
