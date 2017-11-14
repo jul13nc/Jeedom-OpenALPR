@@ -425,20 +425,7 @@ class openalprCmd extends cmd {
 		if($this->getLogicalId()== 'manual'){
 			$Results=exec('sudo alpr -j '.$_options['message']);
 			log::add('openalpr','debug',$Results);
-			foreach($Results["candidates"] as $Plate){
-				if(openalpr::isValideImmat(trim($Plate["plate"]))){
-					$PlateSplite=preg_split('[a-z]',trim($Plate["plate"]));
-					$search[]=trim($Plate["plate"]);
-					$search[]=$PlateSplite[0].'****';
-					$search[]=$PlateSplite[0].$PlateSplite[1].'**';
-					$search[]=$PlateSplite[0].'**'.$PlateSplite[2];
-					$search[]='**'.$PlateSplite[1].'**';
-					$search[]='**'.$PlateSplite[1].$PlateSplite[2];
-					$search[]='****'.$PlateSplite[2];
-					if(openalpr::searchValidPlate($camera_id,$search,$Plate))
-						return;
-				}
-			}
+			openalpr:: GestionDetect($Results);
 		}
 	}
 }
