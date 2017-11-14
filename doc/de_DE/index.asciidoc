@@ -15,6 +15,3 @@ include::Installation.asciidoc[]
 
 == Einrichten von Geräten und Befehlen
 include::Parametrage.asciidoc[]
-
-== FAQ
-include::faq.asciidoc[]
