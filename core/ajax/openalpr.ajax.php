@@ -65,7 +65,9 @@ try {
 		ajax::success(false);
 	}
 	if (init('action') == 'removeInconnue') {
-		ajax::success(cmd::byId(init('id'))->remove());
+		$cmd=cmd::byId(init('id'));
+		if(is_object($cmd))
+			ajax::success($cmd->remove());
 	}
 	if (init('action') == 'getAlprdLog') {
 		ajax::success("<pre>".file_get_contents('/var/log/alprd.log')."</pre>");

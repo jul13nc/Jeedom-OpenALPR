@@ -10,7 +10,7 @@ class openalpr extends eqLogic {
 				case'vue':
 				default:
 					foreach($Equipement->getCmd() as $Commande){ 
-						if(is_object($Commande) && $Commande->getLogicalId()!='lastPlate' && $Commande->execCmd()){						
+						if(is_object($Commande) && $Commande->getLogicalId()!='manual' && $Commande->getLogicalId()!='lastPlate' && $Commande->execCmd()){						
 							$Commande->updateState(false);	
 						}
 					}
