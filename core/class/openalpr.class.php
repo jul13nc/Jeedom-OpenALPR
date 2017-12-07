@@ -396,6 +396,53 @@ class openalpr extends eqLogic {
 		exec('sudo rm '. $file);
 		log::add('openalpr','debug','Fichiers '.$file.' à été supprimée');
 	}
+	public function checkCondition(){		
+		foreach($this->getConfiguration('condition') as $Condition){
+			if (isset($Condition['enable']) && $Condition['enable'] == 0)
+				continue;
+			if (!$this->EvaluateCondition($Condition)){
+				log::add('openalpr','info',$this->getHumanName().' Les conditions ne sont pas remplies');
+				return false;
+			}
+		}
+		log::add('openalpr','info',$this->getHumanName().' Les conditions sont remplies');
+		return true;
+	}
+	public function boolToText($value){
+		if (is_bool($value)) {
+			if ($value) 
+				return __('Vrai', __FILE__);
+			else 
+				return __('Faux', __FILE__);
+		} else 
+			return $value;
+	}
+	public function EvaluateCondition($Condition){
+		$_scenario = null;
+		$expression = scenarioExpression::setTags($Condition['expression'], $_scenario, true);
+		$message = __('Evaluation de la condition : [', __FILE__) . trim($expression) . '] = ';
+		$result = evaluate($expression);
+		$message .=$this->boolToText($result);
+		log::add('openalpr','info',$this->getHumanName().$message);
+		if(!$result)
+			return false;		
+		return true;
+	}
+	public function ExecuteAction($cmd){
+		try {
+			$options = array();
+			if (isset($cmd['options'])) 
+				$options = $cmd['options'];
+			scenarioExpression::createAndExec('action', $cmd['cmd'], $options);
+		} catch (Exception $e) {
+			log::add('openalpr', 'error',$this->getHumanName(). __('Erreur lors de l\'exécution de ', __FILE__) . $action['cmd'] . __('. Détails : ', __FILE__) . $e->getMessage());
+		}
+		$Commande=cmd::byId(str_replace('#','',$cmd['cmd']));
+		if(is_object($Commande)){
+			log::add('openalpr','debug',$this->getHumanName().' Exécution de '.$Commande->getHumanName());
+			$Commande->event($cmd['options']);
+		}
+	}
 }
 class openalprCmd extends cmd {
 	public function updateState($value=true){
@@ -415,6 +462,10 @@ class openalprCmd extends cmd {
 		}
 		$this->getEqLogic()->checkAndUpdateCmd('*',true);
 		$this->getEqLogic()->checkAndUpdateCmd('lastPlate',$this->getName());
+		if($this->getEqLogic()->checkCondition()){
+			foreach($this->getEqLogic()->getConfiguration('action') as $Cmd)	
+				$this->getEqLogic()->ExecuteAction($Cmd);
+		}
 	}
 	public function preSave() {
 		$this->setLogicalId(trim(str_replace('-','',$this->getLogicalId())));
