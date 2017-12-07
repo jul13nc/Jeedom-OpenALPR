@@ -5,7 +5,6 @@ if (!isConnect('admin')) {
 sendVarToJS('eqType', 'openalpr');
 $eqLogics = eqLogic::byType('openalpr');
 ?>
-
 <div class="row row-overflow">
     <div class="col-lg-2 col-md-3 col-sm-4">
         <div class="bs-sidebar">
@@ -88,6 +87,14 @@ $eqLogics = eqLogic::byType('openalpr');
 			<li role="presentation" class="">
 				<a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">
 					<i class="fa fa-list-alt"></i> Commandes</a>
+			</li>
+			<li role="presentation" class="">
+				<a href="#conditiontab" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">
+					<i class="fa fa-cube"></i> {{Conditions d'exécution}}</a>
+			</li>
+			<li role="presentation" class="">
+				<a href="#actiontab" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">
+					<i class="icon divers-viral"></i> {{Actions}}</a>
 			</li>
 		</ul>
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -186,9 +193,56 @@ $eqLogics = eqLogic::byType('openalpr');
 					</tbody>
 				</table>
 			</div>	
+			<div role="tabpanel" class="tab-pane" id="conditiontab">
+				<form class="form-horizontal">
+					<fieldset>
+						<legend>{{Les conditions d'exécution :}}
+							<sup>
+								<i class="fa fa-question-circle tooltips" title="Saisir toutes les conditions d'exécution de la gestion"></i>
+							</sup>
+							<a class="btn btn-success btn-xs conditionAttr" data-action="add" style="margin-left: 5px;">
+								<i class="fa fa-plus-circle"></i>
+								{{Ajouter une Condition}}
+							</a>
+						</legend>
+					</fieldset>
+				</form>			
+				<table id="table_condition" class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Condition</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>				
+			<div role="tabpanel" class="tab-pane" id="actiontab">
+				<form class="form-horizontal">
+					<fieldset>
+						<legend>{{Les actions:}}
+							<sup>
+								<i class="fa fa-question-circle tooltips" title="Saisir toutes les actions à mener à l'ouverture"></i>
+							</sup>
+							<a class="btn btn-success btn-xs ActionAttr" data-action="add" style="margin-left: 5px;">
+								<i class="fa fa-plus-circle"></i>
+								{{Ajouter une Action}}
+							</a>
+						</legend>
+					</fieldset>
+				</form>					
+				<table id="table_action" class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>		
 		</div>
-    </div>
+	</div>
 </div>
-
 <?php include_file('desktop', 'openalpr', 'js', 'openalpr'); ?>
 <?php include_file('core', 'plugin.template', 'js'); ?>
