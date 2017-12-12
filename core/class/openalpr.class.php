@@ -338,12 +338,14 @@ class openalpr extends eqLogic {
 		return false;
 	}
 	public static function isValideImmat($plate){
-		if (strlen($plate) <= 9 && preg_match("#^[0-9]{1,4}[A-Z]{1,4}[0-9]{1,2}$#", $plate)) {
+		/*if (strlen($plate) <= 9 && preg_match("#^[0-9]{1,4}[A-Z]{1,4}[0-9]{1,2}$#", $plate)) {
 			return true;
 		}elseif  (strlen($plate) <= 7 && preg_match("#^[A-Z]{2,2}[0-9]{2,3}[A-Z]{2,2}$#", $plate))  {
 			return true;
 		}
-		return false;
+		return false;*/
+		//Le format depend de la localisation le format definie est uniquement pour la france
+		return true;
 	}
 	public static function SendLastSnap($file){
 		if (config::byKey('snapshot','openalpr')) {
