@@ -430,7 +430,8 @@ class openalpr extends eqLogic {
 			return false;		
 		return true;
 	}
-	public function ExecuteAction($cmd){
+	public function ExecuteAction(){
+        foreach($this->getConfiguration('action') as $cmd){	
 		try {
 			$options = array();
 			if (isset($cmd['options'])) 
@@ -444,13 +445,16 @@ class openalpr extends eqLogic {
 			log::add('openalpr','debug',$this->getHumanName().' Exécution de '.$Commande->getHumanName());
 			$Commande->event($cmd['options']);
 		}
+      }
 	}
 }
 class openalprCmd extends cmd {
 	public function updateState($value=true){
-		if(strtotime($this->getCollectDate()) >= time()+config::byKey('DelaisDetect', 'openalpr'))
+		$Detect=time();
+		$NextDetect=$this->getConfiguration('LastDetect')+config::byKey('DelaisDetect', 'openalpr');
+		if($Detect < $NextDetect)
 			return;
-		log::add('openalpr','debug',"Derniere mise détection: ".$this->getCollectDate());
+		$this->save();
 		switch($this->getEqLogic()->getConfiguration('UpdateMode')){
 			case'toogle':
 				if ($this->execCmd())
@@ -458,18 +462,18 @@ class openalprCmd extends cmd {
 				else
 					$value=true;
 			break;
+         		default:
+				$value=true;
+           		break;
 		}	
-		if ($this->execCmd() != $this->formatValue($value)) {
-			$this->event($value);
-		}
+		$this->getEqLogic()->checkAndUpdateCmd($this->getLogicalId(),$value);
 		$this->getEqLogic()->checkAndUpdateCmd('*',true);
 		$this->getEqLogic()->checkAndUpdateCmd('lastPlate',$this->getName());
-		if($this->getEqLogic()->checkCondition()){
-			foreach($this->getEqLogic()->getConfiguration('action') as $Cmd)	
-				$this->getEqLogic()->ExecuteAction($Cmd);
-		}
+		if($this->getEqLogic()->checkCondition())
+				$this->getEqLogic()->ExecuteAction();
 	}
 	public function preSave() {
+        $this->setConfiguration('LastDetect',time());
 		$this->setLogicalId(trim(str_replace('-','',$this->getLogicalId())));
 		$this->setTemplate('dashboard','PresenceGarage');
 		$this->setTemplate('mobile','PresenceGarage');
