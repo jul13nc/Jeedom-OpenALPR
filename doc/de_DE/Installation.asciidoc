@@ -8,7 +8,7 @@ image::../images/Installation_dependance.jpg[]
 === Konfiguration des Plugins und seine Abhängigkeiten
 image::../images/openalpr_screenshot_configuration.jpg[]
 
-Les paramettre de configuration général sont:
+Die Parameter der allgemeinen Konfiguration sind :
 
 * Création automatique de plaque inconnue: Permet a jeedom de créer une commande pour les plaque non reconue
 * Activer le Snapshot: Permet de déterminer si on veut des snapshot des détécton
