@@ -1,10 +1,10 @@
-==== Group of license plates
+==== Groupe de plaques
 Il est possible de lancer une detection manuel, ou par scénario de cette en passant en message l'url de votre image
 
 image::../images/TestManuel.jpg[]
 
-==== Group of license plates
-First of all, you need to create a new group and to name it.
+==== Groupe de plaques
+Dans un premier temps, il faut créer un nouvelle groupe  et le nommé.
 Comme dans tous les plugins Jeedom vous avez un bouton ajouté un equipement sur la gauche de votre fenetre.
 
 image::../images/Configuration_equipement.jpg[]
