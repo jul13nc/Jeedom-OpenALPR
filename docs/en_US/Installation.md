@@ -1,5 +1,5 @@
-=== Dependencies install
-To facilitate the implementation of the dependencies, jeedom is going to handle the installation of the OpenALPR software .
+=== Installation des dépendance
+Pour facilité la mise en place des dépendance, jeedom vas gérer seul l’installation et la compilation du logiciel OpenALPR.
 
 Dans la cadre réservé aux dépendances, vous allez avoir le statut de l’installation. Nous avons aussi la possibilité de consulté le log d’installation en temps réel.
 
