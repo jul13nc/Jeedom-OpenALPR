@@ -6,7 +6,6 @@ try {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 	if (init('action') == 'UpdateStatut') {
-		
 		$Commande=cmd::byId(init('id'));
 		if(is_object($Commande)){
 			$Commande->updateState(init('value'));
