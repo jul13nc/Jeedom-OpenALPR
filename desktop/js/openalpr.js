@@ -281,6 +281,56 @@ $("body").on('click', ".listCmdAction", function() {
 		});
 	});
 });
+$("body").on('click', ".present", function() {
+	var id = $(this).closest('td').find('.cmdAttr[data-l1key=id]').val();
+	$.ajax({
+		type: 'POST',
+		async: false,
+		url: 'plugins/openalpr/core/ajax/openalpr.ajax.php',
+		data: {
+			action: 'UpdateStatut',
+			id: id,
+			value: true
+		},
+		dataType: 'json',
+		global: false,
+		error: function(request, status, error) {
+		},
+		success: function(data) {
+			if (data.state != 'ok') {
+				$('#div_alert').showAlert({message: data.result, level: 'danger'});
+				return;
+			}
+			$('#div_alert').showAlert({message: "L'etat a été mise a jours", level: 'success'});
+		}
+	});
+
+});
+$("body").on('click', ".absent", function() {
+	var id = $(this).closest('td').find('.cmdAttr[data-l1key=id]').val();
+	$.ajax({
+		type: 'POST',
+		async: false,
+		url: 'plugins/openalpr/core/ajax/openalpr.ajax.php',
+		data: {
+			action: 'UpdateStatut',
+			id: id,
+			value: false
+		},
+		dataType: 'json',
+		global: false,
+		error: function(request, status, error) {
+		},
+		success: function(data) {
+			if (data.state != 'ok') {
+				$('#div_alert').showAlert({message: data.result, level: 'danger'});
+				return;
+			}
+			$('#div_alert').showAlert({message: "L'etat a été mise a jours", level: 'success'});
+		}
+	});
+
+});
 function addCmdToTable(_cmd) {
   if (!isset(_cmd)) {
         var _cmd = {};
@@ -301,13 +351,18 @@ function addCmdToTable(_cmd) {
 		.append($('<div>')
 			.append($('<input type="text" class="cmdAttr form-control input-sm" data-l1key="logicalId"  placeholder="{{Numero de la plaque}}">'))));
 	tr.append($('<td>')
-			.append($('<input type="hidden" class="cmdAttr" data-l1key="type" value="info" />'))
-			.append($('<input type="hidden" class="cmdAttr" data-l1key="subType" value="binary" />'))
-			.append($('<span>')
-				.append($('<input type="checkbox" class="cmdAttr" data-size="mini" data-label-text="{{Historiser}}" data-l1key="isHistorized" checked/>')))
-			.append($('<span>')
-				.append($('<input type="checkbox" class="cmdAttr" data-size="mini" data-label-text="{{Afficher}}" data-l1key="isVisible" checked/>'))));
-
+		.append($('<input type="hidden" class="cmdAttr" data-l1key="type" value="info" />'))
+		.append($('<input type="hidden" class="cmdAttr" data-l1key="subType" value="binary" />'))
+		.append($('<span>')
+			.append($('<input type="checkbox" class="cmdAttr" data-size="mini" data-label-text="{{Historiser}}" data-l1key="isHistorized" checked/>')))
+		.append($('<span>')
+			.append($('<input type="checkbox" class="cmdAttr" data-size="mini" data-label-text="{{Afficher}}" data-l1key="isVisible" checked/>')))
+		.append($('<a class="btn btn-default btn-xs present">')
+			.append($('<i class="fa fa-arrows-alt">')
+				.text('{{Présent}}')))
+		  .append($('<a class="btn btn-default btn-xs absent ">')
+			.append($('<i class="fa fa-arrows-alt">')
+				.text('{{Absent}}'))));
 	var parmetre=$('<td>')
 		.append($('<i class="fa fa-arrows-v pull-left cursor bt_sortable" style="margin-top: 9px;">'))
 		.append($('<i class="fa fa-minus-circle pull-right cmdAction cursor" data-action="remove">'))
