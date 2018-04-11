@@ -282,7 +282,7 @@ $("body").on('click', ".listCmdAction", function() {
 	});
 });
 $("body").on('click', ".present", function() {
-	var id = $(this).closest('td').find('.cmdAttr[data-l1key=id]').val();
+	var id = $(this).closest('tr').find('.cmdAttr[data-l1key=id]').val();
 	$.ajax({
 		type: 'POST',
 		async: false,
@@ -307,7 +307,7 @@ $("body").on('click', ".present", function() {
 
 });
 $("body").on('click', ".absent", function() {
-	var id = $(this).closest('td').find('.cmdAttr[data-l1key=id]').val();
+	var id = $(this).closest('tr').find('.cmdAttr[data-l1key=id]').val();
 	$.ajax({
 		type: 'POST',
 		async: false,
