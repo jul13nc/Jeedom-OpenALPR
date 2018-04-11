@@ -290,7 +290,7 @@ $("body").on('click', ".present", function() {
 		data: {
 			action: 'UpdateStatut',
 			id: id,
-			value: true
+			value: 1
 		},
 		dataType: 'json',
 		global: false,
@@ -315,7 +315,7 @@ $("body").on('click', ".absent", function() {
 		data: {
 			action: 'UpdateStatut',
 			id: id,
-			value: false
+			value: 0
 		},
 		dataType: 'json',
 		global: false,
@@ -358,10 +358,10 @@ function addCmdToTable(_cmd) {
 		.append($('<span>')
 			.append($('<input type="checkbox" class="cmdAttr" data-size="mini" data-label-text="{{Afficher}}" data-l1key="isVisible" checked/>')))
 		.append($('<a class="btn btn-default btn-xs present">')
-			.append($('<i class="fa fa-arrows-alt">')
+			.append($('<i class="fa fa-sign-in">')
 				.text('{{Présent}}')))
 		  .append($('<a class="btn btn-default btn-xs absent ">')
-			.append($('<i class="fa fa-arrows-alt">')
+			.append($('<i class="fa fa-sign-out">')
 				.text('{{Absent}}'))));
 	var parmetre=$('<td>')
 		.append($('<i class="fa fa-arrows-v pull-left cursor bt_sortable" style="margin-top: 9px;">'))
