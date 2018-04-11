@@ -4,31 +4,31 @@ echo 0 > /tmp/compilation_openAlpr_in_progress
 echo "*****************************************************************************************************"
 echo "*                                Installing additional libraries                                    *"
 echo "*****************************************************************************************************"
-#sudo apt-get -y --force-yes update
-#sudo apt-get -y --force-yes upgrade
+#sudo apt-get -y -allow update
+#sudo apt-get -y -allow upgrade
 echo 10 > /tmp/compilation_openAlpr_in_progress
-sudo apt-get install -y --force-yes autoconf automake libtool
-sudo apt-get install -y --force-yes pkg-config
-sudo apt-get install -y --force-yes libpng12-dev
-sudo apt-get install -y --force-yes libjpeg62-turbo-dev
-sudo apt-get install -y --force-yes libtiff4-dev
-sudo apt-get install -y --force-yes zlib1g-dev
-sudo apt-get install -y --force-yes git
-sudo apt-get install -y --force-yes git-core
-sudo apt-get install -y --force-yes cmake
-sudo apt-get install -y --force-yes liblog4cplus-dev 
-sudo apt-get install -y --force-yes libcurl3-dev 
-sudo apt-get install -y --force-yes uuid-dev
-sudo apt-get install -y --force-yes build-essential
-sudo apt-get install -y --force-yes libjpeg8-dev libjasper-dev
-sudo apt-get install -y --force-yes libgtk2.0-dev
-sudo apt-get install -y --force-yes libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
-sudo apt-get install -y --force-yes libatlas-base-dev gfortran
-sudo apt-get install -y --force-yes python2.7-dev
-sudo apt-get install -y --force-yes libopencv-dev
-sudo apt-get install -y --force-yes libtesseract-dev
-sudo apt-get install -y --force-yes libleptonica-dev
-sudo apt-get install -y --force-yes beanstalkd
+sudo apt-get install -y -allow autoconf automake libtool
+sudo apt-get install -y -allow pkg-config
+sudo apt-get install -y -allow libpng12-dev
+sudo apt-get install -y -allow libjpeg62-turbo-dev
+sudo apt-get install -y -allow libtiff4-dev
+sudo apt-get install -y -allow zlib1g-dev
+sudo apt-get install -y -allow git
+sudo apt-get install -y -allow git-core
+sudo apt-get install -y -allow cmake
+sudo apt-get install -y -allow liblog4cplus-dev 
+sudo apt-get install -y -allow libcurl3-dev 
+sudo apt-get install -y -allow uuid-dev
+sudo apt-get install -y -allow build-essential
+sudo apt-get install -y -allow libjpeg8-dev libjasper-dev
+sudo apt-get install -y -allow libgtk2.0-dev
+sudo apt-get install -y -allow libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install -y -allow libatlas-base-dev gfortran
+sudo apt-get install -y -allow python2.7-dev
+sudo apt-get install -y -allow libopencv-dev
+sudo apt-get install -y -allow libtesseract-dev
+sudo apt-get install -y -allow libleptonica-dev
+sudo apt-get install -y -allow beanstalkd
 echo 50 > /tmp/compilation_openAlpr_in_progress
 echo "*****************************************************************************************************"
 echo "*                                            Compile openalpr:                                      *"

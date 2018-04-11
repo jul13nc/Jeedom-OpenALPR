@@ -431,21 +431,17 @@ class openalpr extends eqLogic {
 		return true;
 	}
 	public function ExecuteAction(){
-        foreach($this->getConfiguration('action') as $cmd){	
-		try {
-			$options = array();
-			if (isset($cmd['options'])) 
-				$options = $cmd['options'];
-			scenarioExpression::createAndExec('action', $cmd['cmd'], $options);
-		} catch (Exception $e) {
-			log::add('openalpr', 'error',$this->getHumanName(). __('Erreur lors de l\'exécution de ', __FILE__) . $action['cmd'] . __('. Détails : ', __FILE__) . $e->getMessage());
+		foreach($this->getConfiguration('action') as $cmd){	
+			try {
+				$options = array();
+				if (isset($cmd['options'])) 
+					$options = $cmd['options'];
+				scenarioExpression::createAndExec('action', $cmd['cmd'], $options);
+				log::add('openalpr','debug',$this->getHumanName().' Exécution de '.$cmd['cmd']);
+			} catch (Exception $e){
+				log::add('openalpr', 'error',$this->getHumanName(). __('Erreur lors de l\'exécution de ', __FILE__) . $cmd['cmd'] . __('. Détails : ', __FILE__) . $e->getMessage());
+			}
 		}
-		$Commande=cmd::byId(str_replace('#','',$cmd['cmd']));
-		if(is_object($Commande)){
-			log::add('openalpr','debug',$this->getHumanName().' Exécution de '.$Commande->getHumanName());
-			$Commande->event($cmd['options']);
-		}
-      }
 	}
 }
 class openalprCmd extends cmd {

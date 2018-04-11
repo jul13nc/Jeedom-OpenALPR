@@ -1,17 +1,17 @@
 <?php
 try {
-    require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-    include_file('core', 'authentification', 'php');
-
-    if (!isConnect('admin')) {
-        throw new Exception(__('401 - Accès non autorisé', __FILE__));
-    }
+	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+	include_file('core', 'authentification', 'php');
+	if (!isConnect('admin')) {
+		throw new Exception(__('401 - Accès non autorisé', __FILE__));
+	}
 	if (init('action') == 'UpdateStatut') {
 		$Commande=cmd::byId(init('id'));
 		if(is_object($Commande)){
-			$Commande->event();
+			$Commande->getEqLogic()->checkAndUpdateCmd($Commande->getLogicalId(),init('value'));
+			ajax::success(true);
 		}
-		ajax::success(true);
+		ajax::error("Commande introuvable");
 	}
 	if (init('action') == 'ConfigOpenAlpr') {
 		ajax::success(openalpr::ConfigOpenAlpr());
