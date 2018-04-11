@@ -290,7 +290,7 @@ $("body").on('click', ".present", function() {
 		data: {
 			action: 'UpdateStatut',
 			id: id,
-			value: 1
+			value: true
 		},
 		dataType: 'json',
 		global: false,
@@ -315,7 +315,7 @@ $("body").on('click', ".absent", function() {
 		data: {
 			action: 'UpdateStatut',
 			id: id,
-			value: 0
+			value: false
 		},
 		dataType: 'json',
 		global: false,
