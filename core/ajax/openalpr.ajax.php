@@ -6,15 +6,11 @@ try {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 	if (init('action') == 'UpdateStatut') {
-		$_value=init('value');
 		$cmd=cmd::byId(init('id'));
 		if(is_object($cmd)){
-			$oldValue = $cmd->execCmd();
-			if (($oldValue != $cmd->formatValue($_value)) || $oldValue === '') {
-				$cmd->event($_value);
-				ajax::success(true);
-			}
+			$cmd->event(init('value'));
 			$cmd->setCache('collectDate', date('Y-m-d H:i:s'));
+			$cmd->save();
 		}
 		ajax::success(true);
 	}
