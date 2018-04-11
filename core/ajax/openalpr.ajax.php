@@ -9,7 +9,7 @@ try {
 	if (init('action') == 'UpdateStatut') {
 		$Commande=cmd::byId(init('id'));
 		if(is_object($Commande)){
-			$Commande->event();
+			$Commande->event(init('value'));
 		}
 		ajax::success(true);
 	}
