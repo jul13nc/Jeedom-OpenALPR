@@ -6,7 +6,13 @@ try {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 	if (init('action') == 'UpdateStatut') {
-		ajax::success(cmd::byId(init('id'))->updateState(init('value')));
+		
+		$Commande=cmd::byId(init('id'));
+		if(is_object($Commande)){
+			$Commande->updateState(init('value'));
+			ajax::success(true);
+		}
+		ajax::error("Commande introuvable");
 	}
 	if (init('action') == 'ConfigOpenAlpr') {
 		ajax::success(openalpr::ConfigOpenAlpr());
