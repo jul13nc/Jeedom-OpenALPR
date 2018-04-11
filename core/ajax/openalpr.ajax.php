@@ -1,15 +1,20 @@
 <?php
 try {
-    require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-    include_file('core', 'authentification', 'php');
-
-    if (!isConnect('admin')) {
-        throw new Exception(__('401 - Accès non autorisé', __FILE__));
-    }
+	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+	include_file('core', 'authentification', 'php');
+	if (!isConnect('admin')) {
+		throw new Exception(__('401 - Accès non autorisé', __FILE__));
+	}
 	if (init('action') == 'UpdateStatut') {
-		$Commande=cmd::byId(init('id'));
-		if(is_object($Commande)){
-			$Commande->event(init('value'));
+		$_value=init('value');
+		$cmd=cmd::byId(init('id'));
+		if(is_object($cmd)){
+			$oldValue = $cmd->execCmd();
+			if (($oldValue != $cmd->formatValue($_value)) || $oldValue === '') {
+				$cmd->event($_value);
+				ajax::success(true);
+			}
+			$cmd->setCache('collectDate', date('Y-m-d H:i:s'));
 		}
 		ajax::success(true);
 	}
