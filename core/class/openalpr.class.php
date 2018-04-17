@@ -446,11 +446,11 @@ class openalpr extends eqLogic {
 }
 class openalprCmd extends cmd {
 	public function updateState($value=true){
-		$Detect=time();
-		$NextDetect=$this->getConfiguration('LastDetect')+config::byKey('DelaisDetect', 'openalpr');
-		if($Detect < $NextDetect)
+		$cache = cache::byKey('openalpr::LastDetect::'.$this->getId());
+		$LastDetect = $cache->getValue(time()-config::byKey('DelaisDetect', 'openalpr'));
+		if($LastDetect + config::byKey('DelaisDetect', 'openalpr') < time())
 			return;
-		$this->save();
+		cache::set('openalpr::LastDetect::'.$this->getId(), time(), 0);
 		switch($this->getEqLogic()->getConfiguration('UpdateMode')){
 			case'toogle':
 				if ($this->execCmd())
@@ -469,10 +469,9 @@ class openalprCmd extends cmd {
 				$this->getEqLogic()->ExecuteAction();
 	}
 	public function preSave() {
-        $this->setConfiguration('LastDetect',time());
 		$this->setLogicalId(trim(str_replace('-','',$this->getLogicalId())));
-		$this->setTemplate('dashboard','PresenceGarage');
-		$this->setTemplate('mobile','PresenceGarage');
+		//$this->setTemplate('dashboard','PresenceGarage');
+		//$this->setTemplate('mobile','PresenceGarage');
 	}
 	public function execute($_options = array()) {
 		if($this->getLogicalId()== 'manual'){

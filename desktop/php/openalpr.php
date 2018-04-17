@@ -50,6 +50,7 @@ $eqLogics = eqLogic::byType('openalpr');
 			</div>
 		</div>
         <legend>{{Mes groupes de plaques d'immatriculation}}</legend>
+		<input class="form-control" placeholder="{{Rechercher}}" style="margin-bottom:4px;" id="in_searchEqlogic" />
 		<div class="eqLogicThumbnailContainer">
 			<?php
 			if (count($eqLogics) == 0) {
