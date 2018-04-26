@@ -186,6 +186,7 @@ class openalpr extends eqLogic {
 		if (file_exists('/tmp/compilation_openAlpr_in_progress')) 
 			return;
 		log::remove('openalpr_update');
+		config::save('lastDependancyInstallTime', date('Y-m-d H:i:s'),'openalpr');
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../ressources/install.sh';
 		$cmd .= ' >> ' . log::getPathToLog('openalpr_update') . ' 2>&1 &';
 		exec($cmd);
