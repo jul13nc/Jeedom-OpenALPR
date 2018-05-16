@@ -7,28 +7,28 @@ echo "**************************************************************************
 #sudo apt-get -y -allow update
 #sudo apt-get -y -allow upgrade
 echo 10 > /tmp/compilation_openAlpr_in_progress
-sudo apt-get install -y -allow autoconf automake libtool
-sudo apt-get install -y -allow pkg-config
-sudo apt-get install -y -allow libpng12-dev
-sudo apt-get install -y -allow libjpeg62-turbo-dev
-sudo apt-get install -y -allow libtiff4-dev
-sudo apt-get install -y -allow zlib1g-dev
-sudo apt-get install -y -allow git
-sudo apt-get install -y -allow git-core
-sudo apt-get install -y -allow cmake
-sudo apt-get install -y -allow liblog4cplus-dev 
-sudo apt-get install -y -allow libcurl3-dev 
-sudo apt-get install -y -allow uuid-dev
-sudo apt-get install -y -allow build-essential
-sudo apt-get install -y -allow libjpeg8-dev libjasper-dev
-sudo apt-get install -y -allow libgtk2.0-dev
-sudo apt-get install -y -allow libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
-sudo apt-get install -y -allow libatlas-base-dev gfortran
-sudo apt-get install -y -allow python2.7-dev
-sudo apt-get install -y -allow libopencv-dev
-sudo apt-get install -y -allow libtesseract-dev
-sudo apt-get install -y -allow libleptonica-dev
-sudo apt-get install -y -allow beanstalkd
+sudo apt-get install -y autoconf automake libtool
+sudo apt-get install -y pkg-config
+sudo apt-get install -y libpng12-dev
+sudo apt-get install -y libjpeg62-turbo-dev
+sudo apt-get install -y libtiff4-dev
+sudo apt-get install -y zlib1g-dev
+sudo apt-get install -y git
+sudo apt-get install -y git-core
+sudo apt-get install -y cmake
+sudo apt-get install -y liblog4cplus-dev 
+sudo apt-get install -y libcurl3-dev 
+sudo apt-get install -y uuid-dev
+sudo apt-get install -y build-essential
+sudo apt-get install -y libjpeg8-dev libjasper-dev
+sudo apt-get install -y libgtk2.0-dev
+sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install -y libatlas-base-dev gfortran
+sudo apt-get install -y python2.7-dev
+sudo apt-get install -y libopencv-dev
+sudo apt-get install -y libtesseract-dev
+sudo apt-get install -y libleptonica-dev
+sudo apt-get install -y beanstalkd
 echo 50 > /tmp/compilation_openAlpr_in_progress
 echo "*****************************************************************************************************"
 echo "*                                            Compile openalpr:                                      *"
