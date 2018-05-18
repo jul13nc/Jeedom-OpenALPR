@@ -151,7 +151,7 @@ class openalpr extends eqLogic {
 		}
 		return $Equipement;
 	}
-	public static function addCommande($eqLogic,$Name,$_logicalId, $type='info', $subtype='binary') {
+	public static function addCommande($eqLogic,$Name,$_logicalId, $type='info', $subtype='binary',$historised=true) {
 		$Commande = $eqLogic->getCmd(null,$_logicalId);
 		if (!is_object($Commande)){
 			$Commande = new openalprCmd();
@@ -160,7 +160,7 @@ class openalpr extends eqLogic {
 			$Commande->setLogicalId($_logicalId);
 			$Commande->setEqLogic_id($eqLogic->getId());
 			$Commande->setType($type);
-			$Commande->setIsHistorized(1);
+			$Commande->setIsHistorized($historised);
 		}
 		$Commande->setSubType($subtype);
 		if($_logicalId =='*')
@@ -303,7 +303,7 @@ class openalpr extends eqLogic {
 			}
 			if(self::isValideImmat($Results["plate"]) && config::byKey('inconnue','openalpr')){
 				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
-				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"]);			
+				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"],'info','binary,false);			
 				$CmdPlate->updateState();
 			}
 		}
