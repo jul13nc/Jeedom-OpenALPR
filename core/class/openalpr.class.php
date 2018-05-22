@@ -303,7 +303,7 @@ class openalpr extends eqLogic {
 			}
 			if(self::isValideImmat($Results["plate"]) && config::byKey('inconnue','openalpr')){
 				$Equipement = openalpr::addEquipement('Plaques détectées inconnu','inconnu');
-				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"],'info','binary,false);			
+				$CmdPlate=openalpr::addCommande($Equipement,$Results["plate"],$Results["plate"],'info','binary',false);			
 				$CmdPlate->updateState();
 			}
 		}
