@@ -50,8 +50,8 @@ foreach ($files as $date => &$file) {
 	foreach ($file as $time => $filename) {
 		echo '<div class="cameraDisplayCard" style="background-color: #e7e7e7;padding:5px;height:167px;">';
 		echo '<center>' . $time . '</center>';
-		echo '<center><img class="img-responsive cursor displayImage" src="core/php/downloadFile.php?pathfile=' . urlencode($path.$filename) . '" width="150"/></center>';
-		echo '<center style="margin-top:5px;"><a href="core/php/downloadFile.php?pathfile=' . urlencode($path.$filename) . '" class="btn btn-success btn-xs" style="color : white"><i class="fa fa-download"></i></a>';
+		echo '<center><img class="img-responsive cursor displayImage" src="plugins/openalpr/core/php/downloadFile.php?pathfile=' . urlencode($path.$filename) . '" width="150"/></center>';
+		echo '<center style="margin-top:5px;"><a href="plugins/openalpr/core/php/downloadFile.php?pathfile=' . urlencode($path.$filename) . '" class="btn btn-success btn-xs" style="color : white"><i class="fa fa-download"></i></a>';
 		echo ' <a class="btn btn-danger bt_removeCameraFile btn-xs" style="color : white" data-day="'.$date.'" data-filename="' . $filename . '"><i class="fa fa-trash-o"></i></a></center>';
 		echo '</div>';
 	}
