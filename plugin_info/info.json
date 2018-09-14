@@ -4,7 +4,7 @@
 	"description" : "Plugin permanent de faire de la reconnaissance de plaque d'immatriculation avec nos camera",
 	"licence" : "AGPL",
 	"author" : "Halbout Michael",
-	"require" : "3.0",
+	"require" : "2.4",
 	"category" : "security",
 	"display" : "panel",
 	"mobile" : "panel",
@@ -13,5 +13,5 @@
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"],
 	"issue" : "https://github.com/mika-nt28/Jeedom-OpenALPR/issues",
  	"changelog" : "https://github.com/mika-nt28/Jeedom-OpenALPR/commits/master",
- 	"documentation" : "https://jeedom.github.io/documentation/third_plugin/openalpr/fr_FR/index.html"
+ 	"documentation" : "https://mika-nt28.github.io/Jeedom-OpenALPR/"
 }
