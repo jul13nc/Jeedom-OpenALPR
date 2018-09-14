@@ -13,5 +13,5 @@
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"],
 	"issue" : "https://github.com/mika-nt28/Jeedom-OpenALPR/issues",
  	"changelog" : "https://github.com/mika-nt28/Jeedom-OpenALPR/commits/master",
- 	"documentation" : "https://jeedom.github.io/documentation/third_plugin/openalpr/fr_FR/index.html"
+ 	"documentation" : "https://mika-nt28.github.io/Jeedom-OpenALPR/"
 }
