@@ -96,6 +96,8 @@ class openalpr extends eqLogic {
 		fputs($fp, "\n");
 		fputs($fp,'country = eu');
 		fputs($fp, "\n");
+		fputs($fp,'pattern  = fr');
+		fputs($fp, "\n");
 		fputs($fp,'site_id = Jeedom');
 		fputs($fp, "\n");
 		$Cameras=config::byKey('configuration','openalpr');
@@ -110,7 +112,9 @@ class openalpr extends eqLogic {
 			fputs($fp,'stream ='. self::getUrl(""));
 			fputs($fp, "\n");
 		}
-		fputs($fp,'topn = 10');
+		fputs($fp,'analysis_threads = '.config::byKey('analysis_threads','openalpr'));
+		fputs($fp, "\n");
+		fputs($fp,'topn = '.config::byKey('topn','openalpr'));
 		fputs($fp, "\n");
 		fputs($fp,'store_plates = '.config::byKey('snapshot','openalpr'));
 		fputs($fp, "\n");
