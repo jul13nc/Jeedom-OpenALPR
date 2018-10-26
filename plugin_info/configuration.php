@@ -49,6 +49,18 @@ if (!isConnect()) {
 	<form class="form-horizontal">
 		<legend>Configuration du demon Alprd</legend>
 		<fieldset>
+			<!--div class="form-group">
+				<label class="col-lg-4 control-label">{{Nombre de thread}}</label>
+				<div class="col-lg-4">
+					<input type="text" class="configKey" data-l1key="analysis_threads">
+				 </div>
+			</div--> 
+			<div class="form-group">
+				<label class="col-lg-4 control-label">{{Nombre de plaque maximum}}</label>
+				<div class="col-lg-4">
+					<input type="text" class="configKey" data-l1key="topn">
+				 </div>
+			</div> 
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Repertoire Snapshot}}</label>
 				<div class="col-lg-4">
