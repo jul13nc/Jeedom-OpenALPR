@@ -25,8 +25,8 @@ class openalpr extends eqLogic {
 	}
  	public static function ConfigOpenAlpr() {
 		$file='/etc/openalpr/openalpr.conf';
-		//if (config::byKey('openParam','openalpr')){
-			/*$fp = fopen($file,"w+");
+		if (config::byKey('openParam','openalpr')){
+			$fp = fopen($file,"w+");
 			fputs($fp,'ocr_img_size_percent = '.config::byKey('ocr_img_size_percent','openalpr'));
 			fputs($fp, "\n");
 			fputs($fp,'state_id_img_size_percent = '.config::byKey('state_id_img_size_percent','openalpr'));
@@ -84,12 +84,12 @@ class openalpr extends eqLogic {
 			fputs($fp,'debug_show_images     = '.config::byKey('debug','openalpr'));
 			fputs($fp, "\n");
 			fputs($fp,'debug_pause_on_frame  = '.config::byKey('debug','openalpr'));
-			fclose($fp);*/
-		//}else{
+			fclose($fp);
+		}else{
 			exec('sudo rm '.$file);
 			exec('sudo touch '.$file);
 			exec('sudo chmod 777 '.$file);
-		//}
+		}
 		$file='/etc/openalpr/alprd.conf';
 		$fp = fopen($file,"w+");
 		fputs($fp,'[daemon]');

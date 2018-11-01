@@ -36,12 +36,12 @@ if (!isConnect()) {
 					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="inconnue" />
 				 </div>
 			</div>
-			<!--div class="form-group">
+			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Personnalisé les paramettre par defaut de OpenAlpr}}</label>
 				<div class="col-lg-4">
 					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="openParam" />
 				 </div>
-			</div--> 
+			</div> 
 		</fieldset>
 	</form>
 </div>
@@ -49,12 +49,12 @@ if (!isConnect()) {
 	<form class="form-horizontal">
 		<legend>Configuration du demon Alprd</legend>
 		<fieldset>
-			<!--div class="form-group">
+			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Nombre de thread}}</label>
 				<div class="col-lg-4">
 					<input type="text" class="configKey" data-l1key="analysis_threads">
 				 </div>
-			</div--> 
+			</div> 
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Nombre de plaque maximum}}</label>
 				<div class="col-lg-4">
@@ -99,7 +99,7 @@ if (!isConnect()) {
 		</fieldset>
 	</form>
 </div>
-<!--div class="col-sm-6 openAlprParamters">
+<div class="col-sm-6 openAlprParamters">
 	<form class="form-horizontal">
 		<fieldset>
 			<legend>Configuration de parametre de détéction OpenAlpr</legend>
@@ -214,7 +214,7 @@ if (!isConnect()) {
 			</div>
 		</fieldset>
 	</form>
-</div-->
+</div>
 
 <script>	
 $.ajax({
