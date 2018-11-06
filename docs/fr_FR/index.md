@@ -59,6 +59,7 @@ Les paramettre de configuration général sont:
 * Mots de pass de la Camera
 
 Nous pouvons voir le status de configuration et d’activation d’OpenALPR dans le cadre "Démon"
+La configuration des parametres peuvent etre défini avec l'utilitaire openalpr-utils-calibrate.exe sur windows avec une image de la camera. 
 
 ![introduction01](../images/Status_Demon.jpg)	
 Si tous les voyant sont au vert, nous pouvons passée a la suite
