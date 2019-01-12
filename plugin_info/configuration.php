@@ -114,6 +114,13 @@ if (!isConnect()) {
 				<div class="col-lg-4">
 					<input type="text" class="configKey "  data-l1key="ocr_img_size_percent" />
 				 </div>
+			</div>detection_mask_image 
+			<div class="form-group">
+				<label class="col-lg-4 control-label">{{Calibrage de votre camera améliore la précision de la détection dans les cas où des plaques d'immatriculation sont capturés à un angle raide (Utilisez l'utilitaire openalpr-utils-calibration pour calibrer votre camera fixe pour ajuster un angle )}}</label>
+				<div class="col-lg-4">
+					<input type="file" id="FileMask" name="FileMask" class="form-control" data-url="plugins/openalpr/core/ajax/openalpr.ajax.php?action=addFileMask" />
+					<span class="configKey" data-l1key="detection_mask_image" />
+				 </div>
 			</div>
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Calibrage de votre camera améliore la précision de la détection dans les cas où des plaques d'immatriculation sont capturés à un angle raide (Utilisez l'utilitaire openalpr-utils-calibration pour calibrer votre camera fixe pour ajuster un angle )}}</label>
