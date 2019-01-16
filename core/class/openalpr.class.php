@@ -31,6 +31,8 @@ class openalpr extends eqLogic {
 			fputs($fp, "\n");
 			fputs($fp,'state_id_img_size_percent = '.config::byKey('state_id_img_size_percent','openalpr'));
 			fputs($fp, "\n");
+			fputs($fp,'detection_mask_image ='.config::byKey('detection_mask_image','openalpr'));
+			fputs($fp, "\n");
 			fputs($fp,'prewarp ='.config::byKey('prewarp','openalpr'));
 			fputs($fp, "\n");
 			fputs($fp,'max_plate_width_percent = '.config::byKey('max_plate_width_percent','openalpr'));
