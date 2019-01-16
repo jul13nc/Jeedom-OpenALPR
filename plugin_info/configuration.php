@@ -114,7 +114,7 @@ if (!isConnect()) {
 				<div class="col-lg-4">
 					<input type="text" class="configKey "  data-l1key="ocr_img_size_percent" />
 				 </div>
-			</div>detection_mask_image 
+			</div>
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Calibrage de votre camera améliore la précision de la détection dans les cas où des plaques d'immatriculation sont capturés à un angle raide (Utilisez l'utilitaire openalpr-utils-calibration pour calibrer votre camera fixe pour ajuster un angle )}}</label>
 				<div class="col-lg-4">
@@ -324,6 +324,7 @@ $('#FileMask').fileupload({
 			return;
 		}
 		$('#div_alert').showAlert({message: data.result, level: 'success'});
+		$('.configKey[data-l1key=detection_mask_image]).val(data.result).text(data.result);
 	}
 });
 </script>
