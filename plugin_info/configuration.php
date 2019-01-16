@@ -315,4 +315,15 @@ function AddCamera(_el,data){
 	_el.find('tr:last').setValues(data, '.configKey');
 	_el.find('tr:last').find('.configKey[data-l1key=configuration][data-l2key=id]').val(id);
 } 
+$('#FileMask').fileupload({
+	dataType: 'json',
+	replaceFileInput: false,
+	success: function(data) {
+		if (data.state != 'ok') {
+			$('#div_alert').showAlert({message: data.result, level: 'danger'});
+			return;
+		}
+		$('#div_alert').showAlert({message: data.result, level: 'success'});
+	}
+});
 </script>
