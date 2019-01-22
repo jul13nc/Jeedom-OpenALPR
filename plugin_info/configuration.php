@@ -36,12 +36,12 @@ if (!isConnect()) {
 					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="inconnue" />
 				 </div>
 			</div>
-			<!--div class="form-group">
+			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Personnalisé les paramettre par defaut de OpenAlpr}}</label>
 				<div class="col-lg-4">
 					<input type="checkbox" class="configKey" data-label-text="{{Activer}}" data-l1key="openParam" />
 				 </div>
-			</div--> 
+			</div> 
 		</fieldset>
 	</form>
 </div>
@@ -49,12 +49,12 @@ if (!isConnect()) {
 	<form class="form-horizontal">
 		<legend>Configuration du demon Alprd</legend>
 		<fieldset>
-			<!--div class="form-group">
+			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Nombre de thread}}</label>
 				<div class="col-lg-4">
 					<input type="text" class="configKey" data-l1key="analysis_threads">
 				 </div>
-			</div--> 
+			</div> 
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Nombre de plaque maximum}}</label>
 				<div class="col-lg-4">
@@ -99,7 +99,7 @@ if (!isConnect()) {
 		</fieldset>
 	</form>
 </div>
-<!--div class="col-sm-6 openAlprParamters">
+<div class="col-sm-6 openAlprParamters">
 	<form class="form-horizontal">
 		<fieldset>
 			<legend>Configuration de parametre de détéction OpenAlpr</legend>
@@ -113,6 +113,13 @@ if (!isConnect()) {
 				<label class="col-lg-4 control-label">{{ocr_img_size_percent}}</label>
 				<div class="col-lg-4">
 					<input type="text" class="configKey "  data-l1key="ocr_img_size_percent" />
+				 </div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-4 control-label">{{Calibrage de votre camera améliore la précision de la détection dans les cas où des plaques d'immatriculation sont capturés à un angle raide (Utilisez l'utilitaire openalpr-utils-calibration pour calibrer votre camera fixe pour ajuster un angle )}}</label>
+				<div class="col-lg-4">
+					<input type="file" id="FileMask" name="FileMask" class="form-control" data-url="plugins/openalpr/core/ajax/openalpr.ajax.php?action=addFileMask" />
+					<span class="configKey" data-l1key="detection_mask_image" />
 				 </div>
 			</div>
 			<div class="form-group">
@@ -214,7 +221,7 @@ if (!isConnect()) {
 			</div>
 		</fieldset>
 	</form>
-</div-->
+</div>
 
 <script>	
 $.ajax({
@@ -308,4 +315,16 @@ function AddCamera(_el,data){
 	_el.find('tr:last').setValues(data, '.configKey');
 	_el.find('tr:last').find('.configKey[data-l1key=configuration][data-l2key=id]').val(id);
 } 
+$('#FileMask').fileupload({
+	dataType: 'json',
+	replaceFileInput: false,
+	success: function(data) {
+		if (data.state != 'ok') {
+			$('#div_alert').showAlert({message: data.result, level: 'danger'});
+			return;
+		}
+		$('#div_alert').showAlert({message: data.result, level: 'success'});
+		$('.configKey[data-l1key=detection_mask_image]').val(data.result).text(data.result);
+	}
+});
 </script>

@@ -5,6 +5,28 @@ try {
 	if (!isConnect('admin')) {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
+	if (init('action') == 'addFileMask') {
+		if(isset($_FILES['FileMask'])){ 
+			log::add('openalpr','debug',  "Le ficher mask a ete recu =>" . basename($_FILES["FileMask"]["name"]));
+			$directory = dirname(__FILE__) . '/../../mask/';
+			if(!file_exists($directory)){
+				
+				log::add('openalpr','debug',  "Creation d'un dossier mask =>" . $directory);
+				exec('sudo mkdir -p '.$directory);
+				exec('sudo chmod 777 -R '.$directory);
+			}
+			$target_file = $directory . basename($_FILES["FileMask"]["name"]);
+			if(move_uploaded_file($_FILES['FileMask']['tmp_name'],$target_file)){
+				log::add('openalpr','debug',  "Le fichier a ete placer et configurer dans detection_mask_image =>" . $target_file);
+				config::save('detection_mask_image', $target_file,'openalpr');
+				ajax::success($target_file);
+			}else{
+				log::add('openalpr','debug',  "Le fichier n'a pas pue etre déplacé");
+				ajax::error("Le fichier n'a pas pue etre déplacé");
+			}
+		}
+		ajax::error("Le fichier n'a pas été recu");
+	}
 	if (init('action') == 'UpdateStatut') {
 		$Commande=cmd::byId(init('id'));
 		if(is_object($Commande)){
