@@ -324,7 +324,7 @@ $('#FileMask').fileupload({
 			return;
 		}
 		$('#div_alert').showAlert({message: data.result, level: 'success'});
-		$('.configKey[data-l1key=detection_mask_image]).val(data.result).text(data.result);
+		$('.configKey[data-l1key=detection_mask_image]').val(data.result).text(data.result);
 	}
 });
 </script>
