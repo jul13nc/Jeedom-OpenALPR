@@ -65,8 +65,10 @@ La configuration des parametres peuvent etre défini avec l'utilitaire openalpr-
 Si tous les voyant sont au vert, nous pouvons passée a la suite
 
 
-Paramétrage des equipements et des commandes
+Paramétrage des mes groupes et de mes plaques
 =============================================
+
+![introduction01](../images/MesGroupes.jpg)	
 
 Verification d'une image
 -----------------
@@ -80,7 +82,6 @@ Groupe de plaques
 
 Dans un premier temps, il faut créer un nouveau groupe et le nommer.
 Comme dans tous les plugins Jeedom vous avez un bouton ajouter un equipement sur la gauche de votre fenetre.
-
 ![introduction01](../images/Configuration_equipement.jpg)	
 
 Ce nouveau groupe a besoin d'être paramétré.
@@ -90,20 +91,22 @@ Ce nouveau groupe a besoin d'être paramétré.
 * Catégorie : Déclare l'équipement dans une catégorie
 * Visible : Permet de rendre l'équipement visible dans le Dashboard
 * Activer : Permet d'activer l'équipement
+* Mode de mise a jours : permet de determiné si les etats des commandes représenterons la visibilité sur l'image ou un changement a chaque passage (cette deuxieme option peut posée probleme si on reste devant la camera)
+* Camera autorisé : ce champs permet de spécifier quel camera a le droit de mettre a jours se groupe
 
 Le groupe "Plaques détectées inconnu" ce créer automatiquement des qu’une plaque a ete détécté et qu’elle n’existe pas sous jeedom.
-Pour créer votre groupe et comme partout sur jeedom vous avez le bouton "Ajouter" sur la gauche de votre écran.
 
 Plaques d'imatriculation
 --------------------------
 
-Maintenant que votre groupe est crée et configurée, on vas pouvoir y ajouter des commandes.
-Le groupe "Plaques détectées inconnu" ce créer automatiquement des qu’une plaque a ete détécté et qu’elle n’existe pas sous jeedom.
-Pour créer votre groupe et comme partout sur jeedom vous avez le bouton "Ajouter" sur la gauche de votre écran.
-
-Exemple de configuration
-
 ![introduction01](../images/Configuration_commande.jpg)	
+
+A la creation du groupe certaine commande ont été ajouté automatiquement, il ne faut pas les supprimer.
+* Dernier déclencheur : Indique quel a ete la derniere plaque vue sur la camera
+* Détection manuel : permet de spécifier une url d'une image a analysé
+* Etat du groupe : informe l'etat de detection du groupe
+
+Pour compléter votre goupe vous devez ajouter autant de commandes que vous avez de plaque a détecter
 
 * Nom : Donner un nom a votre plaque de manière a la retrouve facilement dans Jeedom
 * Numero de la plaque: Numero de la plaque (sans les tirets) (il est possible de remplacé des caractere par de ** en cas de flotte avec de plaque qui se suive
@@ -119,3 +122,10 @@ AX**WW
 * Afficher: si vous voulez que la plaque apparaisse sur le dashbord
 * Déplacer: ce bouton permet de déplacer une plaque d’un groupe a un autre
 * Enfin pensez sauvegarder.
+
+Il est possible egalement de d'initialisé l'etat de base (si vous avez choisie un changement a chaque passage) avec les boutons "Absent" et "Présent".
+
+Condition et Action
+-------------------
+A chaque détéction du plugin il est possible d'executer des actions.
+Ses actions sont autorisé par des conditions
